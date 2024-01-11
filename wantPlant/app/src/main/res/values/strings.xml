@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">wantPlant</string>
+    <string name="bottom_nav_garden">정원방문</string>
+    <string name="bottom_nav_water">물주기</string>
+</resources>

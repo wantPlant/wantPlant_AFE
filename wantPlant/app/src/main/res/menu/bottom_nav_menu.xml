@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bottom_nav_garden"
+        android:title="@string/bottom_nav_garden"
+        android:icon="@drawable/ic_flower_outline"/>
+    <item
+        android:id="@+id/bottom_nav_water"
+        android:title="@string/bottom_nav_water"
+        android:icon="@drawable/ic_water_outline"/>
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:title="닉네임"
+        android:icon="@drawable/menu_profile_icon"/>
+</menu>
