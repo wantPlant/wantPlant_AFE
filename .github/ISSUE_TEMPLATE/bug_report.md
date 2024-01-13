@@ -7,14 +7,6 @@ assignees: ''
 
 ---
 
----
-name: Bug report
-about: 버그 관련 이슈 작성
-title: "[Bug] {한줄 설명}"
-labels: ""
-assignees: ''"
----
-
 ## Destription
 > 버그에 대한 설명 작성
 
