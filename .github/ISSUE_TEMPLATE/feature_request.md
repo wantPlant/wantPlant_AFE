@@ -12,7 +12,7 @@ name: Feature request
 about: 기능 구현 시 사용하는 템플릿입니다.
 title: "[Feat] {기능명}"
 labels: ""
-assignees: ''
+assignees: ''"
 
 ---
 

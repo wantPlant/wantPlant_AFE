@@ -12,8 +12,7 @@ name: Bug report
 about: 버그 관련 이슈 작성
 title: "[Bug] {한줄 설명}"
 labels: ""
-assignees: ''
-
+assignees: ''"
 ---
 
 ## Destription
