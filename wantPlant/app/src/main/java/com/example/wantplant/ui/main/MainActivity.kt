@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.provider.ContactsContract.Profile
 import com.example.wantplant.R
 import com.example.wantplant.databinding.ActivityMainBinding
+import com.example.wantplant.ui.main.book.BookFragment
 import com.example.wantplant.ui.main.garden.GardenFragment
 import com.example.wantplant.ui.main.profile.ProfileFragment
 import com.example.wantplant.ui.main.water.WaterFragment
@@ -26,10 +27,8 @@ class MainActivity : AppCompatActivity() {
     // 바텀 네비게이션 구현
     private fun initBottomNavigation(){
 
-        binding.mainBottomNavBnv.selectedItemId = R.id.bottom_nav_water
-
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_frm, WaterFragment())
+            .replace(R.id.main_frm, GardenFragment())
             .commitAllowingStateLoss()
 
         binding.mainBottomNavBnv.setOnItemSelectedListener{ item ->
@@ -45,6 +44,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.bottom_nav_water -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, WaterFragment())
+                        .commitAllowingStateLoss()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.bottom_nav_book -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, BookFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
