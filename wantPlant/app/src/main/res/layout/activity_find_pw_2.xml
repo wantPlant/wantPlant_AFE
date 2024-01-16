@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFFFF">
+
+    <TextView
+        android:id="@+id/findpw2_logo_iv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="129dp"
+        android:text="가입한 이메일\ndaisy**@naver.com로\n연락드렸어요!"
+        android:textSize="32dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/findpw2_tempopw_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_rect"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="25dp"
+        android:hint="임시 비밀번호"
+        android:inputType="text"
+        android:textColor="@color/wp_gray2"
+        android:textSize="14dp"
+        android:layout_marginTop="373dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/findpw2_dis_tempopw_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/wrong_pw_tempo"
+        android:textColor="@color/wp_red"
+        android:textSize="11dp"
+        app:layout_constraintStart_toStartOf="@+id/findpw2_tempopw_et"
+        app:layout_constraintTop_toBottomOf="@+id/findpw2_tempopw_et"
+
+        android:visibility="gone"
+        />
+
+
+    <EditText
+        android:id="@+id/findpw2_newpw_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_rect"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="25dp"
+        android:hint="새로운 비밀번호"
+        android:inputType="text"
+        android:textColor="@color/wp_gray2"
+        android:textSize="14dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/findpw2_tempopw_et"/>
+
+
+    <EditText
+        android:id="@+id/findpw2_newpw_confirm_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_rect"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="25dp"
+        android:hint="새로운 비밀번호 확인"
+        android:inputType="text"
+        android:textColor="@color/wp_gray2"
+        android:textSize="14dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/findpw2_newpw_et"/>
+
+    <TextView
+        android:id="@+id/findpw2_dis_newpw_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/wrong_pw"
+        android:textColor="@color/wp_red"
+        android:textSize="11dp"
+        app:layout_constraintStart_toStartOf="@+id/findpw2_newpw_confirm_et"
+        app:layout_constraintTop_toBottomOf="@+id/findpw2_newpw_confirm_et"
+
+        android:visibility="gone"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/findpw_start_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_background"
+        android:layout_marginTop="650dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/btn_okay"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

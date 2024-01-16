@@ -2,4 +2,16 @@
     <string name="app_name">wantPlant</string>
     <string name="bottom_nav_garden">정원방문</string>
     <string name="bottom_nav_water">물주기</string>
+    <string name="btn_okay">확인</string>
+    <string name="btn_start">하고, 심으러 가기</string>
+    <string name="btn_first_garden">첫 정원 만들기</string>
+    <string name="btn_re_login">다시 로그인하기</string>
+    <string name="wrong_pw_tempo">임시 비밀번호가 일치하지 않습니다.</string>
+    <string name="wrong_pw">비밀번호가 일치하지 않습니다.</string>
+    <string name="wrong_pw_form">대소문자 구분 없이 숫자를 포함하여 10자 이상으로 작성해주세요.</string>
+    <string name="wrong_email">존재하지 않거나 잘못된 이메일입니다.</string>
+    <string name="wrong_nickname">닉네임은 5글자 이내로 작성해주세요.</string>
+    <string name="wrong_phone">잘못된 전화번호 형식입니다.</string>
+    <string name="login_account">계정이 없으신가요? 회원가입</string>
+
 </resources>
