@@ -2,4 +2,12 @@
     <string name="app_name">wantPlant</string>
     <string name="bottom_nav_garden">정원방문</string>
     <string name="bottom_nav_water">물주기</string>
+    <string name="bottom_nav_book">전체도감</string>
+    <string name="logo_small">이제는 하고 싶을 때,</string>
+    <string name="logo_big">하고,심다</string>
+    <string name="garden_delete">정원 삭제</string>
+    <string name="garden_my">나의 정원</string>
+    <string name="garden_pot">화분 심기</string>
+    <string name="garden_tot_guide">전체 도감</string>
+    <string name="water_change_calendar">월/주</string>
 </resources>
