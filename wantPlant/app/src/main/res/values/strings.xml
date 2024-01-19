@@ -13,5 +13,12 @@
     <string name="wrong_nickname">닉네임은 5글자 이내로 작성해주세요.</string>
     <string name="wrong_phone">잘못된 전화번호 형식입니다.</string>
     <string name="login_account">계정이 없으신가요? 회원가입</string>
-
+    <string name="bottom_nav_book">전체도감</string>
+    <string name="logo_small">이제는 하고 싶을 때,</string>
+    <string name="logo_big">하고,심다</string>
+    <string name="garden_delete">정원 삭제</string>
+    <string name="garden_my">나의 정원</string>
+    <string name="garden_pot">화분 심기</string>
+    <string name="garden_tot_guide">전체 도감</string>
+    <string name="water_change_calendar">월/주</string>
 </resources>
