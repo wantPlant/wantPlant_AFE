@@ -8,6 +8,6 @@
     <string name="garden_delete">정원 삭제</string>
     <string name="garden_my">나의 정원</string>
     <string name="garden_pot">화분 심기</string>
-    <string name="garden_tot_guide">전체 도감</string>
+    <string name="garden_add">정원 만들기</string>
     <string name="water_change_calendar">월/주</string>
 </resources>
