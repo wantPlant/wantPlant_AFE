@@ -1,16 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="garden"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/garden_delete_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/garden_delete"
+            android:textColor="@color/wp_gray2"
+            android:textSize="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/garden_logo_small_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/logo_small"
+            android:textSize="12dp"
+            android:fontFamily="@font/font1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/garden_logo_big_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:text="@string/logo_big"
+            android:textSize="45dp"
+            android:fontFamily="@font/font2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/garden_logo_small_tv" />
+
+        <LinearLayout
+            android:id="@+id/garden_my_garden_title_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/border_nonfill_greenstroke_15radius"
+            app:layout_constraintTop_toBottomOf="@id/garden_logo_big_tv"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="정원을 만들어주세요."
+                android:textColorHint="@color/wp_gray2"
+                android:textSize="13dp"
+                android:privateImeOptions="korean"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/garden_add_pot_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_garden_plus_btn"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toBottomOf="@id/garden_my_garden_title_ll"
+            app:layout_constraintStart_toStartOf="@id/garden_bg_iv"/>
+
+        <TextView
+            android:id="@+id/garden_add_pot_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/garden_pot"
+            android:textColor="@color/wp_brown2"
+            android:layout_marginStart="5dp"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/garden_add_pot_iv"
+            app:layout_constraintTop_toTopOf="@id/garden_add_pot_iv"
+            app:layout_constraintBottom_toBottomOf="@id/garden_add_pot_iv"/>
+
+        <ImageView
+            android:id="@+id/garden_bg_iv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_garden_bg"
+            android:background="@drawable/rect_nonfill_nonstroke_15radius"
+            android:clipToOutline="true"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/garden_add_pot_tv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/garden_add"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_mainfill_nonstroke_15radius"
+            app:layout_constraintTop_toBottomOf="@id/garden_bg_iv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
