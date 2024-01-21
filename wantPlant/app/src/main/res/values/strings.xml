@@ -2,6 +2,17 @@
     <string name="app_name">wantPlant</string>
     <string name="bottom_nav_garden">정원방문</string>
     <string name="bottom_nav_water">물주기</string>
+    <string name="btn_okay">확인</string>
+    <string name="btn_start">하고, 심으러 가기</string>
+    <string name="btn_first_garden">첫 정원 만들기</string>
+    <string name="btn_re_login">다시 로그인하기</string>
+    <string name="wrong_pw_tempo">임시 비밀번호가 일치하지 않습니다.</string>
+    <string name="wrong_pw">비밀번호가 일치하지 않습니다.</string>
+    <string name="wrong_pw_form">대소문자 구분 없이 숫자를 포함하여 10자 이상으로 작성해주세요.</string>
+    <string name="wrong_email">존재하지 않거나 잘못된 이메일입니다.</string>
+    <string name="wrong_nickname">닉네임은 5글자 이내로 작성해주세요.</string>
+    <string name="wrong_phone">잘못된 전화번호 형식입니다.</string>
+    <string name="login_account">계정이 없으신가요? 회원가입</string>
     <string name="bottom_nav_book">전체도감</string>
     <string name="logo_small">이제는 하고 싶을 때,</string>
     <string name="logo_big">하고,심다</string>
@@ -10,4 +21,11 @@
     <string name="garden_pot">화분 심기</string>
     <string name="garden_add">정원 만들기</string>
     <string name="water_change_calendar">월/주</string>
+    <string name="select_topic">집중하고 싶은 순간을 골라주세요!</string>
+    <string name="select_topic1">공부</string>
+    <string name="select_topic2">취미</string>
+    <string name="select_topic3">운동</string>
+    <string name="select_title">하고 싶을 준비 되었나요?</string>
+    <string name="select_explanation">정원의 설명을 적어주세요!</string>
+
 </resources>
