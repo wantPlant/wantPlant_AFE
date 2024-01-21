@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="#FFFFFFFF">
+
+     <ImageView
+         android:id="@+id/select_wantplant_logo_iv"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_logo_wantplant"
+         android:layout_marginTop="103dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/select_topic_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_topic"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/select_topic_1_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/select_stroke"
+        android:text="공부"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="19dp"
+        android:layout_marginTop="303dp"
+        android:layout_marginRight="26dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/select_topic_2_tv"/>
+
+    <TextView
+        android:id="@+id/select_topic_2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="303dp"
+        android:background="@drawable/select_stroke"
+        android:paddingHorizontal="19dp"
+        android:paddingVertical="4dp"
+        android:text="취미"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/select_topic_3_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/select_stroke"
+        android:text="운동"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="19dp"
+        android:layout_marginTop="303dp"
+        android:layout_marginLeft="26dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/select_topic_2_tv" />
+
+    <TextView
+        android:id="@+id/select_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_title"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="378dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/select_titlel_et"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="46dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/ic_select_title_rect"
+        android:gravity="center"
+        android:hint="정원 이름"
+        android:inputType="text"
+        android:textColor="@color/wp_gray2"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/select_explain_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_explanation"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="497dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/select_explain_et"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:layout_marginHorizontal="46dp"
+        android:background="@drawable/select_shadow"
+        android:hint="정원 설명"
+        android:inputType="text"
+        android:textColor="@color/wp_gray2"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="537dp"
+        android:gravity="center"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
