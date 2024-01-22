@@ -26,7 +26,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_start_btn"
+        android:id="@+id/landing_login_start_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_login_background"
