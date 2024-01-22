@@ -54,7 +54,7 @@ class LandingActivity : AppCompatActivity() {
         handler.post(sliderRunnable) // 슬라이더 실행
 
         // 하고,심으러 가기 버튼 누를 때
-        binding.loginStartBtn.setOnClickListener {
+        binding.landingLoginStartBtn.setOnClickListener {
             Log.d("click", "click_hagosimda")
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
