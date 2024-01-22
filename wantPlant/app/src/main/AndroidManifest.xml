@@ -13,7 +13,17 @@
         android:theme="@style/Theme.WantPlant"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".ui.main.login.LoginActivity">
+
+        </activity>
+
+        <activity
+            android:name=".ui.main.landing.LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
