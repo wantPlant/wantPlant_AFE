@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/song_lalac_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFFFF">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraint_toTopOf="parent">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/question_01_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/question_01_toggle_iv"
+                        android:layout_width="17dp"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="43dp"
+                        android:src="@drawable/ic_polygon"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/question_01_tv"/>
+
+                    <TextView
+                        android:id="@+id/question_01_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="4sp"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="32dp"
+                        android:textStyle="bold"
+                        android:text="정원, 화분, 투두(물주기) 설정은 어떻게\n하는 건가요?"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:letterSpacing="0.02"
+                        app:layout_constraintStart_toEndOf="@+id/question_01_toggle_iv"
+                        app:layout_constraintTop_toTopOf="@+id/question_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_01_cl" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/answer_01_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp">
+
+                    <ImageView
+                        android:id="@+id/answer_01_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="30dp"
+                        android:src="@drawable/ic_dog"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/answer_01_tv"/>
+
+                    <TextView
+                        android:id="@+id/answer_01_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="정원은 공부/운동/취미 카테고리 중 하나를\n선택해서 자유롭게 가꿀 수 있는 엄청 큰 목\n표입니다. 그 속에서 키울 수 있는 화분은 작\n은 목표, 그리고 물을 주는 행위가 투두인데\n요!\n\n쉬운 예로는 운동이라는 카테고리를 정한다\n면, 나는야 운동왕이 정원이 되는 거고,\n10KG 감량 / 공복유산소 / 식단 관리 같은\n항목이 화분이 되는 겁니다. 해당 화분에 대\n해서도 목표랑 할일을 설정해서 물주기 캘린\n더 페이지를 꾸밀 수 있습니다. 말 그대로 할\n일을 하고, 화분을 심을 수 있는 것이죠."
+                        android:textSize="14sp"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
+                        app:layout_constraintBottom_toTopOf="@+id/answer_01_icon_iv"
+                        app:layout_constraintStart_toEndOf="@+id/answer_01_icon_iv"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/line"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/question_02_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/question_02_toggle_iv"
+                        android:layout_width="17dp"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="43dp"
+                        android:src="@drawable/ic_polygon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/question_02_tv"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_02_tv"/>
+
+                    <TextView
+                        android:id="@+id/question_02_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:lineSpacingExtra="4sp"
+                        android:textStyle="bold"
+                        android:text="전체 도감은 어떤 기능인가요?"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:letterSpacing="0.02"
+                        app:layout_constraintStart_toEndOf="@+id/question_02_toggle_iv"
+                        app:layout_constraintTop_toTopOf="@+id/question_02_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_02_cl" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/answer_02_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp">
+
+                    <ImageView
+                        android:id="@+id/answer_02_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="30dp"
+                        android:src="@drawable/ic_dog"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/answer_02_tv"
+                        app:layout_constraintBottom_toBottomOf="@+id/answer_02_tv"/>
+
+                    <TextView
+                        android:id="@+id/answer_02_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="다 키운 화분을 모아서 보여주는 페이지입니다."
+                        android:textSize="14sp"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/answer_02_icon_iv"
+                        app:layout_constraintStart_toEndOf="@+id/answer_02_icon_iv"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/line" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/question_03_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/question_03_toggle_iv"
+                        android:layout_width="17dp"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="43dp"
+                        android:src="@drawable/ic_polygon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/question_03_tv"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_03_tv"/>
+
+                    <TextView
+                        android:id="@+id/question_03_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:lineSpacingExtra="4sp"
+                        android:text="정원의 개수가 제한적인가요?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:letterSpacing="0.02"
+                        app:layout_constraintStart_toEndOf="@+id/question_03_toggle_iv"
+                        app:layout_constraintTop_toTopOf="@+id/question_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/question_03_cl" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
