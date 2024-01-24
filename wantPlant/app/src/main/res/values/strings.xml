@@ -48,4 +48,13 @@
     <string name="plant_add_goal">목표 추가</string>
     <string name="plant_garden_name">정원 이름</string>
     <string name="plant_flowerpot_name">화분의 이름</string>
+    <string name="whole_create_garden">정원을 만들어 주세요</string>
+    <string name="whole_no_flowerpot">아직 다 키운 화분이 없어요\nㅠ_ㅠ</string>
+    <string name="whole_garden_name">정원 이름</string>
+    <string name="whole_explain_garden">정원설명</string>
+    <string name="whole_category_label">공부</string>
+    <string name="whole_category">카테고리</string>
+    <string name="whole_explain_garden_label">나는 공부왕이 될거야 두고봐라</string>
+    <string name="item_flowerpot_plant_name">3-1 과탑 예정이요 ㅋ</string>
+    <string name="item_flowerpot_period">2024.01.01 ~ 2024.02.01</string>
 </resources>
