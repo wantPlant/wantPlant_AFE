@@ -154,7 +154,6 @@
                         app:layout_constraintStart_toEndOf="@+id/qna_question_02_toggle_iv"
                         app:layout_constraintTop_toTopOf="@+id/qna_question_02_cl"
                         app:layout_constraintBottom_toBottomOf="@+id/qna_question_02_cl" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
