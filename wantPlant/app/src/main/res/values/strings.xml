@@ -35,4 +35,13 @@
     <string name="profile_withdrawal">탈퇴하기</string>
     <string name="modify_take_pictures">사진 찍기</string>
     <string name="modify_select_gallery">갤러리에서 선택</string>
+    <string name="howtouse_step_01">카테고리를 선택해주세요! (공부, 운동, 취미)</string>
+    <string name="howtouse_step_02">정원 이름을 정해주세요!</string>
+    <string name="howtouse_step_03">정원 속 키우고 싶은 화분을 심어주세요!</string>
+    <string name="howtouse_step_04">화분을 키우기 위해 투두를 작성하고,\n투두를 완료해서 화분에 물을 주세요!</string>
+    <string name="qna_question_01">정원, 화분, 투두(물주기) 설정은 어떻게\n하는 건가요?</string>
+    <string name="qna_question_02">전체 도감은 어떤 기능인가요?</string>
+    <string name="qna_question_03">정원의 개수가 제한적인가요?</string>
+    <string name="qna_answer_01">정원은 공부/운동/취미 카테고리 중 하나를\n선택해서 자유롭게 가꿀 수 있는 엄청 큰 목\n표입니다. 그 속에서 키울 수 있는 화분은 작\n은 목표, 그리고 물을 주는 행위가 투두인데\n요!\n\n쉬운 예로는 운동이라는 카테고리를 정한다\n면, 나는야 운동왕이 정원이 되는 거고,\n10KG 감량 / 공복유산소 / 식단 관리 같은\n항목이 화분이 되는 겁니다. 해당 화분에 대\n해서도 목표랑 할일을 설정해서 물주기 캘린\n더 페이지를 꾸밀 수 있습니다. 말 그대로 할\n일을 하고, 화분을 심을 수 있는 것이죠.</string>
+    <string name="qna_answer_02">다 키운 화분을 모아서 보여주는 페이지입니다.</string>
 </resources>

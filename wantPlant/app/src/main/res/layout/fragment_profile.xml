@@ -5,22 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFFFF">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/profile_welcome_user_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:textStyle="bold"
-        android:text="@string/profile_welcome_user"
+        android:layout_marginTop="12dp"
         android:gravity="center"
-        android:textSize="25sp"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="9sp"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_iv"
+        android:text="@string/profile_welcome_user"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/profile_image_iv"
-        app:layout_constraintStart_toStartOf="@+id/profile_image_iv"/>
+        app:layout_constraintHorizontal_bias="0.397"
+        app:layout_constraintStart_toStartOf="@+id/profile_image_iv"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_iv" />
 
     <ImageView
         android:id="@+id/profile_image_iv"

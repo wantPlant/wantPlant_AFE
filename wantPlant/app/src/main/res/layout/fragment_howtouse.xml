@@ -8,7 +8,7 @@
     android:background="#FFFFFFFF">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:fillViewport="true"
         android:orientation="vertical"
@@ -24,22 +24,21 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/step_ll"
+                android:id="@+id/howtouse_step_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraint_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/step_01_cl"
+                    android:id="@+id/howtouse_step_01_cl"
                     android:layout_width="match_parent"
                     android:layout_height="90dp">
 
                     <TextView
-                        android:id="@+id/step_01_num_tv"
+                        android:id="@+id/howtouse_step_01_num_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -48,32 +47,33 @@
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
                         android:textColor="@color/black"
-                        app:layout_constraintStart_toEndOf="@+id/step_01_icon_iv"
-                        app:layout_constraintTop_toTopOf="@+id/step_01_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_01_cl" />
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_01_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl" />
 
                     <TextView
-                        android:id="@+id/step_01_label_tv"
+                        android:id="@+id/howtouse_step_01_label_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="카테고리를 선택해주세요! (공부, 운동, 취미)"
+                        android:text="@string/howtouse_step_01"
                         android:textColor="@color/black"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
+                        android:lineSpacingExtra="4sp"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/step_01_num_tv"
-                        app:layout_constraintTop_toTopOf="@+id/step_01_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_01_cl"/>
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_01_num_tv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl"/>
 
                     <ImageView
-                        android:id="@+id/step_01_icon_iv"
+                        android:id="@+id/howtouse_step_01_icon_iv"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="16dp"
                         android:src="@drawable/ic_dog"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/step_01_cl" />
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,7 +90,7 @@
                     android:layout_height="90dp">
 
                     <ImageView
-                        android:id="@+id/step_02_icon_iv"
+                        android:id="@+id/howtouse_step_02_icon_iv"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="16dp"
@@ -100,7 +100,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/step_02_cl"/>
 
                     <TextView
-                        android:id="@+id/step_02_num_tv"
+                        android:id="@+id/howtouse_step_02_num_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -109,22 +109,23 @@
                         android:textColor="@color/black"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/step_02_icon_iv"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_02_icon_iv"
                         app:layout_constraintTop_toTopOf="@+id/step_02_cl"
                         app:layout_constraintBottom_toBottomOf="@+id/step_02_cl" />
 
                     <TextView
-                        android:id="@+id/step_02_label_tv"
+                        android:id="@+id/howtouse_step_02_label_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="정원 이름을 정해주세요!"
+                        android:text="@string/howtouse_step_02"
+                        android:lineSpacingExtra="4sp"
                         android:textColor="@color/black"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="@+id/step_02_num_tv"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_02_num_tv"
-                        app:layout_constraintStart_toEndOf="@+id/step_02_num_tv" />
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_02_num_tv"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_02_num_tv"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_02_num_tv" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,22 +137,22 @@
                     android:background="@drawable/line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/step_03_cl"
+                    android:id="@+id/howtouse_step_03_cl"
                     android:layout_width="match_parent"
                     android:layout_height="90dp">
 
                     <ImageView
-                        android:id="@+id/step_03_icon_iv"
+                        android:id="@+id/howtouse_step_03_icon_iv"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="16dp"
                         android:src="@drawable/ic_dog"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/step_03_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_03_cl"/>
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl"/>
 
                     <TextView
-                        android:id="@+id/step_03_num_tv"
+                        android:id="@+id/howtouse_step_03_num_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -160,21 +161,22 @@
                         android:textColor="@color/black"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/step_03_icon_iv"
-                        app:layout_constraintTop_toTopOf="@+id/step_03_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_03_cl" />
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_03_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl" />
 
                     <TextView
-                        android:id="@+id/step_03_label_tv"
+                        android:id="@+id/howtouse_step_03_label_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="정원 속 키우고 싶은 화분을 심어주세요!"                        android:textColor="@color/black"
+                        android:text="@string/howtouse_step_03"                        android:textColor="@color/black"
                         android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="@+id/step_03_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_03_cl"
-                        app:layout_constraintStart_toEndOf="@+id/step_03_num_tv"/>
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_03_num_tv"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,22 +188,22 @@
                     android:background="@drawable/line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/step_04_cl"
+                    android:id="@+id/howtouse_step_04_cl"
                     android:layout_width="match_parent"
                     android:layout_height="90dp">
 
                     <ImageView
-                        android:id="@+id/step_04_icon_iv"
+                        android:id="@+id/howtouse_step_04_icon_iv"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="16dp"
                         android:src="@drawable/ic_cat"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/step_04_cl"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_04_cl"/>
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_04_cl"/>
 
                     <TextView
-                        android:id="@+id/step_04_num_tv"
+                        android:id="@+id/howtouse_step_04_num_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -210,21 +212,22 @@
                         android:textColor="@color/black"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/step_04_icon_iv"
-                        app:layout_constraintTop_toTopOf="@+id/step_04_label_tv" />
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_04_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_label_tv" />
 
                     <TextView
-                        android:id="@+id/step_04_label_tv"
+                        android:id="@+id/howtouse_step_04_label_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="화분을 키우기 위해 투두를 작성하고,\n투두를 완료해서 화분에 물을 주세요!"
+                        android:text="@string/howtouse_step_04"
                         android:textColor="@color/black"
+                        android:lineSpacingExtra="4sp"
                         android:letterSpacing="0.02"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/step_04_cl"
-                        app:layout_constraintStart_toEndOf="@+id/step_04_num_tv"
-                        app:layout_constraintTop_toTopOf="@+id/step_04_cl" />
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_04_cl"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_04_num_tv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_cl" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
