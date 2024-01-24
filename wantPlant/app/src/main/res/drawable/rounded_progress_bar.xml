@@ -1,0 +1,52 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background Layer -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="15dp" />
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Secondary Progress Layer (Optional, depends on your use case) -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="15dp" />
+                <solid android:color="#FFFFFF" />
+            </shape>
+        </clip>
+    </item>
+
+    <!-- Progress Layer -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <layer-list>
+                <!-- Rounded Start -->
+                <item android:left="0dp">
+                    <shape android:shape="rectangle">
+                        <corners android:radius="15dp" />
+                        <solid android:color="#96BFD9" />
+                        <stroke android:width="10dp" android:color="#96BFD9" />
+                    </shape>
+                </item>
+                <!-- Progress Bar -->
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:radius="15dp" />
+                        <solid android:color="#96BFD9" />
+                        <stroke android:width="10dp" android:color="#96BFD9" />
+                    </shape>
+                </item>
+                <!-- Rounded End -->
+                <item android:right="0dp">
+                    <shape android:shape="rectangle">
+                        <corners android:radius="15dp" />
+                        <solid android:color="#96BFD9" />
+                        <stroke android:width="10dp" android:color="#96BFD9" />
+                    </shape>
+                </item>
+            </layer-list>
+        </clip>
+    </item>
+</layer-list>
