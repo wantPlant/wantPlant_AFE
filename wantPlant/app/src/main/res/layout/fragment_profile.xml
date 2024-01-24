@@ -28,8 +28,7 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginTop="83dp"
-        android:background="@color/white"
-        android:src="@drawable/img_profile"
+        android:src="@drawable/img_profile_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +73,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_height="1dp"
-                android:background="#FFFFFF" />
+                android:background="@color/white" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_personal_information_processing_policy_cl"
@@ -96,7 +95,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_height="1dp"
-                android:background="#FFFFFF" />
+                android:background="@color/white" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_howtouse_cl"
@@ -158,7 +157,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_height="1dp"
-                android:background="#FFFFFF" />
+                android:background="@color/white" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_withdrawal_cl"
