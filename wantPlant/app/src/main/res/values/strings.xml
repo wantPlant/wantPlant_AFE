@@ -44,4 +44,8 @@
     <string name="qna_question_03">정원의 개수가 제한적인가요?</string>
     <string name="qna_answer_01">정원은 공부/운동/취미 카테고리 중 하나를\n선택해서 자유롭게 가꿀 수 있는 엄청 큰 목\n표입니다. 그 속에서 키울 수 있는 화분은 작\n은 목표, 그리고 물을 주는 행위가 투두인데\n요!\n\n쉬운 예로는 운동이라는 카테고리를 정한다\n면, 나는야 운동왕이 정원이 되는 거고,\n10KG 감량 / 공복유산소 / 식단 관리 같은\n항목이 화분이 되는 겁니다. 해당 화분에 대\n해서도 목표랑 할일을 설정해서 물주기 캘린\n더 페이지를 꾸밀 수 있습니다. 말 그대로 할\n일을 하고, 화분을 심을 수 있는 것이죠.</string>
     <string name="qna_answer_02">다 키운 화분을 모아서 보여주는 페이지입니다.</string>
+    <string name="plant_percent">0%</string>
+    <string name="plant_add_goal">목표 추가</string>
+    <string name="plant_garden_name">정원 이름</string>
+    <string name="plant_flowerpot_name">화분의 이름</string>
 </resources>
