@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_day_tag_todo_layout"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
+
+    <TextView
+        android:id="@+id/item_month_day_tag_todo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="할 일"
+        android:textSize="7dp"
+        android:layout_gravity="center_horizontal"
+        android:maxLength="5"/>
+
+</LinearLayout>

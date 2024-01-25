@@ -27,6 +27,11 @@
     <string name="select_topic3">운동</string>
     <string name="select_title">하고 싶을 준비 되었나요?</string>
     <string name="select_explanation">정원의 설명을 적어주세요!</string>
+    <string name="dialog_garden_month_time">시간 설정하기</string>
+    <string name="dialog_garden_month_date">날짜 설정하기</string>
+    <string name="dialog_garden_month_cancel">취소</string>
+    <string name="dialog_garden_month_complete">완료</string>
+    <string name="dialog_garden_month_choose">블럭 색상을 정해주세요!</string>
     <string name="profile_welcome_user">삶을 가꾸는 하니님,\n환영해요!</string>
     <string name="profile_terms_and_conditions_of_use">이용약관</string>
     <string name="profile_personal_information_processing_policy">개인정보처리방침</string>
