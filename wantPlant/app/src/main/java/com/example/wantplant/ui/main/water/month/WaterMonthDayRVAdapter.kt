@@ -32,7 +32,7 @@ class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>):
             val formattedDate = dateFormat.format(dayList[position])
             Log.d("날짜", formattedDate)
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
-            val waterMonthDialog = WaterMonthDialog(context, this)
+            val waterMonthDialog = WaterMonthDialog(context, this, formattedDate)
             waterMonthDialog.show()
         }
 

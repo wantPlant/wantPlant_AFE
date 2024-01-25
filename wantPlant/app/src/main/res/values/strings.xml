@@ -27,9 +27,10 @@
     <string name="select_topic3">운동</string>
     <string name="select_title">하고 싶을 준비 되었나요?</string>
     <string name="select_explanation">정원의 설명을 적어주세요!</string>
-    <string name="dialog_garden_month_time">00:00</string>
+    <string name="dialog_garden_month_time">시간 설정하기</string>
     <string name="dialog_garden_month_date">날짜 설정하기</string>
     <string name="dialog_garden_month_cancel">취소</string>
     <string name="dialog_garden_month_complete">완료</string>
+    <string name="dialog_garden_month_choose">블럭 색상을 정해주세요!</string>
 
 </resources>
