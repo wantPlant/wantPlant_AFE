@@ -2,6 +2,7 @@ package com.example.wantplant.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.wantplant.R
 import com.example.wantplant.databinding.ActivityMainBinding
 import com.example.wantplant.ui.main.book.BookFragment
@@ -10,6 +11,7 @@ import com.example.wantplant.ui.main.book.LandingPageFragment
 import com.example.wantplant.ui.main.garden.GardenFragment
 import com.example.wantplant.ui.main.profile.ProfileFragment
 import com.example.wantplant.ui.main.water.month.WaterMonthFragment
+import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity() {
 
