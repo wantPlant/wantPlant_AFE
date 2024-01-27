@@ -59,4 +59,20 @@ dependencies {
     implementation "com.kakao.sdk:v2-navi:2.19.0" // 카카오내비
     implementation "com.kakao.sdk:v2-cert:2.19.0" // 카카오 인증서비스
 
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // okHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
 }
