@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.R
 import com.example.wantplant.databinding.FragmentGardenBinding
 
@@ -25,23 +26,25 @@ class GardenFragment : Fragment() {
     ): View? {
         binding = FragmentGardenBinding.inflate(layoutInflater)
 
-        setLogo()
+        initGardenRecyclerView()
+
+        initPotRecyclerView()
 
         return binding.root
     }
 
-    @SuppressLint("ResourceAsColor")
-    private fun setLogo() {
-        val textView: TextView = binding.gardenLogoBigTv // binding으로부터 TextView 인스턴스 가져오기
-
-        val originalText = textView.text.toString()
-
-        val spannableString = SpannableString(originalText)
-
-        val startIndex = originalText.indexOf(",")
-        val endIndex = originalText.indexOf(",") + 1
-
-        spannableString.setSpan(ForegroundColorSpan(R.color.wp_green3), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.text = spannableString
+    private fun initGardenRecyclerView() {
+        binding.gardenGardenRv.apply {
+            adapter = GardenGardenRVAdapter()
+            layoutManager = LinearLayoutManager(context)
+        }
     }
+
+    private fun initPotRecyclerView() {
+        binding.gardenPotRv.apply {
+            adapter = GardenPotRVAdapter()
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
 }
