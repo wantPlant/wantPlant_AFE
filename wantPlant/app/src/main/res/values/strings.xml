@@ -21,6 +21,7 @@
     <string name="garden_pot">화분 심기</string>
     <string name="garden_add">정원 만들기</string>
     <string name="water_change_calendar">월/주</string>
+    <string name="water_week_add_goal">목표 추가</string>
     <string name="select_topic">집중하고 싶은 순간을 골라주세요!</string>
     <string name="select_topic1">공부</string>
     <string name="select_topic2">취미</string>
