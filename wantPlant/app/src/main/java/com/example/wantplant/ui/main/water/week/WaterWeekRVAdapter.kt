@@ -1,18 +1,24 @@
 package com.example.wantplant.ui.main.water.week
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.local.WeekDate
 import com.example.wantplant.databinding.ItemWaterWeekBinding
 import com.example.wantplant.ui.main.water.month.WaterMonthDayRVAdapter
 import java.util.Calendar
 import java.util.Date
 
-class WaterWeekRVAdapter: RecyclerView.Adapter<WaterWeekRVAdapter.ViewHolder>() {
+class WaterWeekRVAdapter(private val dateClickedListener: onDateClickedListener): RecyclerView.Adapter<WaterWeekRVAdapter.ViewHolder>(), WaterWeekDayRVAdapter.onDateSelectedListener {
     val center = Int.MAX_VALUE / 2
     private var calendar = Calendar.getInstance()
+
+    interface onDateClickedListener {
+        fun onDateClicked(formattedDate: String)
+    }
 
     inner class ViewHolder(val binding: ItemWaterWeekBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -43,17 +49,18 @@ class WaterWeekRVAdapter: RecyclerView.Adapter<WaterWeekRVAdapter.ViewHolder>() 
         // 그 월에서 보여줄 일들을 구함
         // Grid 타입의 RecyclerView를 사용하여 각 날짜를 보여줌
         // 6주 * 7일의 날짜를 표시하며 각 정보는 dayList에 저장하여 AdapterDay의 파라미터로 줌
-        var dayList: MutableList<Date> = MutableList(6 * 7) { Date() }
+//        var dayList: MutableList<WeekDate> = MutableList(6 * 7) { Date() }
+        var dayList : MutableList<WeekDate> = MutableList(6*7){WeekDate(Date(), false)}
         for(i in 0..5) {
             for(k in 0..6) {
                 calendar.add(Calendar.DAY_OF_MONTH, (1-calendar.get(Calendar.DAY_OF_WEEK)) + k)
-                dayList[i * 7 + k] = calendar.time
+                dayList[i * 7 + k].date = calendar.time
             }
             calendar.add(Calendar.WEEK_OF_MONTH, 1)
         }
 
         val dayListManager = LinearLayoutManager(holder.binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-        val dayListAdapter = WaterWeekDayRVAdapter(tempMonth, dayList)
+        val dayListAdapter = WaterWeekDayRVAdapter(tempMonth, dayList, this)
 
         holder.binding.itemWeekDayListRv.apply {
             layoutManager = dayListManager
@@ -63,6 +70,11 @@ class WaterWeekRVAdapter: RecyclerView.Adapter<WaterWeekRVAdapter.ViewHolder>() 
 
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
+    }
+
+    override fun onDateSelected(formattedDate: String) {
+        Log.d("날짜가 잘 왔나용?", "Selected Date: $formattedDate")
+        dateClickedListener.onDateClicked(formattedDate)
     }
 
 }

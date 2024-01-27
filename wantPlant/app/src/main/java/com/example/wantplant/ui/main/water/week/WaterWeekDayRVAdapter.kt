@@ -5,15 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.local.WeekDate
 import com.example.wantplant.databinding.ItemWaterWeekDayBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class WaterWeekDayRVAdapter(val tempMonth: Int, val dayList: MutableList<Date>): RecyclerView.Adapter<WaterWeekDayRVAdapter.ViewHolder>() {
+class WaterWeekDayRVAdapter(val tempMonth: Int, val dayList: MutableList<WeekDate>, private val dateSelectedListener: onDateSelectedListener): RecyclerView.Adapter<WaterWeekDayRVAdapter.ViewHolder>() {
     private val row = 6
+    private var prePosition : Int = -1
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+    interface onDateSelectedListener {
+        fun onDateSelected(formattedDate : String)
+    }
 
     inner class ViewHolder(val binding: ItemWaterWeekDayBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -27,15 +33,36 @@ class WaterWeekDayRVAdapter(val tempMonth: Int, val dayList: MutableList<Date>):
 
     override fun onBindViewHolder(holder: WaterWeekDayRVAdapter.ViewHolder, position: Int) {
 
-        holder.binding.itemDayLayout.setOnClickListener {
-            val formattedDate = dateFormat.format(dayList[position])
-            Log.d("날짜", formattedDate)
+        if(!dayList[position].isSelecting) {
+            holder.binding.waterWeekDaySelectIv.visibility = View.INVISIBLE
+
+        }
+        else {
             holder.binding.waterWeekDaySelectIv.visibility = View.VISIBLE
         }
 
-        holder.binding.itemDateTv.text = dayList[position].date.toString()
+        holder.binding.itemDayLayout.setOnClickListener {
+            val formattedDate = dateFormat.format(dayList[position].date)
+            dateSelectedListener.onDateSelected(formattedDate)
+            Log.d("날짜", formattedDate)
 
-        var dateDay = dayList[position].day.toString()
+            // 클릭 시 하트 표시
+            holder.binding.waterWeekDaySelectIv.visibility = View.VISIBLE
+
+            dayList[position].isSelecting = true
+            notifyItemChanged(position)
+
+            if (prePosition != -1) {
+                dayList[prePosition].isSelecting = false
+            }
+            notifyItemChanged(prePosition)
+            prePosition = holder.adapterPosition
+
+        }
+
+        holder.binding.itemDateTv.text = dayList[position].date.date.toString()
+
+        var dateDay = dayList[position].date.day.toString()
 
         if (dateDay == "0") {
             holder.binding.itemDayTv.text = "일"
@@ -69,14 +96,16 @@ class WaterWeekDayRVAdapter(val tempMonth: Int, val dayList: MutableList<Date>):
 //        })
 
         // tempMonth로 현재 월이 아닌 날짜의 경우 안 보이게
-        if(tempMonth != dayList[position].month) {
+        if(tempMonth != dayList[position].date.month) {
             holder.binding.itemDayLayout.isClickable = false
 //            holder.binding.itemDayLayout.visibility = View.GONE
         }
 
-        val isToday = isToday(dayList[position])
+        val isToday = isToday(dayList[position].date)
 
         holder.binding.waterWeekDayTodayIv.visibility = if (isToday) View.VISIBLE else View.INVISIBLE
+
+
     }
 
     override fun getItemCount(): Int {
