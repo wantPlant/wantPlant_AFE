@@ -23,11 +23,8 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
     ): View? {
         binding = FragmentWaterWeekBinding.inflate(layoutInflater)
 
-        // initCalendar()
-
-        clickListener()
-
-        initRecyclerView()
+        val weekListManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val weekListAdapter = WaterWeekRVAdapter(this)
         
         binding.waterWeekCalendarRv.apply {
             layoutManager = weekListManager
