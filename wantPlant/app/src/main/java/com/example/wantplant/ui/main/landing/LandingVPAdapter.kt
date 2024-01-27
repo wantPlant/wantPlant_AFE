@@ -1,15 +1,10 @@
 package com.example.wantplant.ui.main.book
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.wantplant.databinding.FragmentLandingBinding
-import com.example.wantplant.databinding.FragmentLandingpageBinding
+import com.example.wantplant.ui.main.landing.LandingActivity
 
-class LandingVPAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
+class LandingVPAdapter(fragment: LandingActivity) : FragmentStateAdapter(fragment){
 
     // 이 클래스 안에서만 사용할 것이기 때문에 private로 선언함
     private  val fragmentList : ArrayList<Fragment> = ArrayList()
