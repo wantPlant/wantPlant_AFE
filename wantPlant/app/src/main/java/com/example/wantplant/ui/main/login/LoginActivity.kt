@@ -15,7 +15,6 @@ import com.example.wantplant.ui.main.book.LandingFragment
 import com.example.wantplant.ui.main.book.LandingPageFragment
 import com.example.wantplant.ui.main.garden.GardenFragment
 import com.example.wantplant.ui.main.profile.ProfileFragment
-import com.example.wantplant.ui.main.selectgarden.SelectGardenActivity
 import com.example.wantplant.ui.main.water.month.WaterMonthFragment
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
@@ -31,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         // 카카오톡 로그인 버튼 누를 때
@@ -83,7 +83,9 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
-        }
+
+
+        setContentView(binding.root)
     }
 
     private fun moveToMainActivity() {

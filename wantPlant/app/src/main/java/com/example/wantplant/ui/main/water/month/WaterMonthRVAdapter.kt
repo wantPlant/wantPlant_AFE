@@ -53,7 +53,7 @@ class WaterMonthRVAdapter: RecyclerView.Adapter<WaterMonthRVAdapter.ViewHolder>(
         val dayListManager = GridLayoutManager(holder.binding.root.context, 7)
         val dayListAdapter = WaterMonthDayRVAdapter(tempMonth, dayList)
 
-        holder.binding.itemMonthDayList.apply {
+        holder.binding.itemMonthDayListRv.apply {
             layoutManager = dayListManager
             adapter = dayListAdapter
         }
