@@ -28,6 +28,7 @@
     <string name="select_topic3">운동</string>
     <string name="select_title">하고 싶을 준비 되었나요?</string>
     <string name="select_explanation">정원의 설명을 적어주세요!</string>
+    <string name="kakao_key">kakao38ef3a6efa9e6384d62bbc8aafadd751</string>
     <string name="dialog_garden_month_time">시간 설정하기</string>
     <string name="dialog_garden_month_date">날짜 설정하기</string>
     <string name="dialog_garden_month_cancel">취소</string>
