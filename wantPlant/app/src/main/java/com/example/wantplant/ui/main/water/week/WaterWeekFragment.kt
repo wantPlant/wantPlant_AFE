@@ -44,6 +44,8 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
 
         initPotRecyclerView()
 
+        initGardenRecyclerView()
+
         return binding.root
     }
 
@@ -67,6 +69,14 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
         binding.waterWeekPotTitleRv.apply {
             adapter = WaterWeekPotTitleRVAdapter()
             layoutManager = weekPotManager
+        }
+    }
+
+    private fun initGardenRecyclerView() {
+        val weekGardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.waterWeekGardenTitleRv.apply {
+            adapter = WaterWeekGardenTitleRVAdapter()
+            layoutManager = weekGardenManager
         }
     }
 

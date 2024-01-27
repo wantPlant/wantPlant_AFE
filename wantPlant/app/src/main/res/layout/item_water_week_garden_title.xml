@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingRight="18dp"
+    android:paddingLeft="18dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="@drawable/rect_whitefill_mainstroke_15radius2">
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_flower_outline"
+        app:tint="@color/wp_brown1"/>
+
+    <TextView
+        android:id="@+id/item_water_week_garden_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/wp_brown1"
+        android:text="정원 이름"
+        android:textSize="10dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/seoulhangang_ceb"/>
+
+
+</LinearLayout>
