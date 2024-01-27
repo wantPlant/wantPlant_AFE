@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFFFF">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/howtouse_step_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/howtouse_step_01_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <TextView
+                        android:id="@+id/howtouse_step_01_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="1. "
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_01_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl" />
+
+                    <TextView
+                        android:id="@+id/howtouse_step_01_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/howtouse_step_01"
+                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_01_num_tv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl"/>
+
+                    <ImageView
+                        android:id="@+id/howtouse_step_01_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_dog"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_01_cl"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_01_cl" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_02_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <ImageView
+                        android:id="@+id/howtouse_step_02_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_cat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/step_02_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/step_02_cl"/>
+
+                    <TextView
+                        android:id="@+id/howtouse_step_02_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="2. "
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_02_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/step_02_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/step_02_cl" />
+
+                    <TextView
+                        android:id="@+id/howtouse_step_02_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/howtouse_step_02"
+                        android:lineSpacingExtra="4sp"
+                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_02_num_tv"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_02_num_tv"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_02_num_tv" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/howtouse_step_03_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <ImageView
+                        android:id="@+id/howtouse_step_03_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_dog"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl"/>
+
+                    <TextView
+                        android:id="@+id/howtouse_step_03_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="3. "
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_03_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl" />
+
+                    <TextView
+                        android:id="@+id/howtouse_step_03_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/howtouse_step_03"                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_03_cl"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_03_num_tv"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_height="1dp"
+                    android:background="@drawable/line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/howtouse_step_04_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <ImageView
+                        android:id="@+id/howtouse_step_04_icon_iv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_cat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_cl"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_04_cl"/>
+
+                    <TextView
+                        android:id="@+id/howtouse_step_04_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="4. "
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_04_icon_iv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_label_tv" />
+
+                    <TextView
+                        android:id="@+id/howtouse_step_04_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/howtouse_step_04"
+                        android:textColor="@color/black"
+                        android:lineSpacingExtra="4sp"
+                        android:letterSpacing="0.02"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/howtouse_step_04_cl"
+                        app:layout_constraintStart_toEndOf="@+id/howtouse_step_04_num_tv"
+                        app:layout_constraintTop_toTopOf="@+id/howtouse_step_04_cl" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

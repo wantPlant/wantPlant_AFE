@@ -6,6 +6,16 @@
      android:layout_height="match_parent"
      android:background="#FFFFFFFF">
 
+    <ImageView
+        android:id="@+id/select_btn_back_iv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_btn_back"
+        android:layout_marginTop="38dp"
+        android:layout_marginLeft="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
      <ImageView
          android:id="@+id/select_wantplant_logo_iv"
          android:layout_width="0dp"
@@ -31,46 +41,46 @@
 
     <TextView
         android:id="@+id/select_topic_1_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:gravity="center"
         android:background="@drawable/select_stroke"
         android:text="공부"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:paddingVertical="4dp"
+        android:textSize="15sp"
+        android:paddingVertical="5dp"
         android:paddingHorizontal="19dp"
         android:layout_marginTop="303dp"
-        android:layout_marginRight="26dp"
+        android:layout_marginRight="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/select_topic_2_tv"/>
 
     <TextView
         android:id="@+id/select_topic_2_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:gravity="center"
         android:layout_marginTop="303dp"
         android:background="@drawable/select_stroke"
         android:paddingHorizontal="19dp"
-        android:paddingVertical="4dp"
+        android:paddingVertical="5dp"
         android:text="취미"
-        android:textSize="13sp"
-        android:textStyle="bold"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/select_topic_3_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:gravity="center"
         android:background="@drawable/select_stroke"
         android:text="운동"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:paddingVertical="4dp"
+        android:textSize="15sp"
+        android:paddingVertical="5dp"
         android:paddingHorizontal="19dp"
         android:layout_marginTop="303dp"
-        android:layout_marginLeft="26dp"
+        android:layout_marginLeft="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/select_topic_2_tv" />
 
@@ -134,6 +144,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/select_makegarden_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_background"
+        android:layout_marginTop="641dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/garden_add"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

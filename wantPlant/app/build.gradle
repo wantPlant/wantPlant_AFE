@@ -48,7 +48,4 @@ dependencies {
 
     // circleindicator
     implementation 'me.relex:circleindicator:2.1.6'
-
-    // 주간 달력 라이브러리
-    implementation 'com.michalsvec:single-row-calednar:1.0.0'
 }

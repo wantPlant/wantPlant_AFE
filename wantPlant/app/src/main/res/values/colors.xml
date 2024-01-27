@@ -9,6 +9,9 @@
     <color name="wp_brown3">#5A432D</color>
     <color name="wp_brown4">#AB8E71</color>
     <color name="wp_brown5">#F1EDE1</color>
+    <color name="wp_brown6">#D4C29E</color>
+    <color name="wp_brown7">#AD9972</color>
+    <color name="wp_brown8">#7A6740</color>
     <color name="wp_red">#C91A1A</color>
     <color name="wp_gray1">#ECECEC</color>
     <color name="wp_gray2">#757373</color>
@@ -21,6 +24,8 @@
     <color name="wp_green4">#E2EEDC</color>
     <color name="wp_green5">#B8CDBF</color>
     <color name="wp_green6">#ACB774</color>
+    <color name="wp_green7">#A9B388</color>
+    <color name="wp_green8">#739073</color>
     <color name="wp_blue1">#96BFD9</color>
     <color name="wp_blue2">#BBD5E7</color>
     <color name="wp_blue3">#63A0C7</color>

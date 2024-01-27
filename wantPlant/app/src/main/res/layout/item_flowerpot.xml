@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="170dp"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/item_flowerpot_plant_iv"
+        android:layout_width="79dp"
+        android:layout_height="78.76dp"
+        android:src="@drawable/img_plant"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_flowerpot_flowerpot_iv"
+        android:layout_width="76dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="53.57dp"
+        android:src="@drawable/img_rectangle_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_flowerpot_plant_iv" />
+
+    <TextView
+        android:id="@+id/item_flowerpot_name_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_flowerpot_flowerpot_iv"
+        android:layout_marginTop="5dp"
+        android:textSize="11sp"
+        android:letterSpacing="0.02"
+        android:text="@string/item_flowerpot_plant_name"
+        android:textStyle="bold"
+        android:lineSpacingExtra="7sp"/>
+    <TextView
+        android:id="@+id/item_flowerpot_period_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/item_flowerpot_name_iv"
+        android:textSize="10sp"
+        android:letterSpacing="0.03"
+        android:textColor="#757373"
+        android:text="@string/item_flowerpot_period"
+        android:lineSpacingExtra="8sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
