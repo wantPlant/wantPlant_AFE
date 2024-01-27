@@ -1,4 +1,4 @@
-package com.example.wantplant
+package com.example.wantplant.utils
 
 import android.app.Application
 import com.example.wantplant.R
