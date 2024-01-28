@@ -9,11 +9,11 @@ import com.example.wantplant.databinding.ItemGardenPotImageBinding
 
 class GardenPotRVAdapter: RecyclerView.Adapter<GardenPotRVAdapter.ViewHolder>() {
     val profileImgData = arrayOf(
-        ImageItem(R.drawable.ic_dog),
-        ImageItem(R.drawable.ic_dog),
-        ImageItem(R.drawable.ic_dog),
-        ImageItem(R.drawable.ic_dog),
-        ImageItem(R.drawable.ic_dog)
+        ImageItem(R.drawable.rectangle_2),
+        ImageItem(R.drawable.rectangle_2),
+        ImageItem(R.drawable.rectangle_2),
+        ImageItem(R.drawable.rectangle_2),
+        ImageItem(R.drawable.rectangle_2)
     )
 
     inner class ViewHolder(val binding: ItemGardenPotImageBinding): RecyclerView.ViewHolder(binding.root)

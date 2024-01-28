@@ -8,7 +8,8 @@
         android:id="@+id/item_garden_pot_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_flower_outline"
+        android:src="@drawable/rectangle_2"
+        android:paddingRight="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
