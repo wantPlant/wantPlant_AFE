@@ -48,6 +48,10 @@
 
         </activity>
 
+        <activity android:name=".ui.main.plant.PlantActivity">
+
+        </activity>
+
         <activity
             android:name=".ui.main.landing.LandingActivity"
             android:exported="true">
