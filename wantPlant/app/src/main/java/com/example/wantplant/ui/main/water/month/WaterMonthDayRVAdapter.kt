@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerView.Adapter<WaterMonthDayRVAdapter.ViewHolder>(), WaterMonthDialogInterface {
+class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerView.Adapter<WaterMonthDayRVAdapter.ViewHolder>(){
     private val row = 6
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -32,7 +32,7 @@ class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>):
             val formattedDate = dateFormat.format(dayList[position])
             Log.d("날짜", formattedDate)
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
-            val waterMonthDialog = WaterMonthDialog(context, this, formattedDate)
+            val waterMonthDialog = WaterMonthDialog(context, formattedDate)
             waterMonthDialog.show()
         }
 
@@ -77,12 +77,12 @@ class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>):
         return formattedToday == formattedDate
     }
 
-    override fun onCancelClicked() {
-
-    }
-
-    override fun onCompleteClicked() {
-
-    }
+//    override fun onCancelClicked() {
+//
+//    }
+//
+//    override fun onCompleteClicked() {
+//
+//    }
 
 }

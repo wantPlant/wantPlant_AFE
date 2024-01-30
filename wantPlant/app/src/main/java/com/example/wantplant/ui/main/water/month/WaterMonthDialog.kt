@@ -1,6 +1,5 @@
 package com.example.wantplant.ui.main.water.month
 
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -8,14 +7,21 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
+import com.example.wantplant.data.remote.tag.request.TagPostRequest
+import com.example.wantplant.data.remote.tag.response.TagColor
+import com.example.wantplant.data.remote.tag.response.TagPostResponse
 import com.example.wantplant.databinding.DialogWaterMonthBinding
+import com.example.wantplant.utils.getRetrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Calendar
 
-class WaterMonthDialog(context: Context, waterMonthDialogInterface: WaterMonthDialogInterface, private var formattedDate: String) : Dialog(context) {
+class WaterMonthDialog(context: Context, private var formattedDate: String) : Dialog(context) {
     private var mBinding : DialogWaterMonthBinding? = null
     private val binding get() = mBinding!!
+    private var color : TagColor? = null
 
     private var waterMonthDialogInterface : WaterMonthDialogInterface? = null
 
@@ -32,6 +38,38 @@ class WaterMonthDialog(context: Context, waterMonthDialogInterface: WaterMonthDi
 
         binding.dialogGardenMonthDateTv.text = formattedDate
 
+        binding.dialogGardenMonthColor1.setOnClickListener {
+            color = TagColor.RED
+        }
+
+        binding.dialogGardenMonthColor2.setOnClickListener {
+            color = TagColor.BLUE
+        }
+
+        binding.dialogGardenMonthColor3.setOnClickListener {
+            color = TagColor.GREEN
+        }
+
+        binding.dialogGardenMonthColor4.setOnClickListener {
+            color = TagColor.ORANGE
+        }
+
+        binding.dialogGardenMonthColor5.setOnClickListener {
+            color = TagColor.INDIGO
+        }
+
+        binding.dialogGardenMonthColor6.setOnClickListener {
+            color = TagColor.YELLOW
+        }
+
+        binding.dialogGardenMonthColor7.setOnClickListener {
+            color = TagColor.YELLOW
+        }
+
+        binding.dialogGardenMonthColor8.setOnClickListener {
+            color = TagColor.YELLOW
+        }
+
         binding.dialogGardenMonthTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -45,18 +83,42 @@ class WaterMonthDialog(context: Context, waterMonthDialogInterface: WaterMonthDi
 
             dismiss()
         }
+
         binding.dialogWaterMonthCompleteTv.setOnClickListener {
             var tagName = binding.dialogGardenMonthTodoEt.text.toString()
             var tagTime = binding.dialogGardenMonthTimeTv.text.toString()
 
             this.waterMonthDialogInterface?.onCompleteClicked()
 
+            Log.d("colorName", color.toString())
             Log.d("tagName", tagName)
             Log.d("tagTime", tagTime)
             Log.d("date", formattedDate)
 
+            postTagAPI(TagPostRequest(color!!, tagName, formattedDate))
+
             dismiss()
-            // 여기서 데이터 저장해서 interface로 넘겨주면 될 듯
         }
+    }
+
+    // 태그 추가 api 연동
+    private fun postTagAPI(request: TagPostRequest) {
+        val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
+        Log.d("request", request.toString())
+
+        tagService.postTag(request).enqueue(object: Callback<TagPostResponse>
+        {
+            override fun onResponse(call: Call<TagPostResponse>, response: Response<TagPostResponse>) {
+                Log.d("TagPost/Success", response.toString())
+                val resp: TagPostResponse = response.body()!!
+                when(resp.code) {
+                    "200" -> Log.d("TagAdd/Success", "TagAdd!!")
+                }
+            }
+
+            override fun onFailure(call: Call<TagPostResponse>, t: Throwable) {
+                Log.d("TagAdd/Failure", t.message.toString())
+            }
+        })
     }
 }
