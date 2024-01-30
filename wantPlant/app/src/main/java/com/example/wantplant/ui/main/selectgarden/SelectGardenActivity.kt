@@ -15,26 +15,12 @@ import com.example.wantplant.R
 import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
-import com.example.wantplant.databinding.ActivityLoginBinding
-import com.example.wantplant.databinding.ActivityMainBinding
 import com.example.wantplant.databinding.ActivitySelectGardenBinding
-import com.example.wantplant.databinding.FragmentLandingBinding
 import com.example.wantplant.ui.main.MainActivity
-import com.example.wantplant.ui.main.book.BookFragment
-import com.example.wantplant.ui.main.book.LandingFragment
-import com.example.wantplant.ui.main.book.LandingPageFragment
-import com.example.wantplant.ui.main.garden.GardenFragment
-import com.example.wantplant.ui.main.login.LoginActivity
-import com.example.wantplant.ui.main.profile.ProfileFragment
-import com.example.wantplant.ui.main.water.month.WaterMonthFragment
-import com.example.wantplant.utils.BASE_URL
 import com.example.wantplant.utils.getRetrofit
-import kotlinx.coroutines.MainScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class SelectGardenActivity : AppCompatActivity() {
 

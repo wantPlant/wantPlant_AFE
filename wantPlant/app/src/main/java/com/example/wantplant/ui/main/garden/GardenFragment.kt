@@ -1,27 +1,18 @@
 package com.example.wantplant.ui.main.garden
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wantplant.R
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.local.PotsResult
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
 import com.example.wantplant.data.remote.pot.PotRetrofitInterfaces
 import com.example.wantplant.databinding.FragmentGardenBinding
-import com.example.wantplant.ui.main.MainActivity
 import com.example.wantplant.ui.main.plant.PlantActivity
 import com.example.wantplant.ui.main.selectgarden.SelectGardenActivity
 import com.example.wantplant.utils.getRetrofit
@@ -42,7 +33,7 @@ class GardenFragment : Fragment() {
 
         initGardenRecyclerView()
 
-        initPotRecyclerView()
+        initPotRecyclerView(String())
 
         onClickListener()
 
@@ -51,7 +42,9 @@ class GardenFragment : Fragment() {
 
     private fun initGardenRecyclerView() {
         val gardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        gardenGardenRVAdapter = GardenGardenRVAdapter()
+        gardenGardenRVAdapter = GardenGardenRVAdapter { gardenId ->
+            initPotRecyclerView(gardenId)
+        }
         binding.gardenGardenRv.apply {
             adapter = gardenGardenRVAdapter
             layoutManager = gardenManager
@@ -69,11 +62,16 @@ class GardenFragment : Fragment() {
 
                     // 정렬된 리스트에서 각 정원의 이름을 가져옵니다.
                     val gardenNames = gardenList.map { it.name }
+                    val gardenIds = gardenList.map { it.gardenId.toString() }
 
+                    // 정원 이름 설정
                     gardenGardenRVAdapter.gardenTitles = gardenNames
                     gardenGardenRVAdapter.notifyDataSetChanged()
 
-                    Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}")
+                    // 정원의 id 저장
+                    gardenGardenRVAdapter.gardenIds = gardenIds
+
+                    Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
                 } else {
                     Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()}")
                 }
@@ -85,11 +83,11 @@ class GardenFragment : Fragment() {
         })
     }
 
-    private fun initPotRecyclerView() {
+    private fun initPotRecyclerView(gardenId: String) {
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val call = api.getPots(1, 1)
+        val call = api.getPots(gardenId, 1)
         call.enqueue(object : Callback<PotsResult> {
             override fun onResponse(call: Call<PotsResult>, response: Response<PotsResult>) {
                 if (response.isSuccessful) {
@@ -101,7 +99,7 @@ class GardenFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getPots(1, 1)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getPots(gardenId, 1)}")
                 } else {
                     // 응답 실패 시의 처리를 작성합니다.
                 }
