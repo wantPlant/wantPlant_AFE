@@ -7,7 +7,7 @@ import com.example.wantplant.databinding.ItemGardenTitleBinding
 
 class GardenGardenRVAdapter: RecyclerView.Adapter<GardenGardenRVAdapter.ViewHolder>() {
 
-    val gardenTitle = arrayOf( "정원1", "정원2", "정원3", "정원4", "정원5" )
+    var gardenTitles = listOf<String>()
 
     inner class ViewHolder(val binding: ItemGardenTitleBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -16,10 +16,10 @@ class GardenGardenRVAdapter: RecyclerView.Adapter<GardenGardenRVAdapter.ViewHold
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = gardenTitle.size
+    override fun getItemCount(): Int = gardenTitles.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.itemGardenTitleTv.text = gardenTitle[position]
+        holder.binding.itemGardenTitleTv.text = gardenTitles[position]
     }
 
 }
