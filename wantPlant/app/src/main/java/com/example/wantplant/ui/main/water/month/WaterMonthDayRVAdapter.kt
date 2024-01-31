@@ -1,21 +1,17 @@
 package com.example.wantplant.ui.main.water.month
 
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.local.MonthDate
 import com.example.wantplant.databinding.ItemWaterMonthDayBinding
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerView.Adapter<WaterMonthDayRVAdapter.ViewHolder>(){
-    private val row = 6
-
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): RecyclerView.Adapter<WaterMonthDayRVAdapter.ViewHolder>(){
 
     inner class ViewHolder(val binding: ItemWaterMonthDayBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -28,61 +24,40 @@ class WaterMonthDayRVAdapter(val tempMonth:Int, val dayList: MutableList<Date>):
 
         val context = holder.binding.root.context
 
+        // 해당 날을 클릭 했을 때
         holder.binding.itemDayLayout.setOnClickListener {
-            val formattedDate = dateFormat.format(dayList[position])
-            Log.d("날짜", formattedDate)
+            val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            Log.d("날짜", dayList[position].date!!.format(formattedDate))
+
+            // 채운 하트 표시
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
-            val waterMonthDialog = WaterMonthDialog(context, formattedDate)
+            val waterMonthDialog = WaterMonthDialog(context, dayList[position].date!!.format(formattedDate))
             waterMonthDialog.show()
         }
 
-        holder.binding.itemDayText.text = dayList[position].date.toString()
-
-        holder.binding.itemDayText.setTextColor(when(position % 7) {
-            // 일요일 색상
-            0 -> Color.RED
-
-            // 토요일 색상
-            6 -> Color.BLUE
-            else -> Color.BLACK
-        })
-
-        // tempMonth로 현재 월이 아닌 날짜의 경우 alpha를 낮추어 투명도를 주어 현재 월의 날짜와 다르게 표시
-        if(tempMonth != dayList[position].month) {
-            holder.binding.itemDayLayout.alpha = 0.4f
-            holder.binding.itemDayLayout.isClickable = false
+        // 이번 달 날짜인 것 체크
+        if (dayList[position].date != null) {
+            holder.binding.itemDayText.text = dayList[position].date?.dayOfMonth.toString()
+            val tagListManager = LinearLayoutManager(context)
+            val tagListAdapter = WaterMonthDayTagRVAdapter(dayList[position].tag)
+            holder.binding.waterMonthDayRv.apply {
+                layoutManager = tagListManager
+                adapter = tagListAdapter
+            }
+        }
+        else {
+            holder.binding.itemDayText.text = ""
         }
 
-        val tagListManager = LinearLayoutManager(context)
-        val tagListAdapter = WaterMonthDayTagRVAdapter()
-        holder.binding.waterMonthDayRv.apply {
-            layoutManager = tagListManager
-            adapter = tagListAdapter
+        // 오늘 날짜에 하트 표시
+        if (dayList[position].date == LocalDate.now()) {
+            holder.binding.waterMonthDayTodayIv.visibility = View.VISIBLE
         }
 
-        val isToday = isToday(dayList[position])
-
-        holder.binding.waterMonthDayTodayIv.visibility = if (isToday) View.VISIBLE else View.INVISIBLE
     }
 
-    // (ROW == 6주) * 7일로 총 42개의 날짜 표시
     override fun getItemCount(): Int {
-        return row * 7
+        return dayList.size
     }
-
-    private fun isToday(date: Date): Boolean {
-        val today = Date()
-        val formattedToday = dateFormat.format(today)
-        val formattedDate = dateFormat.format(date)
-        return formattedToday == formattedDate
-    }
-
-//    override fun onCancelClicked() {
-//
-//    }
-//
-//    override fun onCompleteClicked() {
-//
-//    }
 
 }

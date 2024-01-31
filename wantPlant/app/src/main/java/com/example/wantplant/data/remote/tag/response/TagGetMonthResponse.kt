@@ -1,14 +1,17 @@
 package com.example.wantplant.data.remote.tag.response
 
-import java.time.LocalTime
-
-data class TagPostResponse(
+data class TagGetMonthResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result : TagPostResult
+    val result : TagMonthGetDTO
 )
-data class TagPostResult (
+
+data class TagMonthGetDTO (
+    val tagResponseDtos : List<TagMonthGetResult>
+)
+
+data class TagMonthGetResult(
     val id: Long,
     var tagTime: String,
     var date: String,
