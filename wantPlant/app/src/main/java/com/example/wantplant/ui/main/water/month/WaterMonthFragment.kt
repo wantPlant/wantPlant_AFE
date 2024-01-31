@@ -83,14 +83,14 @@ class WaterMonthFragment : Fragment() {
                     var tagMap = HashMap<String, MutableList<TagMonthGetResult>>()
                     if (tagList != null) {
                         for(tagData: TagMonthGetResult in tagList){ // for each
-                            if (tagMap.containsKey(tagData.date.toString())) {
+                            if (tagMap.containsKey(tagData.date)) {
                                 // 이미 해당 날짜에 대한 리스트가 존재한다면, 리스트에 추가
-                                tagMap[tagData.date.toString()]?.add(tagData)
+                                tagMap[tagData.date]?.add(tagData)
                             } else {
                                 // 해당 날짜에 대한 리스트가 존재하지 않는다면, 새로운 리스트 생성 후 추가
                                 val newList = mutableListOf<TagMonthGetResult>()
                                 newList.add(tagData)
-                                tagMap[tagData.date.toString()] = newList
+                                tagMap[tagData.date] = newList
                             }
                         }
                     }
@@ -128,7 +128,7 @@ class WaterMonthFragment : Fragment() {
         var dayOfWeek = firstDay.dayOfWeek.value
 
         for (i in 1..42) {
-            if (dayOfWeek == 7) {//그 달의 첫날이 일요일일때 작동: 한칸 아래줄부터 날짜 표시되는 현상 막기위해
+            if (dayOfWeek == 7) { // 그 달의 첫날이 일요일 일 때 작동: 한칸 아래 줄부터 날짜 표시 되는 현상 막기 위해
                 if (i > lastDay) {
                     break
                 }

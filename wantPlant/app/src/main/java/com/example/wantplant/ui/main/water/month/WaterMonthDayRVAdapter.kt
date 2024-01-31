@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.water.month
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import java.time.format.DateTimeFormatter
 
 class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): RecyclerView.Adapter<WaterMonthDayRVAdapter.ViewHolder>(){
 
+    private var selectedPosition: Int = RecyclerView.NO_POSITION
+
     inner class ViewHolder(val binding: ItemWaterMonthDayBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +23,7 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val context = holder.binding.root.context
 
@@ -29,10 +32,22 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
             val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             Log.d("날짜", dayList[position].date!!.format(formattedDate))
 
+            notifyItemChanged(selectedPosition)
+
             // 채운 하트 표시
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
+
+            selectedPosition = position
+
+            // 태그 추가 dialog 띄우기
             val waterMonthDialog = WaterMonthDialog(context, dayList[position].date!!.format(formattedDate))
             waterMonthDialog.show()
+        }
+
+        if (selectedPosition == position) {
+            holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
+        } else {
+            holder.binding.waterMonthDaySelectIv.visibility = View.GONE
         }
 
         // 이번 달 날짜인 것 체크
