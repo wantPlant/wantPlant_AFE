@@ -53,7 +53,7 @@ class GardenFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens(page = 1, pageSize = 10)
+        val call = api.getGardens(page = 2, pageSize = 3)
         call.enqueue(object : Callback<GardenResponse> {
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                 if (response.isSuccessful) {
