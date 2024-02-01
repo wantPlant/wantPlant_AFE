@@ -23,7 +23,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class WaterMonthFragment : Fragment() {
+class WaterMonthFragment : Fragment(), WaterMonthInterface {
     private lateinit var binding: FragmentWaterMonthBinding
     private lateinit var standardDate: LocalDate
 
@@ -41,6 +41,11 @@ class WaterMonthFragment : Fragment() {
                 .replace(R.id.main_frm, WaterWeekFragment()).addToBackStack(tag)
                 .commitAllowingStateLoss()
         }
+
+//        binding.waterMonthYearTv.setOnClickListener {
+//            val waterMonthDialog = WaterMonthDialog(requireContext(), "2024-01-25", this@WaterMonthFragment)
+//            waterMonthDialog.show()
+//        }
 
         monthCalendar()
 
@@ -105,10 +110,23 @@ class WaterMonthFragment : Fragment() {
                         layoutManager = dayListManager
                         adapter = dayListAdapter
                     }
+
+
+                    dayListAdapter.setDayClick(object: WaterMonthDayRVAdapter.ItemClickListener{
+                        // 일 클릭 시 dialog
+                        override fun onDayClick(formattedTagDate: String) {
+                            val waterMonthDialog = WaterMonthDialog(requireContext(), formattedTagDate, this@WaterMonthFragment)
+                            waterMonthDialog.show()
+                        }
+
+                        // 태그 클릭 시 dialog
+                        override fun onTagClick2(tag: TagMonthGetResult) {
+                            val waterMonthPatchDialog = WaterMonthPatchDialog(requireContext(), tag, this@WaterMonthFragment)
+                            waterMonthPatchDialog.show()
+                        }
+                    })
                 }
-
             }
-
             override fun onFailure(call: Call<TagGetMonthResponse>, t: Throwable) {
                 Log.e("TagGet/Failure", t.message.toString())
             }
@@ -175,5 +193,15 @@ class WaterMonthFragment : Fragment() {
     private fun monthFromDate(date: LocalDate?): String? {
         var formatter = DateTimeFormatter.ofPattern("MM")
         return date?.format(formatter)
+    }
+
+    override fun clickDialogComplete() {
+        Log.d("TagAddInterface", "Success")
+        monthCalendar()
+    }
+
+    override fun clickDialogPatchComplete() {
+        Log.d("TagPatchInterface", "Success")
+        monthCalendar()
     }
 }

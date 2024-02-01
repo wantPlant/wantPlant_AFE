@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.data.local.MonthDate
+import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.databinding.ItemWaterMonthDayBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -17,6 +18,17 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
     private var selectedPosition: Int = RecyclerView.NO_POSITION
 
     inner class ViewHolder(val binding: ItemWaterMonthDayBinding): RecyclerView.ViewHolder(binding.root)
+
+    interface ItemClickListener {
+        fun onDayClick(formattedTagDate: String)
+        fun onTagClick2(tag: TagMonthGetResult)
+    }
+
+    private lateinit var mItemClickListener: ItemClickListener
+
+    fun setDayClick(itemClickListener: ItemClickListener) {
+        mItemClickListener = itemClickListener
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemWaterMonthDayBinding = ItemWaterMonthDayBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -28,9 +40,12 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
         val context = holder.binding.root.context
 
         // 해당 날을 클릭 했을 때
-        holder.binding.itemDayLayout.setOnClickListener {
+        holder.binding.waterMonthDayCl.setOnClickListener {
+
             val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             Log.d("날짜", dayList[position].date!!.format(formattedDate))
+
+            mItemClickListener.onDayClick(dayList[position].date!!.format(formattedDate))
 
             notifyItemChanged(selectedPosition)
 
@@ -38,16 +53,12 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
 
             selectedPosition = position
-
-            // 태그 추가 dialog 띄우기
-            val waterMonthDialog = WaterMonthDialog(context, dayList[position].date!!.format(formattedDate))
-            waterMonthDialog.show()
         }
 
         if (selectedPosition == position) {
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
         } else {
-            holder.binding.waterMonthDaySelectIv.visibility = View.GONE
+            holder.binding.waterMonthDaySelectIv.visibility = View.INVISIBLE
         }
 
         // 이번 달 날짜인 것 체크
@@ -59,6 +70,12 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
                 layoutManager = tagListManager
                 adapter = tagListAdapter
             }
+            tagListAdapter.setTagClick(object: WaterMonthDayTagRVAdapter.TagClickListener{
+                override fun onTagClick(tag: TagMonthGetResult) {
+                    mItemClickListener.onTagClick2(tag)
+                }
+
+            })
         }
         else {
             holder.binding.itemDayText.text = ""
