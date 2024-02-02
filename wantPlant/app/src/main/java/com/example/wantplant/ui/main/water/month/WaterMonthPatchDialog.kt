@@ -96,9 +96,28 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
         binding.dialogWaterMonthDateLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.dialogWaterMonthDateTv.text = "${year}-${month+1}-${dayOfMonth}"
-                tagDate = binding.dialogWaterMonthDateTv.toString()
+                if (month in 1..9) {
+                    if (dayOfMonth in 1..9) {
+                        binding.dialogWaterMonthDateTv.text = "${year}-0${month+1}-0${dayOfMonth}"
+                        tagDate = "${year}-0${month+1}-0${dayOfMonth}"
+                    }
+                    else {
+                        binding.dialogWaterMonthDateTv.text = "${year}-0${month+1}-${dayOfMonth}"
+                        tagDate = "${year}-0${month+1}-${dayOfMonth}"
+                    }
+                }
+                else {
+                    if (dayOfMonth in 1..9) {
+                        binding.dialogWaterMonthDateTv.text = "${year}-${month+1}-0${dayOfMonth}"
+                        tagDate = "${year}-${month+1}-0${dayOfMonth}"
+                    }
+                    else {
+                        binding.dialogWaterMonthDateTv.text = "${year}-${month+1}-${dayOfMonth}"
+                        tagDate = "${year}-${month+1}-${dayOfMonth}"
+                    }
+                }
             }
+
             DatePickerDialog(context, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
