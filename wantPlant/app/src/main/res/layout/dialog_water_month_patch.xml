@@ -172,7 +172,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/dialog_water_month_cancel_tv"
+        android:id="@+id/dialog_water_month_delete_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_garden_month_delete"

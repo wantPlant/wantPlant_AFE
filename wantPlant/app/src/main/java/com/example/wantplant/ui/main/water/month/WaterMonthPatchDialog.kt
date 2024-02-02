@@ -12,6 +12,7 @@ import com.example.wantplant.R
 import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
 import com.example.wantplant.data.remote.tag.request.TagPatchRequest
 import com.example.wantplant.data.remote.tag.response.TagColor
+import com.example.wantplant.data.remote.tag.response.TagDeleteResponse
 import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.data.remote.tag.response.TagPatchResponse
 import com.example.wantplant.databinding.DialogWaterMonthPatchBinding
@@ -106,7 +107,15 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
 
             patchTagAPI(TagPatchRequest(tag.id, color, tagName, tagTime, tagDate))
 
-            this.waterMonthInterface?.clickDialogPatchComplete()
+            this.waterMonthInterface?.clickDialogPatch()
+
+            dismiss()
+        }
+
+        binding.dialogWaterMonthDeleteTv.setOnClickListener {
+            deleteTagAPI(tag.id)
+
+            this.waterMonthInterface?.clickDialogDelete()
 
             dismiss()
         }
@@ -128,6 +137,23 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
             }
 
             override fun onFailure(call: Call<TagPatchResponse>, t: Throwable) {
+                Log.d("TagPatch/Failure", t.message.toString())
+            }
+
+        })
+    }
+
+    // 태그 삭제 api 연동
+    private fun deleteTagAPI(tagId: Long) {
+        val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
+
+        tagService.deleteTag(tagId = tagId).enqueue(object : Callback<TagDeleteResponse>{
+            override fun onResponse(call: Call<TagDeleteResponse>, response: Response<TagDeleteResponse>) {
+                Log.d("TagDelete/ServerSuccess", response.toString())
+                Log.d("TagDeleteRequest", tagId.toString())
+            }
+
+            override fun onFailure(call: Call<TagDeleteResponse>, t: Throwable) {
                 Log.d("TagPatch/Failure", t.message.toString())
             }
 

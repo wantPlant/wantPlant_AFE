@@ -42,11 +42,6 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
                 .commitAllowingStateLoss()
         }
 
-//        binding.waterMonthYearTv.setOnClickListener {
-//            val waterMonthDialog = WaterMonthDialog(requireContext(), "2024-01-25", this@WaterMonthFragment)
-//            waterMonthDialog.show()
-//        }
-
         monthCalendar()
 
         return binding.root
@@ -71,6 +66,7 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
 
     }
 
+    // 월별 태그 api 연동
     private fun getMonthTagAPI(standardDate: LocalDate) {
 
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
@@ -200,8 +196,14 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
         monthCalendar()
     }
 
-    override fun clickDialogPatchComplete() {
+    override fun clickDialogPatch() {
         Log.d("TagPatchInterface", "Success")
         monthCalendar()
     }
+
+    override fun clickDialogDelete() {
+        Log.d("TagDeleteInterface", "Success")
+        monthCalendar()
+    }
+
 }

@@ -2,7 +2,9 @@ package com.example.wantplant.ui.main.water.month
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.remote.tag.response.TagColor
 import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.databinding.ItemMonthDayTagBinding
 
@@ -35,6 +37,21 @@ class WaterMonthDayTagRVAdapter(private val tag: List<TagMonthGetResult>?): Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+
+        var setColor: String
+
+        when(tag?.get(position)?.tagColor) {
+            TagColor.COLOR_1 -> setColor = "#B8CDBF"
+            TagColor.COLOR_2 -> setColor = "#A9B388"
+            TagColor.COLOR_3 -> setColor = "#739073"
+            TagColor.COLOR_4 -> setColor = "#4F6F53"
+            TagColor.COLOR_5 -> setColor = "#EDE3CE"
+            TagColor.COLOR_6 -> setColor = "#D4C29E"
+            TagColor.COLOR_7 -> setColor = "#AD9972"
+            else -> {setColor = "#7A6740"}
+        }
+
+        holder.binding.itemDayTagTodoLayout.setBackgroundColor(setColor.toColorInt())
 
         holder.binding.itemMonthDayTagTodo.setOnClickListener {
             mTagClickListener.onTagClick(tag?.get(position)!!)
