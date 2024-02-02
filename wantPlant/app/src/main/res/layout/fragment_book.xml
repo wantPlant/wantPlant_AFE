@@ -267,7 +267,7 @@
             android:overScrollMode="never"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_flowerpot" />
+            tools:listitem="@layout/item_book_flowerpot" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
