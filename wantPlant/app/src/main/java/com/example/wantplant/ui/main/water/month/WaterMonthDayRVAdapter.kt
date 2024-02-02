@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.data.local.MonthDate
@@ -42,17 +43,23 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
         // 해당 날을 클릭 했을 때
         holder.binding.waterMonthDayCl.setOnClickListener {
 
-            val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            Log.d("날짜", dayList[position].date!!.format(formattedDate))
+            if (dayList[position].tag?.size!! > 3) {
+                val waterMonthWarningDialog = WaterMonthWarningDialog(context)
+                waterMonthWarningDialog.show()
+            }
+            else {
+                val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                Log.d("날짜", dayList[position].date!!.format(formattedDate))
 
-            mItemClickListener.onDayClick(dayList[position].date!!.format(formattedDate))
-
+                mItemClickListener.onDayClick(dayList[position].date!!.format(formattedDate))
+            }
             notifyItemChanged(selectedPosition)
 
             // 채운 하트 표시
             holder.binding.waterMonthDaySelectIv.visibility = View.VISIBLE
 
             selectedPosition = position
+
         }
 
         if (selectedPosition == position) {

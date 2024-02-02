@@ -35,6 +35,7 @@
     <string name="dialog_garden_month_complete">완료</string>
     <string name="dialog_garden_month_delete">삭제</string>
     <string name="dialog_garden_month_choose">블럭 색상을 정해주세요!</string>
+    <string name="dialog_garden_month_warning">태그는 최대 4개까지 설정할 수 있습니다!</string>
     <string name="profile_welcome_user">삶을 가꾸는 하니님,\n환영해요!</string>
     <string name="profile_terms_and_conditions_of_use">이용약관</string>
     <string name="profile_personal_information_processing_policy">개인정보처리방침</string>
