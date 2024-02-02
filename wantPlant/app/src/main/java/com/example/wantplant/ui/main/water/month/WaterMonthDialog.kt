@@ -27,11 +27,9 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
     private var color : TagColor = TagColor.COLOR_1
     private lateinit var tagTime: String
 
-//    private var waterMonthDialogInterface : WaterMonthDialogInterface? = null
     private var waterMonthInterface : WaterMonthInterface? = null
 
     init {
-//        this.waterMonthDialogInterface = waterMonthDialogInterface
         this.waterMonthInterface = waterMonthInterface
     }
 
@@ -79,24 +77,73 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
         binding.dialogWaterMonthTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:${minute}"
-                tagTime = "${hourOfDay}:${minute}"
+                when (hourOfDay) {
+                    0 -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:0${minute}"
+                                tagTime = "00:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:00"
+                                tagTime = "00:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:${minute}"
+                                tagTime = "00:${minute}"
+                            }
+                        }
+                    }
+                    in 1..9 -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:0${minute}"
+                                tagTime = "0${hourOfDay}:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:00"
+                                tagTime = "0${hourOfDay}:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:${minute}"
+                                tagTime = "0${hourOfDay}:${minute}"
+                            }
+                        }
+                    }
+                    else -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:0${minute}"
+                                tagTime = "${hourOfDay}:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:00"
+                                tagTime = "${hourOfDay}:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:${minute}"
+                                tagTime = "${hourOfDay}:${minute}"
+                            }
+                        }
+                    }
+                }
             }
             TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
         binding.dialogWaterMonthCancelTv.setOnClickListener {
-//            this.waterMonthDialogInterface?.onCancelClicked()
 
             dismiss()
         }
 
         binding.dialogWaterMonthCompleteTv.setOnClickListener {
             var tagName = binding.dialogWaterMonthTodoEt.text.toString()
-            var time = binding.dialogWaterMonthTimeTv.text.toString()
-//            var tagTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"))
-
-//            this.waterMonthDialogInterface?.onCompleteClicked()
 
             Log.d("colorName", color.toString())
             Log.d("tagName", tagName)
@@ -114,7 +161,7 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
     // 태그 추가 api 연동
     private fun postTagAPI(tagPostRequest: TagPostRequest) {
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
-        Log.d("request", tagPostRequest.toString())
+        Log.d("TagPostRequest", tagPostRequest.toString())
 
         tagService.postTag(tagPostRequest).enqueue(object: Callback<TagPostResponse>
         {

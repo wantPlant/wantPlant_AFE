@@ -87,10 +87,64 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
         binding.dialogWaterMonthTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:${minute}"
-                tagTime = "${hourOfDay}:${minute}"
+                when (hourOfDay) {
+                    0 -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:0${minute}"
+                                tagTime = "00:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:00"
+                                tagTime = "00:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "00:${minute}"
+                                tagTime = "00:${minute}"
+                            }
+                        }
+                    }
+                    in 1..9 -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:0${minute}"
+                                tagTime = "0${hourOfDay}:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:00"
+                                tagTime = "0${hourOfDay}:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "0${hourOfDay}:${minute}"
+                                tagTime = "0${hourOfDay}:${minute}"
+                            }
+                        }
+                    }
+                    else -> {
+                        when (minute) {
+                            in 1..9 -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:0${minute}"
+                                tagTime = "${hourOfDay}:0${minute}"
+                            }
+
+                            0 -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:00"
+                                tagTime = "${hourOfDay}:00"
+                            }
+
+                            else -> {
+                                binding.dialogWaterMonthTimeTv.text = "${hourOfDay}:${minute}"
+                                tagTime = "${hourOfDay}:${minute}"
+                            }
+                        }
+                    }
+                }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true).show()
         }
 
         binding.dialogWaterMonthDateLl.setOnClickListener {

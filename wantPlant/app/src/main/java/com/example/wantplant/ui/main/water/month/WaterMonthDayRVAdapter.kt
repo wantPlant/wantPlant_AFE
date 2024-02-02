@@ -43,11 +43,11 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
         // 해당 날을 클릭 했을 때
         holder.binding.waterMonthDayCl.setOnClickListener {
 
-            if (dayList[position].tag?.size!! > 3) {
+            if (dayList[position].tag?.size ?:0 > 3) {
                 val waterMonthWarningDialog = WaterMonthWarningDialog(context)
                 waterMonthWarningDialog.show()
             }
-            else {
+            else if(dayList[position].tag?.size == null || dayList[position].tag?.size!! <= 3){
                 val formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 Log.d("날짜", dayList[position].date!!.format(formattedDate))
 
