@@ -6,15 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.wantplant.R
+import com.example.wantplant.data.local.MonthDate
+import com.example.wantplant.data.local.WeekDate
+import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.databinding.FragmentWaterWeekBinding
 import com.example.wantplant.ui.main.MainActivity
+import com.example.wantplant.ui.main.water.month.WaterMonthDayRVAdapter
 import com.example.wantplant.ui.main.water.month.WaterMonthFragment
+import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
-class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVAdapter.onDateClickedListener {
+class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface {
     private lateinit var binding : FragmentWaterWeekBinding
+    private lateinit var standardDate: LocalDate
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,20 +32,18 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
     ): View? {
         binding = FragmentWaterWeekBinding.inflate(layoutInflater)
 
-        val weekListManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val weekListAdapter = WaterWeekRVAdapter(this)
-        
-        binding.waterWeekCalendarRv.apply {
-            layoutManager = weekListManager
-            adapter = weekListAdapter
+        standardDate = LocalDate.now()
 
-            scrollToPosition(Int.MAX_VALUE/2)
+        weekCalendar()
+
+        val dayList = dayInMonthArray()
+        Log.d("dayList", dayList.toString())
+        val dayListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val dayListAdapter = WaterWeekDayRVAdapter(dayList)
+        binding.waterWeekDayListRv.apply {
+            layoutManager = dayListManager
+            adapter = dayListAdapter
         }
-
-        binding.waterWeekCalendarRv.suppressLayout(true)
-
-        val snap = PagerSnapHelper()
-        snap.attachToRecyclerView(binding.waterWeekCalendarRv)
 
         onClickListener()
 
@@ -47,6 +54,74 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
         initGardenRecyclerView()
 
         return binding.root
+    }
+
+    private fun weekCalendar() {
+        binding.waterWeekYearTv.text = "${yearFromDate(standardDate)}년 ${monthFromDate(standardDate)}월"
+
+        binding.waterWeekBackIv.setOnClickListener {
+            standardDate = standardDate.minusMonths(1)
+            binding.waterWeekYearTv.text = "${yearFromDate(standardDate)}년 ${monthFromDate(standardDate)}월"
+//            getMonthTagAPI(standardDate)
+            val dayList = dayInMonthArray()
+            Log.d("dayList", dayList.toString())
+            val dayListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val dayListAdapter = WaterWeekDayRVAdapter(dayList)
+            binding.waterWeekDayListRv.apply {
+                layoutManager = dayListManager
+                adapter = dayListAdapter
+            }
+        }
+
+        binding.waterWeekForwardIv.setOnClickListener {
+            standardDate = standardDate.plusMonths(1)
+            binding.waterWeekYearTv.text = "${yearFromDate(standardDate)}년 ${monthFromDate(standardDate)}월"
+//            getMonthTagAPI(standardDate)
+            val dayList = dayInMonthArray()
+            Log.d("dayList", dayList.toString())
+            val dayListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val dayListAdapter = WaterWeekDayRVAdapter(dayList)
+            binding.waterWeekDayListRv.apply {
+                layoutManager = dayListManager
+                adapter = dayListAdapter
+            }
+        }
+    }
+
+    private fun dayInMonthArray(): MutableList<WeekDate> {
+        var yearMonth = YearMonth.from(standardDate)
+        val dayList = ArrayList<WeekDate>()
+
+        // 해당 월의 마지막 날짜 가져오기(결과: 1월이면 31)
+        var lastDay = yearMonth.lengthOfMonth()
+        // 해당 월의 첫번째 날 가져오기(결과: 2023-01-01)
+        var firstDay = standardDate.withDayOfMonth(1)
+        // 첫 번째날 요일 가져오기(결과: 월 ~일이 1~7에 대응되어 나타남)
+        var dayOfWeek = firstDay.dayOfWeek.value
+
+        for (i in 1..42) {
+            if (i > lastDay) {
+                break
+            }
+            else {
+                dayList.add(
+                    WeekDate(LocalDate.of(standardDate.year, standardDate.monthValue, i))
+                )
+            }
+        }
+        return dayList
+    }
+
+    // YYYY 형식으로 포맷
+    private fun yearFromDate(date: LocalDate?): String? {
+        var formatter = DateTimeFormatter.ofPattern("yyyy")
+        return date?.format(formatter)
+    }
+
+    // MM 형식으로 포맷
+    private fun monthFromDate(date: LocalDate?): String? {
+        var formatter = DateTimeFormatter.ofPattern("MM")
+        return date?.format(formatter)
     }
 
     private fun onClickListener() {
@@ -93,11 +168,6 @@ class WaterWeekFragment : Fragment(), WaterWeekGoalDialogInterface, WaterWeekRVA
 
     override fun onCompleteClicked() {
 
-    }
-
-    override fun onDateClicked(formattedDate: String) {
-        Log.d("날짜가 여기까지 왔을까요....", "Selected Date: $formattedDate")
-        showDialog(formattedDate)
     }
 
 }
