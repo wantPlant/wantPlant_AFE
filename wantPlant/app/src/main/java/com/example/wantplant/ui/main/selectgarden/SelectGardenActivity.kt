@@ -12,19 +12,15 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.example.wantplant.R
-import com.example.wantplant.databinding.ActivityLoginBinding
-import com.example.wantplant.databinding.ActivityMainBinding
+import com.example.wantplant.data.local.GardenData
+import com.example.wantplant.data.local.GardenResponse
+import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
 import com.example.wantplant.databinding.ActivitySelectGardenBinding
-import com.example.wantplant.databinding.FragmentLandingBinding
 import com.example.wantplant.ui.main.MainActivity
-import com.example.wantplant.ui.main.book.BookFragment
-import com.example.wantplant.ui.main.book.LandingFragment
-import com.example.wantplant.ui.main.book.LandingPageFragment
-import com.example.wantplant.ui.main.garden.GardenFragment
-import com.example.wantplant.ui.main.login.LoginActivity
-import com.example.wantplant.ui.main.profile.ProfileFragment
-import com.example.wantplant.ui.main.water.month.WaterMonthFragment
-import kotlinx.coroutines.MainScope
+import com.example.wantplant.utils.getRetrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SelectGardenActivity : AppCompatActivity() {
 
@@ -36,6 +32,12 @@ class SelectGardenActivity : AppCompatActivity() {
         binding = ActivitySelectGardenBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        // retrofit
+        val retrofit = getRetrofit()
+
+        val api = retrofit.create(GardenRetrofitInterfaces::class.java)
+
 
         // 뒤로 가기 버튼 누를 때
         binding.selectBtnBackIv.setOnClickListener {
@@ -106,6 +108,41 @@ class SelectGardenActivity : AppCompatActivity() {
         // 정원 만들기 버튼 누를 때
         binding.selectMakegardenBtn.setOnClickListener {
             Log.d("click", "click_make_garden")
+
+            // 사용자가 선택한 카테고리의 이름을 가져옵니다.
+            // 카테고리 매핑을 위한 HashMap
+            val categoryMap = hashMapOf("취미" to "HOBBY", "공부" to "STUDY", "운동" to "EXERCISE") // 이런 식으로 필요한 매핑을 추가해주세요.
+
+            // 사용자가 선택한 카테고리의 이름을 가져옵니다.
+            val selectedCategoryNameInKorean = findViewById<TextView>(selectedTopicId!!).text.toString()
+
+            // 한글 카테고리 이름을 영문으로 변환합니다.
+            val selectedCategoryName = categoryMap[selectedCategoryNameInKorean]
+
+            val gardenData = GardenData(
+                name = editTextTitle.text.toString(),
+                description = editTextExplain.text.toString(),
+                category = selectedCategoryName.toString()
+            )
+
+            val call = api.postData(gardenData)
+            call.enqueue(object : Callback<GardenResponse> {
+                override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
+                    if (response.isSuccessful) {
+                        // 응답 성공 시의 처리를 작성합니다.
+                        Log.d("Retrofit 정원생성", "성공: ${response.body()?.isSuccess} ${selectedCategoryName}")
+                    } else {
+                        // 응답 실패 시의 처리를 작성합니다.
+                        Log.d("Retrofit 정원생성", "실패: ${response.errorBody()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<GardenResponse>, t: Throwable) {
+                    // 요청 실패 시의 처리를 작성합니다.
+                    Log.d("Retrofit", "실패: $t")
+                }
+            })
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
