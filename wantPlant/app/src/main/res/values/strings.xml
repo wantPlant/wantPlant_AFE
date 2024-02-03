@@ -67,4 +67,6 @@
     <string name="whole_explain_garden_label">나는 공부왕이 될거야 두고봐라</string>
     <string name="item_flowerpot_plant_name">3-1 과탑 예정이요 ㅋ</string>
     <string name="item_flowerpot_period">2024.01.01 ~ 2024.02.01</string>
+    <string name="item_book_garden_name">정원 이름</string>
+    <string name="item_book_pot_name">화분 이름</string>
 </resources>

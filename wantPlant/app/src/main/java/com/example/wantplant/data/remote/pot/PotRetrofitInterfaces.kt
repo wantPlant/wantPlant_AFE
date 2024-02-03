@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PotRetrofitInterfaces {
-    @GET("api/pots")
+    @GET("/api/pots")
     fun getPots(@Query("gardenId") gardenId: String, @Query("page") page: Int): Call<PotsResult>
 }

@@ -2,9 +2,12 @@ package com.example.wantplant.ui.main.water.week
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.databinding.ItemWaterWeekGoalBinding
+import com.example.wantplant.ui.main.plant.PlantDialog
+import com.example.wantplant.ui.main.plant.PlantDialogInterface
 
 class WaterWeekGoalRVAdapter : RecyclerView.Adapter<WaterWeekGoalRVAdapter.ViewHolder>() {
     private val data = mapOf(
@@ -43,6 +46,12 @@ class WaterWeekGoalRVAdapter : RecyclerView.Adapter<WaterWeekGoalRVAdapter.ViewH
                 layoutManager = LinearLayoutManager(binding.itemGoalTodoRv.context, LinearLayoutManager.VERTICAL, false)
             }
         }
-    }
 
+        init {
+            binding.itemGoalPlusBtnIv.setOnClickListener {
+                val plantDialog = PlantDialog(it.context as AppCompatActivity, it.context as PlantDialogInterface)
+                plantDialog.show()
+            }
+        }
+    }
 }
