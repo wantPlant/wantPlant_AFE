@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.water.month
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -9,25 +10,26 @@ import android.os.Bundle
 import android.util.Log
 import com.example.wantplant.R
 import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
-import com.example.wantplant.data.remote.tag.request.TagPostRequest
+import com.example.wantplant.data.remote.tag.request.TagPatchRequest
 import com.example.wantplant.data.remote.tag.response.TagColor
-import com.example.wantplant.data.remote.tag.response.TagPostResponse
-import com.example.wantplant.databinding.DialogWaterMonthBinding
+import com.example.wantplant.data.remote.tag.response.TagDeleteResponse
+import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
+import com.example.wantplant.data.remote.tag.response.TagPatchResponse
+import com.example.wantplant.databinding.DialogWaterMonthPatchBinding
 import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class WaterMonthDialog(context: Context, private var formattedDate: String, waterMonthInterface: WaterMonthInterface) : Dialog(context) {
-    private var mBinding : DialogWaterMonthBinding? = null
+class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult, waterMonthInterface: WaterMonthInterface) : Dialog(context) {
+    private var mBinding : DialogWaterMonthPatchBinding? = null
     private val binding get() = mBinding!!
-    private var color : TagColor = TagColor.COLOR_1
+    private lateinit var color : TagColor
     private lateinit var tagTime: String
+    private lateinit var tagDate: String
 
-    private var waterMonthInterface : WaterMonthInterface? = null
+    private var waterMonthInterface: WaterMonthInterface? = null
 
     init {
         this.waterMonthInterface = waterMonthInterface
@@ -35,13 +37,21 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DialogWaterMonthBinding.inflate(layoutInflater)
+        mBinding = DialogWaterMonthPatchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.dialogWaterMonthDateTv.text = formattedDate
+        tagTime = tag.tagTime
+        tagDate = tag.date
 
+        // 클릭한 태그 정보 표시
+        binding.dialogWaterMonthTimeTv.text = tag.tagTime
+        binding.dialogWaterMonthDateTv.text = tag.date
+        binding.dialogWaterMonthTodoEt.setText(tag.tagName)
+        color = tag.tagColor
+
+        // 태그 색깔 선택
         binding.dialogWaterMonthColor1.setOnClickListener {
             color = TagColor.COLOR_1
         }
@@ -134,50 +144,92 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true).show()
         }
 
-        binding.dialogWaterMonthCancelTv.setOnClickListener {
+        binding.dialogWaterMonthDateLl.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                if (month in 1..9) {
+                    if (dayOfMonth in 1..9) {
+                        binding.dialogWaterMonthDateTv.text = "${year}-0${month+1}-0${dayOfMonth}"
+                        tagDate = "${year}-0${month+1}-0${dayOfMonth}"
+                    }
+                    else {
+                        binding.dialogWaterMonthDateTv.text = "${year}-0${month+1}-${dayOfMonth}"
+                        tagDate = "${year}-0${month+1}-${dayOfMonth}"
+                    }
+                }
+                else {
+                    if (dayOfMonth in 1..9) {
+                        binding.dialogWaterMonthDateTv.text = "${year}-${month+1}-0${dayOfMonth}"
+                        tagDate = "${year}-${month+1}-0${dayOfMonth}"
+                    }
+                    else {
+                        binding.dialogWaterMonthDateTv.text = "${year}-${month+1}-${dayOfMonth}"
+                        tagDate = "${year}-${month+1}-${dayOfMonth}"
+                    }
+                }
+            }
 
-            dismiss()
+            DatePickerDialog(context, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
         binding.dialogWaterMonthCompleteTv.setOnClickListener {
             var tagName = binding.dialogWaterMonthTodoEt.text.toString()
 
-            Log.d("colorName", color.toString())
-            Log.d("tagName", tagName)
-            Log.d("tagTime", tagTime)
-            Log.d("date", formattedDate)
+            patchTagAPI(TagPatchRequest(tag.id, color, tagName, tagTime, tagDate))
 
-            postTagAPI(TagPostRequest(color, tagName, tagTime, formattedDate))
+            this.waterMonthInterface?.clickDialogPatch()
 
-            this.waterMonthInterface?.clickDialogComplete()
+            dismiss()
+        }
+
+        binding.dialogWaterMonthDeleteTv.setOnClickListener {
+            deleteTagAPI(tag.id)
+
+            this.waterMonthInterface?.clickDialogDelete()
 
             dismiss()
         }
     }
 
-    // 태그 추가 api 연동
-    private fun postTagAPI(tagPostRequest: TagPostRequest) {
+    // 태그 수정 api 연동
+    private fun patchTagAPI(tagPatchRequest: TagPatchRequest) {
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
-        Log.d("TagPostRequest", tagPostRequest.toString())
 
-        tagService.postTag(tagPostRequest).enqueue(object: Callback<TagPostResponse>
+        tagService.patchTag(tagPatchRequest).enqueue(object: Callback<TagPatchResponse>
         {
-            override fun onResponse(call: Call<TagPostResponse>, response: Response<TagPostResponse>) {
-                Log.d("TagPost/ServerSuccess", response.toString())
-                val resp: TagPostResponse? = response.body()
-                Log.d("TagAdd", "code: ${resp?.message}")
+            override fun onResponse(call: Call<TagPatchResponse>, response: Response<TagPatchResponse>) {
+                Log.d("TagPatch/ServerSuccess", response.toString())
+                Log.d("TagPatchRequest", tagPatchRequest.toString())
+                val resp: TagPatchResponse? = response.body()
                 when(resp?.code) {
-                    "200" -> Log.d("TagAdd/Success", "TagAdd!!")
+                    "200" -> Log.d("TagPatch/Success", "TagPatch!!")
                 }
             }
 
-            override fun onFailure(call: Call<TagPostResponse>, t: Throwable) {
-                Log.d("TagAdd/Failure", t.message.toString())
+            override fun onFailure(call: Call<TagPatchResponse>, t: Throwable) {
+                Log.d("TagPatch/Failure", t.message.toString())
             }
+
         })
     }
 
+    // 태그 삭제 api 연동
+    private fun deleteTagAPI(tagId: Long) {
+        val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
+
+        tagService.deleteTag(tagId = tagId).enqueue(object : Callback<TagDeleteResponse>{
+            override fun onResponse(call: Call<TagDeleteResponse>, response: Response<TagDeleteResponse>) {
+                Log.d("TagDelete/ServerSuccess", response.toString())
+                Log.d("TagDeleteRequest", tagId.toString())
+            }
+
+            override fun onFailure(call: Call<TagDeleteResponse>, t: Throwable) {
+                Log.d("TagPatch/Failure", t.message.toString())
+            }
+
+        })
+    }
 }

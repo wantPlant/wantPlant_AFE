@@ -2,17 +2,27 @@ package com.example.wantplant.ui.main.water.month
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.remote.tag.response.TagColor
+import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.databinding.ItemMonthDayTagBinding
-import java.util.Date
 
-class WaterMonthDayTagRVAdapter: RecyclerView.Adapter<WaterMonthDayTagRVAdapter.ViewHolder>() {
+class WaterMonthDayTagRVAdapter(private val tag: List<TagMonthGetResult>?): RecyclerView.Adapter<WaterMonthDayTagRVAdapter.ViewHolder>() {
 
-    private val data = arrayOf( "할일1", "할일2", "얏호얏호얏호얏호", "할일!!" )
+    interface TagClickListener {
+        fun onTagClick(tag: TagMonthGetResult)
+    }
+
+    private lateinit var mTagClickListener: TagClickListener
+
+    fun setTagClick(tagClickListener: TagClickListener) {
+        mTagClickListener = tagClickListener
+    }
 
     inner class ViewHolder(val binding: ItemMonthDayTagBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.itemMonthDayTagTodo.text = data[position]
+            binding.itemMonthDayTagTodo.text = tag?.get(position)?.tagName.toString()
         }
     }
 
@@ -21,10 +31,31 @@ class WaterMonthDayTagRVAdapter: RecyclerView.Adapter<WaterMonthDayTagRVAdapter.
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int {
+        return tag?.size ?: 0
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+
+        var setColor: String
+
+        when(tag?.get(position)?.tagColor) {
+            TagColor.COLOR_1 -> setColor = "#B8CDBF"
+            TagColor.COLOR_2 -> setColor = "#A9B388"
+            TagColor.COLOR_3 -> setColor = "#739073"
+            TagColor.COLOR_4 -> setColor = "#4F6F53"
+            TagColor.COLOR_5 -> setColor = "#EDE3CE"
+            TagColor.COLOR_6 -> setColor = "#D4C29E"
+            TagColor.COLOR_7 -> setColor = "#AD9972"
+            else -> {setColor = "#7A6740"}
+        }
+
+        holder.binding.itemDayTagTodoLayout.setBackgroundColor(setColor.toColorInt())
+
+        holder.binding.itemMonthDayTagTodo.setOnClickListener {
+            mTagClickListener.onTagClick(tag?.get(position)!!)
+        }
     }
 
 
