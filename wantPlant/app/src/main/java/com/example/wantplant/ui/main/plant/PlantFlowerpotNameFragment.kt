@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.databinding.FragmentPlantAllBinding
 import com.example.wantplant.ui.main.book.PlantFlowerpotNameRVAdapter
 import com.example.wantplant.ui.main.water.week.WaterWeekPotTitleRVAdapter
-import com.example.wantplant.ui.main.water.week.WaterWeekRVAdapter
 
 class PlantFlowerpotNameFragment : Fragment() {
     private lateinit var binding: FragmentPlantAllBinding

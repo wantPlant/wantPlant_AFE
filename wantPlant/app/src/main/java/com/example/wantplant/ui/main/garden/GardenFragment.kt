@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.garden
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.local.PotsResult
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
+import com.example.wantplant.data.remote.garden.LoginRetrofitInterfaces
 import com.example.wantplant.data.remote.pot.PotRetrofitInterfaces
 import com.example.wantplant.databinding.FragmentGardenBinding
 import com.example.wantplant.ui.main.plant.PlantActivity
@@ -50,10 +52,14 @@ class GardenFragment : Fragment() {
             layoutManager = gardenManager
         }
 
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens(page = 1, pageSize = 100)
+        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100)
+
         call.enqueue(object : Callback<GardenResponse> {
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                 if (response.isSuccessful) {
@@ -71,14 +77,16 @@ class GardenFragment : Fragment() {
                     // 정원의 id 저장
                     gardenGardenRVAdapter.gardenIds = gardenIds
 
+                    Log.d("Retrofit 정원이름리스트호출", "받아온 정원 리스트: $gardenList")
+
                     Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
                 } else {
-                    Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()}")
+                    Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<GardenResponse>, t: Throwable) {
-                Log.d("Retrofit 정원이름리스트호출", "실패: $t")
+                Log.d("Retrofit 정원이름리스트호출 실패", "실패: $t")
             }
         })
     }
