@@ -26,6 +26,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Redirect URI: "kakao38ef3a6efa9e6384d62bbc8aafadd751://oauth"-->
                 <data
                     android:host="oauth"
                     android:scheme="@string/kakao_key" />
