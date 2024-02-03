@@ -7,15 +7,20 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/rect_tag_nonstroke_5radius">
 
     <TextView
         android:id="@+id/item_month_day_tag_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="할 일"
-        android:textSize="7dp"
+        android:textSize="8dp"
+        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
         android:maxLength="5"/>
 
