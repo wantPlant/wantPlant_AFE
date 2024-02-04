@@ -4,6 +4,7 @@ import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -23,4 +24,8 @@ interface GardenRetrofitInterfaces {
         @Path("page") page: Int,
         @Path("pageSize") pageSize: Int
     ): Call<GardenResponse>
+
+    @DELETE("/api/gardens/{gardenId}")
+    fun deleteGarden(@Header("Authorization") authorization: String, @Path("gardenId") gardenId: Int): Call<Void>
+
 }

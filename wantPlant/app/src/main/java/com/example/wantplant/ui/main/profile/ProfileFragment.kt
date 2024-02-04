@@ -15,8 +15,9 @@ import com.example.wantplant.ui.main.book.ManualFragment
 import com.example.wantplant.ui.main.login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 
+
 class ProfileFragment : Fragment() {
-    private lateinit var binding : FragmentProfileBinding
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +32,12 @@ class ProfileFragment : Fragment() {
         }
 
         binding.profileLogoutCl.setOnClickListener {
-            UserApiClient.instance.me { user, error ->
+            UserApiClient.instance.logout { error ->
                 if (error != null) {
-                    Log.e("PROFILE", "사용자 정보 요청 실패", error)
-                } else if (user != null) {
-                    Log.i("PROFILE", "사용자 정보 요청 성공" +
-                            "\n회원번호: ${user.id}" +
-                            "\n이메일: ${user.kakaoAccount?.email}" +
-                            "\n닉네임: ${user.kakaoAccount?.profile?.nickname}")
+                    Log.e("PROFILE", "로그아웃 실패. error = $error")
+                } else {
+                    Log.i("PROFILE", "로그아웃 성공. 다음부터 로그인 필요.")
+
 
                     // 로그아웃에 성공하면 LoginActivity로 이동합니다.
                     val intent = Intent(context, LoginActivity::class.java)
@@ -51,9 +50,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
             }
-
         }
-
 
         return binding.root
     }
