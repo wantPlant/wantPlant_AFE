@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.selectgarden
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.example.wantplant.R
 import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
+import com.example.wantplant.data.remote.garden.LoginRetrofitInterfaces
 import com.example.wantplant.databinding.ActivitySelectGardenBinding
 import com.example.wantplant.ui.main.MainActivity
 import com.example.wantplant.utils.getRetrofit
@@ -125,7 +127,11 @@ class SelectGardenActivity : AppCompatActivity() {
                 category = selectedCategoryName.toString()
             )
 
-            val call = api.postData(gardenData)
+            val sharedPref = getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+            val accessToken = sharedPref.getString("accessToken", "")
+
+            val call = api.postData("Bearer $accessToken", gardenData)
+
             call.enqueue(object : Callback<GardenResponse> {
                 override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                     if (response.isSuccessful) {

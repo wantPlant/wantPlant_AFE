@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.garden
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.DiffResult.NO_POSITION
@@ -9,6 +10,7 @@ import com.example.wantplant.databinding.ItemGardenTitleBinding
 class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> Unit) : RecyclerView.Adapter<GardenGardenRVAdapter.ViewHolder>() {
     var gardenTitles = listOf<String>()
     var gardenIds = listOf<String>()
+    var currentGardenId: String? = null
 
     inner class ViewHolder(val binding: ItemGardenTitleBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -19,6 +21,8 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
             itemView.setOnClickListener {
                 val position = adapterPosition.takeIf { it != NO_POSITION }
                     ?: return@setOnClickListener
+                currentGardenId = gardenIds[position] // 현재 선택된 정원의 ID를 업데이트
+                Log.d("현재 선택된 정원 이름", "${currentGardenId}")
                 onGardenClicked(gardenIds[position])
             }
         }
@@ -26,11 +30,26 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val gardenTitle = gardenTitles[position]
+        val gardenId = gardenIds[position]
+
         // 아이템 뷰에 데이터를 바인딩
-        // 예를 들어, 정원의 이름을 텍스트 뷰에 설정한다든지
+        // 정원의 이름을 텍스트 뷰에 설정
         holder.binding.itemGardenTitleTv.text = gardenTitle
+        Log.d("정원 이름", "${gardenTitle}")
     }
 
     override fun getItemCount(): Int = gardenTitles.size
+
+    fun getCurrentGardenName(): String {
+        // 'currentGardenId'가 null이 아니라면 해당 ID의 정원의 이름을 반환하고, null이라면 빈 문자열을 반환합니다.
+        return if (currentGardenId != null) {
+            // 'gardenIds'에서 'currentGardenId'와 일치하는 ID를 가진 정원의 인덱스를 찾습니다.
+            val index = gardenIds.indexOf(currentGardenId)
+            // 찾은 인덱스를 사용하여 'gardenTitles'에서 정원의 이름을 가져옵니다. 만약 찾지 못했다면 빈 문자열을 반환합니다.
+            if (index != -1) gardenTitles[index] else ""
+        } else {
+            ""
+        }
+    }
 }
 
