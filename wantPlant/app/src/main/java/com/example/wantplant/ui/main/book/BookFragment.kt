@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.book
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.data.local.CompletedPotsResult
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
+import com.example.wantplant.data.remote.garden.LoginRetrofitInterfaces
 import com.example.wantplant.data.remote.pot.PotRetrofitInterfaces
 import com.example.wantplant.databinding.FragmentBookBinding
 import com.example.wantplant.utils.getRetrofit
@@ -50,11 +52,13 @@ class BookFragment : Fragment() {
             adapter = bookGardenNameRVAdapter
             layoutManager = gardenNameManager
         }
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
 
-        val retrofit = getRetrofit() // Retrofit 객체를 얻음
-        val api = retrofit.create(GardenRetrofitInterfaces::class.java) // GardenRetrofitInterfaces 인터페이스 생성 => API
+        val retrofit = getRetrofit()
+        val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens(page = 1, pageSize = 10) // [GET] 모든 정원 조회 API
+        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100)
         call.enqueue(object : Callback<GardenResponse> { // Call 객체에 비동기적인 응답 처리 등록
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                 if (response.isSuccessful) { // 서버 응답이 성공인 경우
