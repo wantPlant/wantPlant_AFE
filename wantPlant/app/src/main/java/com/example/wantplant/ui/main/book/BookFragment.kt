@@ -104,10 +104,13 @@ class BookFragment : Fragment() {
     }
 
     private fun initFlowerpotRecyclerView(gardenId: String) {
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val call = api.getCompletedPots(gardenId) // 정원 당 화분 리스트 조회
+        val call = api.getCompletedPots("Bearer $accessToken", gardenId) // 정원 당 화분 리스트 조회
         call.enqueue(object : Callback<CompletedPotsResult> {
             override fun onResponse(call: Call<CompletedPotsResult>, response: Response<CompletedPotsResult>) {
                 if (response.isSuccessful) {
@@ -118,7 +121,7 @@ class BookFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots(gardenId)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots("Bearer $accessToken", gardenId)}")
                 } else {
                     // 응답 실패 시의 처리
                 }

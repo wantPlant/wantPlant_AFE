@@ -125,11 +125,13 @@ class GardenFragment : Fragment() {
                     Log.d("Retrofit 화분", "성공 ${api.getPots(gardenId, 1)}")
                 } else {
                     // 응답 실패 시의 처리를 작성합니다.
+                    Log.d("Retrofit 화분", "실패 ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<PotsResult>, t: Throwable) {
                 // 요청 실패 시의 처리를 작성합니다.
+                Log.e("Retrofit 화분", "요청 실패: ${t.message}")
             }
         })
     }

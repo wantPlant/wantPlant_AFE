@@ -4,6 +4,7 @@ import com.example.wantplant.data.local.PotsResult
 import com.example.wantplant.data.local.CompletedPotsResult
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface PotRetrofitInterfaces {
@@ -11,5 +12,5 @@ interface PotRetrofitInterfaces {
     fun getPots(@Query("gardenId") gardenId: String, @Query("page") page: Int): Call<PotsResult>
 
     @GET("/api/pots/completed/app")
-    fun getCompletedPots(@Query("gardenId") gardenId: String): Call<CompletedPotsResult>
+    fun getCompletedPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: String): Call<CompletedPotsResult>
 }
