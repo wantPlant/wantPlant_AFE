@@ -64,6 +64,7 @@ class GardenFragment : Fragment() {
 
         val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
         val accessToken = sharedPref?.getString("accessToken", "")
+        Log.d("Retrofit 정원이름리스트호출", "사용된 액세스 토큰: Bearer $accessToken")
 
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
@@ -72,20 +73,18 @@ class GardenFragment : Fragment() {
 
         call.enqueue(object : Callback<GardenResponse> {
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
+                Log.d("Retrofit 정원이름리스트호출", "응답 코드: ${response.code()}, 응답 메시지: ${response.message()}, 응답 본문: ${response.body()}")
+
                 if (response.isSuccessful) {
                     // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
-                    val gardenList = response.body()?.result?.gardenList?.sortedBy { it.gardenId } ?: emptyList()
+                    val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
 
                     // 정렬된 리스트에서 각 정원의 이름을 가져옴
                     val gardenNames = gardenList.map { it.name }
                     val gardenIds = gardenList.map { it.gardenId.toString() }
 
-                    // 정원 이름 설정
-                    gardenGardenRVAdapter.gardenTitles = gardenNames
-                    gardenGardenRVAdapter.notifyDataSetChanged()
-
-                    // 정원의 id 저장
-                    gardenGardenRVAdapter.gardenIds = gardenIds
+                    // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
+                    gardenGardenRVAdapter.setData(gardenNames, gardenIds)
 
                     // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
                     if (gardenIds.isNotEmpty()) {
@@ -110,10 +109,14 @@ class GardenFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val str = gardenId
-        val num = str.toInt()
+        val num = gardenId.toIntOrNull()
 
-        val call = api.getPots(num, 1)
+        if (num == null) {
+            Log.e("GardenFragment", "gardenId가 정수로 변환할 수 없습니다: $gardenId")
+            return
+        }
+
+        val call = api.getPots("Bearer $accessToken", num, 1)
         call.enqueue(object : Callback<PotsResult> {
             override fun onResponse(call: Call<PotsResult>, response: Response<PotsResult>) {
                 if (response.isSuccessful) {
@@ -125,7 +128,7 @@ class GardenFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getPots(num, 1)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getPots("Bearer $accessToken", num, 1)}")
                 } else {
                     // 응답 실패 시의 처리를 작성합니다.
                     Log.d("Retrofit 화분", "실패 ${response.code()}")

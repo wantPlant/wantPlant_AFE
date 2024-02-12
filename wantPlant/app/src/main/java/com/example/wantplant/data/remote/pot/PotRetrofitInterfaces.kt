@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface PotRetrofitInterfaces {
     @GET("/api/pots")
-    fun getPots(@Query("gardenId") gardenId: Int, @Query("page") page: Int): Call<PotsResult>
+    fun getPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: Int, @Query("page") page: Int): Call<PotsResult>
 
     @GET("/api/pots/completed/app")
     fun getCompletedPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: String): Call<CompletedPotsResult>

@@ -1,11 +1,17 @@
 package com.example.wantplant.ui.main
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.wantplant.R
 import com.example.wantplant.databinding.ActivityMainBinding
 import com.example.wantplant.ui.main.book.BookFragment
 import com.example.wantplant.ui.main.garden.GardenFragment
+import com.example.wantplant.ui.main.login.LoginActivity
 import com.example.wantplant.ui.main.profile.ProfileFragment
 import com.example.wantplant.ui.main.water.month.WaterMonthFragment
 
@@ -16,11 +22,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        // 로그인 상태 확인
+        val sharedPref = getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref.getString("accessToken", null)
+        if (accessToken == null) {
+            // 로그인 되지 않은 상태, LoginActivity로 이동
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            finish()
+            return
+        }
 
-        initBottomNavigation()
+        try {
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            initBottomNavigation()
+            setContentView(binding.root)
 
-        setContentView(binding.root)
+        } catch (e: Exception) {
+            Log.e("메인액티비티", "MainActivity 초기화 중 예외 발생: ${e.message}")
+            AlertDialog.Builder(this)
+                .setTitle("오류 발생")
+                .setMessage("앱을 다시 시작해 주세요.")
+                .setPositiveButton("확인") { _, _ ->
+                    finish()
+                }
+                .show()
+        }
     }
 
     // 바텀 네비게이션 구현
@@ -64,4 +91,19 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 로그인 상태 확인
+        val sharedPref = getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref.getString("accessToken", null)
+        if (accessToken == null) {
+            // 로그인 되지 않은 상태, LoginActivity로 이동
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            finish()
+        }
+    }
+
 }
