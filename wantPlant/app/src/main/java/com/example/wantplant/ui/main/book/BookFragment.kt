@@ -58,7 +58,7 @@ class BookFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100)
+        val call = api.getGardens("Bearer $accessToken")
         call.enqueue(object : Callback<GardenResponse> { // Call 객체에 비동기적인 응답 처리 등록
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                 if (response.isSuccessful) { // 서버 응답이 성공인 경우

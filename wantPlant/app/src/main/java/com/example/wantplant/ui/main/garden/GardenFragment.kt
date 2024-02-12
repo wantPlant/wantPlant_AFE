@@ -68,7 +68,7 @@ class GardenFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100)
+        val call = api.getGardens("Bearer $accessToken")
 
         call.enqueue(object : Callback<GardenResponse> {
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
@@ -110,7 +110,10 @@ class GardenFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val call = api.getPots(gardenId, 1)
+        val str = gardenId
+        val num = str.toInt()
+
+        val call = api.getPots(num, 1)
         call.enqueue(object : Callback<PotsResult> {
             override fun onResponse(call: Call<PotsResult>, response: Response<PotsResult>) {
                 if (response.isSuccessful) {
@@ -122,7 +125,7 @@ class GardenFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getPots(gardenId, 1)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getPots(num, 1)}")
                 } else {
                     // 응답 실패 시의 처리를 작성합니다.
                     Log.d("Retrofit 화분", "실패 ${response.code()}")
