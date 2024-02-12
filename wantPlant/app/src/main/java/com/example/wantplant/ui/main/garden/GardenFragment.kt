@@ -79,21 +79,27 @@ class GardenFragment : Fragment() {
                     // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
                     val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
 
-                    // 정렬된 리스트에서 각 정원의 이름을 가져옴
-                    val gardenNames = gardenList.map { it.name }
-                    val gardenIds = gardenList.map { it.gardenId.toString() }
+                    if (gardenList.isEmpty()) {
+                        // 정원 리스트가 비어있을 경우
+                        gardenGardenRVAdapter.setData(listOf("정원만들기"), listOf("0"))
+                        Log.d("Retrofit 정원이름리스트호출", "리스트 비었음: ${listOf("정원만들기")}")
+                    } else {
+                        // 정원 리스트가 비어있지 않을 경우
+                        // 정렬된 리스트에서 각 정원의 이름을 가져옴
+                        val gardenNames = gardenList.map { it.name }
+                        val gardenIds = gardenList.map { it.gardenId.toString() }
 
-                    // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
-                    gardenGardenRVAdapter.setData(gardenNames, gardenIds)
+                        // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
+                        gardenGardenRVAdapter.setData(gardenNames, gardenIds)
 
-                    // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
-                    if (gardenIds.isNotEmpty()) {
+                        // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
                         gardenGardenRVAdapter.currentGardenId = gardenIds[0]
+
+                        Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
                     }
 
                     Log.d("Retrofit 정원이름리스트호출", "받아온 정원 리스트: $gardenList")
 
-                    Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
                 } else {
                     Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()?.string()}")
                 }

@@ -36,15 +36,20 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
         // 정원의 이름을 텍스트 뷰에 설정
         holder.binding.itemGardenTitleTv.text = gardenTitle
         Log.d("정원 이름", "${gardenTitle}")
+        Log.d("Retrofit 정원 이름", "Position: $position, Garden Title: $gardenTitle, Garden ID: $gardenId")
+
     }
 
     override fun getItemCount(): Int {
-        return minOf(gardenTitles.size, gardenIds.size)
+        val count = minOf(gardenTitles.size, gardenIds.size)
+        Log.d("Retrofit 정원 이름", "Item Count: $count")
+        return count
     }
 
     fun setData(gardenTitles: List<String>, gardenIds: List<String>) {
         this.gardenTitles = gardenTitles
         this.gardenIds = gardenIds
+        Log.d("Retrofit 정원 이름", "setData called with gardenTitles: $gardenTitles, gardenIds: $gardenIds")
         notifyDataSetChanged()  // 데이터가 변경되었음을 알림
     }
 
