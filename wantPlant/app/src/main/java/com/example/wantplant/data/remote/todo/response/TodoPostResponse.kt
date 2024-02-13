@@ -1,6 +1,6 @@
-package com.example.wantplant.data.remote.tag.response
+package com.example.wantplant.data.remote.todo.response
 
-data class TagDeleteResponse(
+data class TodoPostResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,

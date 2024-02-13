@@ -18,6 +18,16 @@ class WaterWeekDayRVAdapter(private val dayList: MutableList<WeekDate>): Recycle
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
 
+    interface DayClickListener {
+        fun onWeekDayClick(formattedDate: String)
+    }
+
+    private lateinit var mDayClickListener: DayClickListener
+
+    fun setWeekDayClick(dayClickListener: DayClickListener) {
+        mDayClickListener = dayClickListener
+    }
+
     inner class ViewHolder(val binding: ItemWaterWeekDayBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
@@ -44,6 +54,9 @@ class WaterWeekDayRVAdapter(private val dayList: MutableList<WeekDate>): Recycle
             Log.d("날짜", dayList[position].date!!.format(formattedDate))
 
             notifyItemChanged(selectedPosition)
+
+            // 날짜 전달
+            mDayClickListener.onWeekDayClick(dayList[position].date!!.format(formattedDate))
 
             // 채운 하트 표시
             holder.binding.waterWeekDaySelectIv.visibility = View.VISIBLE

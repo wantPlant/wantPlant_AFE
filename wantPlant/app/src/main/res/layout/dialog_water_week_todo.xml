@@ -6,14 +6,14 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/dialog_water_week_goal_et"
+    <TextView
+        android:id="@+id/dialog_water_week_goal_tv"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/rect_bluefill_nonstroke_15radius2"
         android:gravity="center"
-        android:hint="목표"
+        android:text="목표"
         android:textSize="14dp"
         android:textColor="@color/black"
         android:layout_marginTop="25dp"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rect_whitefill_bluestroke_15radius"
         android:paddingBottom="24dp"
-        app:layout_constraintTop_toBottomOf="@id/dialog_water_week_goal_et"
+        app:layout_constraintTop_toBottomOf="@id/dialog_water_week_goal_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

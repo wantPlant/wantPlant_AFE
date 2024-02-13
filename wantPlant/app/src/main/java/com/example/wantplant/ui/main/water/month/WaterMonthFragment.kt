@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.water.month
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -69,9 +70,12 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
     // 월별 태그 api 연동
     private fun getMonthTagAPI(standardDate: LocalDate) {
 
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
 
-        tagService.getMonthTag(year = Integer.parseInt(yearFromDate(standardDate)), month = Integer.parseInt(monthFromDate(standardDate))).enqueue(object: Callback<TagGetMonthResponse>
+        tagService.getMonthTag("Bearer $accessToken", year = Integer.parseInt(yearFromDate(standardDate)), month = Integer.parseInt(monthFromDate(standardDate))).enqueue(object: Callback<TagGetMonthResponse>
         {
             override fun onResponse(call: Call<TagGetMonthResponse>, response: Response<TagGetMonthResponse>)
             {

@@ -2,6 +2,7 @@ package com.example.wantplant.data.remote.garden
 
 import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
+import com.example.wantplant.data.remote.garden.response.GardenGetResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -12,6 +13,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GardenRetrofitInterfaces {
+
+    @GET("/api/gardens")
+    fun getGarden(
+        @Header("Authorization") authorization: String
+    ): Call<GardenGetResponse>
+
     @POST("/api/gardens") // 서버의 endpoint
     fun postData(
         @Header("Authorization") authorization: String,

@@ -3,13 +3,23 @@ package com.example.wantplant.ui.main.water.week
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.data.remote.garden.response.GardenGetList
+import com.example.wantplant.data.remote.garden.response.PotList
 import com.example.wantplant.databinding.ItemWaterWeekGardenTitleBinding
 
-class WaterWeekGardenTitleRVAdapter: RecyclerView.Adapter<WaterWeekGardenTitleRVAdapter.ViewHolder>() {
-
-    val gardenTitle = arrayOf( "정원1", "정원2", "정원3", "정원4", "정원5" )
+class WaterWeekGardenTitleRVAdapter(private var gardens: List<GardenGetList>): RecyclerView.Adapter<WaterWeekGardenTitleRVAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemWaterWeekGardenTitleBinding): RecyclerView.ViewHolder(binding.root)
+
+    interface GardenClickListener {
+        fun onGardenClick(potList: List<PotList>)
+    }
+
+    private lateinit var mGardenClickListener: GardenClickListener
+
+    fun setGardenClick(gardenClickListener: GardenClickListener) {
+        mGardenClickListener = gardenClickListener
+    }
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -20,9 +30,13 @@ class WaterWeekGardenTitleRVAdapter: RecyclerView.Adapter<WaterWeekGardenTitleRV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.itemWaterWeekGardenTitleTv.text = gardenTitle[position]
+        holder.binding.itemWaterWeekGardenTitleTv.text = gardens[position].name
+
+        holder.binding.itemWaterWeekGardenTitleLl.setOnClickListener {
+            mGardenClickListener.onGardenClick(gardens[position].potList)
+        }
     }
 
-    override fun getItemCount(): Int = gardenTitle.size
+    override fun getItemCount(): Int = gardens.size
 
 }

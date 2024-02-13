@@ -7,23 +7,21 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import com.example.wantplant.data.remote.goal.GoalRetrofitInterfaces
-import com.example.wantplant.data.remote.goal.request.GoalPostRequest
-import com.example.wantplant.data.remote.goal.request.TodoList
-import com.example.wantplant.data.remote.goal.response.GoalPostResponse
-import com.example.wantplant.data.remote.tag.response.TagPostResponse
-import com.example.wantplant.databinding.DialogWaterWeekBinding
+import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
+import com.example.wantplant.data.remote.todo.request.TodoPostRequest
+import com.example.wantplant.data.remote.todo.response.TodoPostResponse
+import com.example.wantplant.databinding.DialogWaterWeekTodoBinding
 import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
 import java.util.Calendar
 
-class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterface, private var formattedDate: String, private val potId: Long) : Dialog(context) {
-    private var mBinding : DialogWaterWeekBinding? = null
+class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInterface, private var goalName: String, private val goalId: Long, private var todoDate: String) : Dialog(context) {
+    private var mBinding : DialogWaterWeekTodoBinding? = null
     private val binding get() = mBinding!!
-    private lateinit var tagTime: String
+    private lateinit var todoTime: String
+    private var todoTitle: String = ""
 
     private var waterWeekInterface : WaterWeekInterface? = null
 
@@ -33,14 +31,14 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DialogWaterWeekBinding.inflate(layoutInflater)
+        mBinding = DialogWaterWeekTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.dialogWaterWeekDateTv.text = formattedDate
+        binding.dialogWaterWeekGoalTv.text = goalName
 
-        // 시간 설정하기
+        // 시간 설정
         binding.dialogWaterWeekTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -49,17 +47,17 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
                         when (minute) {
                             in 1..9 -> {
                                 binding.dialogWaterWeekTimeTv.text = "00:0${minute}"
-                                tagTime = "00:0${minute}"
+                                todoTime = "00:0${minute}"
                             }
 
                             0 -> {
                                 binding.dialogWaterWeekTimeTv.text = "00:00"
-                                tagTime = "00:00"
+                                todoTime = "00:00"
                             }
 
                             else -> {
                                 binding.dialogWaterWeekTimeTv.text = "00:${minute}"
-                                tagTime = "00:${minute}"
+                                todoTime = "00:${minute}"
                             }
                         }
                     }
@@ -67,17 +65,17 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
                         when (minute) {
                             in 1..9 -> {
                                 binding.dialogWaterWeekTimeTv.text = "0${hourOfDay}:0${minute}"
-                                tagTime = "0${hourOfDay}:0${minute}"
+                                todoTime = "0${hourOfDay}:0${minute}"
                             }
 
                             0 -> {
                                 binding.dialogWaterWeekTimeTv.text = "0${hourOfDay}:00"
-                                tagTime = "0${hourOfDay}:00"
+                                todoTime = "0${hourOfDay}:00"
                             }
 
                             else -> {
                                 binding.dialogWaterWeekTimeTv.text = "0${hourOfDay}:${minute}"
-                                tagTime = "0${hourOfDay}:${minute}"
+                                todoTime = "0${hourOfDay}:${minute}"
                             }
                         }
                     }
@@ -85,17 +83,17 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
                         when (minute) {
                             in 1..9 -> {
                                 binding.dialogWaterWeekTimeTv.text = "${hourOfDay}:0${minute}"
-                                tagTime = "${hourOfDay}:0${minute}"
+                                todoTime = "${hourOfDay}:0${minute}"
                             }
 
                             0 -> {
                                 binding.dialogWaterWeekTimeTv.text = "${hourOfDay}:00"
-                                tagTime = "${hourOfDay}:00"
+                                todoTime = "${hourOfDay}:00"
                             }
 
                             else -> {
                                 binding.dialogWaterWeekTimeTv.text = "${hourOfDay}:${minute}"
-                                tagTime = "${hourOfDay}:${minute}"
+                                todoTime = "${hourOfDay}:${minute}"
                             }
                         }
                     }
@@ -104,48 +102,42 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
             TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
-        // 취소 눌렀을 때
+        // 취소 클릭 시
         binding.dialogWaterWeekCancelTv.setOnClickListener {
             dismiss()
         }
 
-        // 확인 눌렀을 때
+        // 완료 클릭 시
         binding.dialogWaterWeekCompleteTv.setOnClickListener {
-            var goalName = binding.dialogWaterWeekGoalEt.text.toString()
-            var todoName = binding.dialogWaterWeekTodoEt.text.toString()
-            var todoTime = binding.dialogWaterWeekTimeTv.text.toString()
+            var todoTitle = binding.dialogWaterWeekTodoEt.text.toString()
+
+            postTodoAPI(TodoPostRequest(goalId, todoTitle, todoDate, todoTime))
 
             this.waterWeekInterface?.onCompleteClicked()
 
-            postGoalAPI(GoalPostRequest(potId, goalName, TodoList(todoName, formattedDate, todoTime)))
-
             dismiss()
         }
-
     }
 
-    // 목표, 할 일 추가 api 연동
-    private fun postGoalAPI(goalPostRequest: GoalPostRequest) {
-
+    private fun postTodoAPI(todoPostRequest: TodoPostRequest) {
         val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
         val accessToken = sharedPref?.getString("accessToken", "")
 
-        val goalService = getRetrofit().create(GoalRetrofitInterfaces::class.java)
+        val todoService = getRetrofit().create(TodoRetrofitInterfaces::class.java)
+        Log.d("TodoPostRequest", todoPostRequest.toString())
 
-        goalService.postGoalTodo("Bearer $accessToken", goalPostRequest).enqueue(object: Callback<GoalPostResponse>
+        todoService.postTodo("Bearer $accessToken", todoPostRequest).enqueue(object: Callback<TodoPostResponse>
         {
-            override fun onResponse(call: Call<GoalPostResponse>, response: Response<GoalPostResponse>) {
-                Log.d("GoalPost/Request", goalPostRequest.toString())
-                Log.d("GoalPost/ServerSuccess", response.toString())
-                val resp: GoalPostResponse? = response.body()
-                Log.d("GoalAdd", response.body()?.result.toString())
-                when(resp?.code) {
-                    "200" -> Log.d("GoalAdd/Success", "GoalAdd!!")
+            override fun onResponse(call: Call<TodoPostResponse>, response: Response<TodoPostResponse>) {
+                Log.d("TodoPost/ServerSuccess", response.toString())
+                Log.d("TodAdd", response.body()?.result.toString())
+                when(response.body()?.code) {
+                    "200" -> Log.d("TodoAdd/Success", "TodoAdd!!")
                 }
             }
 
-            override fun onFailure(call: Call<GoalPostResponse>, t: Throwable) {
-                Log.d("GoalAdd/Failure", t.message.toString())
+            override fun onFailure(call: Call<TodoPostResponse>, t: Throwable) {
+                Log.d("TodoAdd/Failure", t.message.toString())
             }
 
         })

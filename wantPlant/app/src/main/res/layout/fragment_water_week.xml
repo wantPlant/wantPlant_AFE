@@ -38,13 +38,48 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <LinearLayout
+        android:id="@+id/item_water_week_garden_title_non_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingRight="18dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/rect_whitefill_mainstroke_15radius2"
+        android:backgroundTint="@color/wp_main_btn"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/water_week_change_calendar_ll"
+        app:layout_constraintStart_toStartOf="@id/water_week_calendar_ll"
+        app:layout_constraintEnd_toEndOf="@id/water_week_calendar_ll">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_flower_outline"
+            app:tint="@color/wp_brown1"/>
+
+        <TextView
+            android:id="@+id/item_water_week_garden_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/wp_brown1"
+            android:text="@string/water_week_non_garden"
+            android:textSize="10dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/seoulhangang_ceb"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/water_week_calendar_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/water_week_garden_title_rv"
+        app:layout_constraintTop_toBottomOf="@id/item_water_week_garden_title_non_ll"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/rect_nonfill_mainstroke_15radius">
 

@@ -21,10 +21,10 @@ class PlantActivity : AppCompatActivity(), PlantDialogInterface {
 
         setContentView(binding.root)
 
-        binding.plantWaterWeekGoalRv.apply {
-            adapter = WaterWeekGoalRVAdapter()
-            layoutManager = LinearLayoutManager(context)
-        }
+//        binding.plantWaterWeekGoalRv.apply {
+//            adapter = WaterWeekGoalRVAdapter()
+//            layoutManager = LinearLayoutManager(context)
+//        }
 
     }
 

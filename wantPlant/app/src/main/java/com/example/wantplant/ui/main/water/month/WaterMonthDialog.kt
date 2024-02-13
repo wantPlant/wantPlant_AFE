@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import com.example.wantplant.R
 import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
 import com.example.wantplant.data.remote.tag.request.TagPostRequest
 import com.example.wantplant.data.remote.tag.response.TagColor
@@ -17,8 +16,6 @@ import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class WaterMonthDialog(context: Context, private var formattedDate: String, waterMonthInterface: WaterMonthInterface) : Dialog(context) {
@@ -74,6 +71,7 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
             color = TagColor.COLOR_8
         }
 
+        // 시간 설정
         binding.dialogWaterMonthTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -137,11 +135,12 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
             TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
+        // 취소 클릭 시
         binding.dialogWaterMonthCancelTv.setOnClickListener {
-
             dismiss()
         }
 
+        // 완료 클릭 시
         binding.dialogWaterMonthCompleteTv.setOnClickListener {
             var tagName = binding.dialogWaterMonthTodoEt.text.toString()
 
@@ -160,15 +159,19 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
 
     // 태그 추가 api 연동
     private fun postTagAPI(tagPostRequest: TagPostRequest) {
+
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
         Log.d("TagPostRequest", tagPostRequest.toString())
 
-        tagService.postTag(tagPostRequest).enqueue(object: Callback<TagPostResponse>
+        tagService.postTag("Bearer $accessToken", tagPostRequest).enqueue(object: Callback<TagPostResponse>
         {
             override fun onResponse(call: Call<TagPostResponse>, response: Response<TagPostResponse>) {
                 Log.d("TagPost/ServerSuccess", response.toString())
                 val resp: TagPostResponse? = response.body()
-                Log.d("TagAdd", "code: ${resp?.message}")
+                Log.d("TagAdd", response.body()?.result.toString())
                 when(resp?.code) {
                     "200" -> Log.d("TagAdd/Success", "TagAdd!!")
                 }

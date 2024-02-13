@@ -196,9 +196,13 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
 
     // 태그 수정 api 연동
     private fun patchTagAPI(tagPatchRequest: TagPatchRequest) {
+
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
 
-        tagService.patchTag(tagPatchRequest).enqueue(object: Callback<TagPatchResponse>
+        tagService.patchTag("Bearer $accessToken", tagPatchRequest).enqueue(object: Callback<TagPatchResponse>
         {
             override fun onResponse(call: Call<TagPatchResponse>, response: Response<TagPatchResponse>) {
                 Log.d("TagPatch/ServerSuccess", response.toString())
@@ -218,9 +222,13 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
 
     // 태그 삭제 api 연동
     private fun deleteTagAPI(tagId: Long) {
+
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
 
-        tagService.deleteTag(tagId = tagId).enqueue(object : Callback<TagDeleteResponse>{
+        tagService.deleteTag("Bearer $accessToken", tagId = tagId).enqueue(object : Callback<TagDeleteResponse>{
             override fun onResponse(call: Call<TagDeleteResponse>, response: Response<TagDeleteResponse>) {
                 Log.d("TagDelete/ServerSuccess", response.toString())
                 Log.d("TagDeleteRequest", tagId.toString())
