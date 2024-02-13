@@ -21,7 +21,7 @@ class GardenPotRVAdapter(private val pots: List<Pot>) : RecyclerView.Adapter<Gar
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.binding.itemGardenPotIv.context)
             .load(pots[position].potImageUrl)
-            .override(316, 447) // 원하는 가로, 세로 사이즈를 입력하세요. 여기서는 500x500으로 설정했습니다.
+            .override(316, 447) // 원하는 가로, 세로 사이즈를 입력하세요.
             .into(holder.binding.itemGardenPotIv)
     }
 
