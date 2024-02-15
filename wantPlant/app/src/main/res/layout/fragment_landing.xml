@@ -8,10 +8,12 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/landing_background_vp"
         android:layout_width="match_parent"
-        android:layout_height="667dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/home_indicator"/>
 
 
     <me.relex.circleindicator.CircleIndicator3
@@ -30,13 +32,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_login_background"
-        android:layout_marginTop="690dp"
+        android:layout_marginTop="600dp"
         android:layout_marginHorizontal="30dp"
         android:text="@string/btn_start"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "http://ec2-3-34-198-148.ap-northeast-2.compute.amazonaws.com:8080"
+const val BASE_URL = "http://ec2-3-38-93-79.ap-northeast-2.compute.amazonaws.com:8080/"
 var accessToken: String? = null // 로그인 성공 후 이 변수에 accessToken 저장
 
 fun getRetrofit(): Retrofit {

@@ -36,16 +36,29 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
         // 정원의 이름을 텍스트 뷰에 설정
         holder.binding.itemGardenTitleTv.text = gardenTitle
         Log.d("정원 이름", "${gardenTitle}")
+        Log.d("Retrofit 정원 이름", "Position: $position, Garden Title: $gardenTitle, Garden ID: $gardenId")
+
     }
 
-    override fun getItemCount(): Int = gardenTitles.size
+    override fun getItemCount(): Int {
+        val count = minOf(gardenTitles.size, gardenIds.size)
+        Log.d("Retrofit 정원 이름", "Item Count: $count")
+        return count
+    }
+
+    fun setData(gardenTitles: List<String>, gardenIds: List<String>) {
+        this.gardenTitles = gardenTitles
+        this.gardenIds = gardenIds
+        Log.d("Retrofit 정원 이름", "setData called with gardenTitles: $gardenTitles, gardenIds: $gardenIds")
+        notifyDataSetChanged()  // 데이터가 변경되었음을 알림
+    }
 
     fun getCurrentGardenName(): String {
-        // 'currentGardenId'가 null이 아니라면 해당 ID의 정원의 이름을 반환하고, null이라면 빈 문자열을 반환합니다.
+        // 'currentGardenId'가 null이 아니라면 해당 ID의 정원의 이름을 반환하고, null이라면 빈 문자열 반환
         return if (currentGardenId != null) {
-            // 'gardenIds'에서 'currentGardenId'와 일치하는 ID를 가진 정원의 인덱스를 찾습니다.
+            // 'gardenIds'에서 'currentGardenId'와 일치하는 ID를 가진 정원의 인덱스를 찾음
             val index = gardenIds.indexOf(currentGardenId)
-            // 찾은 인덱스를 사용하여 'gardenTitles'에서 정원의 이름을 가져옵니다. 만약 찾지 못했다면 빈 문자열을 반환합니다.
+            // 찾은 인덱스를 사용하여 'gardenTitles'에서 정원의 이름을 가져옵니다. 만약 찾지 못했다면 빈 문자열 반환
             if (index != -1) gardenTitles[index] else ""
         } else {
             ""
