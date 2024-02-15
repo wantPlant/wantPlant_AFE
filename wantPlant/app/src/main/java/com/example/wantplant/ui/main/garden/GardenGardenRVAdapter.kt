@@ -51,5 +51,11 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
             ""
         }
     }
+
+    fun setGardens(gardenTitles: List<String>, gardenIds: List<String>) {
+        this.gardenTitles = gardenTitles
+        this.gardenIds = gardenIds
+        notifyDataSetChanged() // 데이터가 변경되었음을 알림
+    }
 }
 

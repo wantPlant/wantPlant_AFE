@@ -53,16 +53,16 @@ class LandingActivity : AppCompatActivity() {
                 val landingAdapter = LandingVPAdapter(this)
                 viewPager.adapter = landingAdapter
 
-                // ViewPager2와 CircleIndicator3 연결
-                val indicator: CircleIndicator3 = binding.homeIndicator
-                indicator.setViewPager(viewPager)
-
                 val fragment1 = LandingPageFragment(R.drawable.ic_landing_1)
                 val fragment2 = LandingPageFragment(R.drawable.ic_landing_2)
                 val fragment3 = LandingPageFragment(R.drawable.ic_landing_3)
                 landingAdapter.addFragment(fragment1)
                 landingAdapter.addFragment(fragment2)
                 landingAdapter.addFragment(fragment3)
+
+                // ViewPager2와 CircleIndicator3 연결
+                val indicator: CircleIndicator3 = binding.homeIndicator
+                indicator.setViewPager(viewPager)
 
                 // 핸들러와 Runnable 초기화
                 handler = Handler(Looper.getMainLooper())
@@ -85,6 +85,8 @@ class LandingActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler = Handler(Looper.getMainLooper())
+        runnable = Runnable {  }
         // 액티비티가 종료될 때 핸들러의 동작을 중지시킴
         handler.removeCallbacks(runnable)
     }
