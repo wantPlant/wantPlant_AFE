@@ -28,4 +28,6 @@ interface GardenRetrofitInterfaces {
     @DELETE("/api/gardens/{gardenId}")
     fun deleteGarden(@Header("Authorization") authorization: String, @Path("gardenId") gardenId: Int): Call<Void>
 
+    @GET("/api/gardens/{gardenId}")
+    fun getGarden(@Path("gardenId") gardenId: Int) : Call<GardenResponse>
 }

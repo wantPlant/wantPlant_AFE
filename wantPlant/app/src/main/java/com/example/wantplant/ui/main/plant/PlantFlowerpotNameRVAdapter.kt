@@ -1,45 +1,35 @@
-package com.example.wantplant.ui.main.book
+package com.example.wantplant.ui.main.plant
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.R
 import com.example.wantplant.databinding.ItemPlantFlowerpotNameBinding
-import com.example.wantplant.ui.main.plant.PlantFlowerpotName
 
 private var selectedItemPosition: Int = RecyclerView.NO_POSITION
 
-class PlantFlowerpotNameRVAdapter (private val plantFlowerpotNameList: ArrayList<PlantFlowerpotName>): RecyclerView.Adapter<PlantFlowerpotNameRVAdapter.ViewHolder>() {
+class PlantFlowerpotNameRVAdapter (private var onPotClicked: (potId: String) -> Unit): RecyclerView.Adapter<PlantFlowerpotNameRVAdapter.ViewHolder>() {
 
-    init {
-        // 초기에 첫 번째 아이템을 선택 상태로 설정
-        if (plantFlowerpotNameList.isNotEmpty()) {
-            selectedItemPosition = 0
-        }
-    }
+    var potTitles = listOf<String>() // 화분 이름 리스트(문자열)
+    var potIds = listOf<String>() // 화분 아이디 리스트(문자열)
 
-    // 리사이클러뷰에서는 클릭 이벤트가 내장되어 있지 않음 -> 클릭 리스너 역할을 하는 인터페이스 생성
-    interface ItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    // 어뎁터 외부의 프레그먼트에서 리스너 객체를 던져주면 됨
-    private lateinit var mItemClickListener: ItemClickListener
-    //private var selectedItemPosition: Int = RecyclerView.NO_POSITION
-
-    fun setItemClickListener(itemClickListener: ItemClickListener){
-        mItemClickListener = itemClickListener
+    fun setOnPotClickListener(listener: (potId: String) -> Unit) {
+        onPotClicked = listener
     }
 
     // 뷰 홀더를 생성할 때 호출
     // 아이템 뷰 객채를 만든 후 재활용하기 위해 뷰 홀더에 던져줌
-    override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
-        viewType: Int
-    ): PlantFlowerpotNameRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PlantFlowerpotNameRVAdapter.ViewHolder {
         val binding = ItemPlantFlowerpotNameBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-        return ViewHolder(binding) // 아이템 뷰 객체 던짐
+        return ViewHolder(binding).apply {
+            itemView.setOnClickListener {
+                val position = adapterPosition.takeIf { it != DiffUtil.DiffResult.NO_POSITION }
+                    ?: return@setOnClickListener // adapterPosition이 NO_POSITION이 아닌 경우에만 값 반환
+                onPotClicked(potIds[position])
+            } // ViewHolder의 뷰에 대한 클릭 리스너 설정, 각 아이템을 클릭했을 때 실행될 동작 정의
+        }
     }
 
     // 뷰 홀더에 데이터를 바인딩해줘야 할 때마다(사용자가 화면을 위아래로 스크롤 할 때마다) 호출
@@ -47,14 +37,12 @@ class PlantFlowerpotNameRVAdapter (private val plantFlowerpotNameList: ArrayList
     // 받아온 뷰 홀더에 바인딩해주기 위해 리스트에서 해당 포지션에 위치하는 데이터를 ViewHolder의 bind 함수에 던져줌
     // 포지션 값을 가지고 있기 때문에 클릭 이벤트는 이곳에서 작성
     override fun onBindViewHolder(holder: PlantFlowerpotNameRVAdapter.ViewHolder, position: Int) {
-        holder.bind(plantFlowerpotNameList[position], position)
-        holder.itemView.setOnClickListener{ // 어뎁터 클래스 안에서만 유효
-            mItemClickListener.onItemClick(position)
-        }
+        val potTitle = potTitles[position]
+        holder.binding.itemPlantPotNameTv.text = potTitle
     }
 
     override fun getItemCount(): Int {
-        return plantFlowerpotNameList.size
+        return potTitles.size
     }
 
     // 아이템 뷰 객체들을 재활용하기 위해 날라가지 않도록 담음

@@ -7,7 +7,7 @@ data class CompletedPot(
     val completedAt: String
 )
 
-data class CompletedPotsResult(
+data class CompletedPotResult(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
