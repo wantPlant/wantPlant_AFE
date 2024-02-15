@@ -58,11 +58,11 @@ class BookFragment : Fragment() {
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
 
-        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100)
+        val call = api.getGardens("Bearer $accessToken")
         call.enqueue(object : Callback<GardenResponse> { // Call 객체에 비동기적인 응답 처리 등록
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                 if (response.isSuccessful) { // 서버 응답이 성공인 경우
-                    val gardenList = response.body()?.result?.gardenList?.sortedBy { it.gardenId } ?: emptyList()
+                    val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
                     // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
                     // body() - 서버로부터 받은 데이터를 얻음
                     // ?. - 앞의 표현식이 null이면 null을 반환, 그렇지 않으면 계속 진행
@@ -104,10 +104,13 @@ class BookFragment : Fragment() {
     }
 
     private fun initFlowerpotRecyclerView(gardenId: String) {
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val call = api.getCompletedPots(gardenId) // 정원 당 화분 리스트 조회
+        val call = api.getCompletedPots("Bearer $accessToken", gardenId) // 정원 당 화분 리스트 조회
         call.enqueue(object : Callback<CompletedPotsResult> {
             override fun onResponse(call: Call<CompletedPotsResult>, response: Response<CompletedPotsResult>) {
                 if (response.isSuccessful) {
@@ -118,7 +121,7 @@ class BookFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots(gardenId)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots("Bearer $accessToken", gardenId)}")
                 } else {
                     // 응답 실패 시의 처리
                 }

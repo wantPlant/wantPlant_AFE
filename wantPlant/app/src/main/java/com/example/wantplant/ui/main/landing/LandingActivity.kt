@@ -60,6 +60,7 @@ class LandingActivity : AppCompatActivity() {
                 landingAdapter.addFragment(fragment2)
                 landingAdapter.addFragment(fragment3)
 
+
                 // ViewPager2와 CircleIndicator3 연결
                 val indicator: CircleIndicator3 = binding.homeIndicator
                 indicator.setViewPager(viewPager)
@@ -75,8 +76,6 @@ class LandingActivity : AppCompatActivity() {
                     // 다음 페이지로 자동으로 넘어가기 위해 핸들러에게 다시 postDelayed 호출
                     handler.postDelayed(runnable, 1500) // 1.5초 딜레이
                 }
-
-
                 // 핸들러 시작
                 handler.postDelayed(runnable, 1500) // 1.5초 딜레이
             }
