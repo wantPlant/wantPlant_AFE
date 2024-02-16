@@ -7,6 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
 import com.example.wantplant.data.remote.tag.request.TagPostRequest
 import com.example.wantplant.data.remote.tag.response.TagColor
@@ -22,7 +25,7 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
     private var mBinding : DialogWaterMonthBinding? = null
     private val binding get() = mBinding!!
     private var color : TagColor = TagColor.COLOR_1
-    private lateinit var tagTime: String
+    private var tagTime: String = ""
 
     private var waterMonthInterface : WaterMonthInterface? = null
 
@@ -39,36 +42,102 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
 
         binding.dialogWaterMonthDateTv.text = formattedDate
 
+        binding.dialogWaterMonthColor1Select.visibility = View.VISIBLE
+
         binding.dialogWaterMonthColor1.setOnClickListener {
             color = TagColor.COLOR_1
+            binding.dialogWaterMonthColor1Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor2.setOnClickListener {
             color = TagColor.COLOR_2
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor3.setOnClickListener {
             color = TagColor.COLOR_3
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor4.setOnClickListener {
             color = TagColor.COLOR_4
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor5.setOnClickListener {
             color = TagColor.COLOR_5
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor6.setOnClickListener {
             color = TagColor.COLOR_6
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor7.setOnClickListener {
             color = TagColor.COLOR_7
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor8.setOnClickListener {
             color = TagColor.COLOR_8
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.VISIBLE
         }
 
         // 시간 설정
@@ -149,11 +218,14 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
             Log.d("tagTime", tagTime)
             Log.d("date", formattedDate)
 
-            postTagAPI(TagPostRequest(color, tagName, tagTime, formattedDate))
+            if (tagName != "" && tagTime != "" && formattedDate != "") {
+                postTagAPI(TagPostRequest(color, tagName, tagTime, formattedDate))
 
-            this.waterMonthInterface?.clickDialogComplete()
-
-            dismiss()
+                dismiss()
+            }
+            else {
+                Toast.makeText(context, "에러요", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -172,6 +244,9 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
                 Log.d("TagPost/ServerSuccess", response.toString())
                 val resp: TagPostResponse? = response.body()
                 Log.d("TagAdd", response.body()?.result.toString())
+                if (resp != null) {
+                    waterMonthInterface?.clickDialogComplete()
+                }
                 when(resp?.code) {
                     "200" -> Log.d("TagAdd/Success", "TagAdd!!")
                 }

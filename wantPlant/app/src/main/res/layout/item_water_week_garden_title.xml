@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/wp_brown1"
         android:text="정원 이름"
-        android:textSize="10dp"
+        android:textSize="12dp"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/seoulhangang_ceb"/>
 

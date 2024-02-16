@@ -1,11 +1,18 @@
 package com.example.wantplant.ui.main.water.month
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wantplant.R
@@ -27,7 +34,9 @@ import java.time.format.DateTimeFormatter
 class WaterMonthFragment : Fragment(), WaterMonthInterface {
     private lateinit var binding: FragmentWaterMonthBinding
     private lateinit var standardDate: LocalDate
+    private lateinit var changeCalendarModeTextView: TextView
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,7 +54,28 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
 
         monthCalendar()
 
+        setTextViewColor()
+
         return binding.root
+    }
+
+    private fun setTextViewColor() {
+
+        changeCalendarModeTextView = binding.waterMonthChangeCalendarTv
+
+        val textData: String = changeCalendarModeTextView.text.toString()
+        val builder = SpannableStringBuilder(textData)
+
+        val color1 = ResourcesCompat.getColor(resources, R.color.wp_changeCalendar1, null)
+        val setColor1 = ForegroundColorSpan(color1)
+        builder.setSpan(setColor1, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        val color2 = ResourcesCompat.getColor(resources, R.color.wp_changeCalendar2, null)
+        val setColor2 = ForegroundColorSpan(color2)
+        builder.setSpan(setColor2, 1, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        changeCalendarModeTextView.text = builder
+
     }
 
     private fun monthCalendar() {
@@ -62,6 +92,10 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
         binding.waterMonthForwardIv.setOnClickListener {
             standardDate = standardDate.plusMonths(1)
             binding.waterMonthYearTv.text = "${yearFromDate(standardDate)}년 ${monthFromDate(standardDate)}월"
+            getMonthTagAPI(standardDate)
+        }
+
+        binding.waterMonthYearTv.setOnClickListener {
             getMonthTagAPI(standardDate)
         }
 
@@ -195,16 +229,19 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
         return date?.format(formatter)
     }
 
+    // dialog 확인 클릭 시
     override fun clickDialogComplete() {
         Log.d("TagAddInterface", "Success")
         monthCalendar()
     }
 
+    // dialog 수정 클릭 시
     override fun clickDialogPatch() {
         Log.d("TagPatchInterface", "Success")
         monthCalendar()
     }
 
+    // dialog 삭제 클릭 시
     override fun clickDialogDelete() {
         Log.d("TagDeleteInterface", "Success")
         monthCalendar()

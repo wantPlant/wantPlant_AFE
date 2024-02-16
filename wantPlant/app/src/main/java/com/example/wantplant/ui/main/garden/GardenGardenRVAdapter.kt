@@ -12,6 +12,16 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
     var gardenIds = listOf<String>()
     var currentGardenId: String? = null
 
+    interface GardenClickListener {
+        fun onGardenTitleClick(clickedGardenId: String)
+    }
+
+    private lateinit var mGardenClickListener: GardenClickListener
+
+    fun setGardenTitleClick(gardenClickListener: GardenClickListener) {
+        mGardenClickListener = gardenClickListener
+    }
+
     inner class ViewHolder(val binding: ItemGardenTitleBinding) : RecyclerView.ViewHolder(binding.root)
 
     // ViewHolder 생성 시, 클릭 리스너 설정
@@ -31,6 +41,11 @@ class GardenGardenRVAdapter(private val onGardenClicked: (gardenId: String) -> U
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val gardenTitle = gardenTitles[position]
         val gardenId = gardenIds[position]
+
+        // 정원 이름 클릭 시
+        holder.binding.itemGardenTitleTv.setOnClickListener {
+            mGardenClickListener.onGardenTitleClick(gardenIds[position])
+        }
 
         // 아이템 뷰에 데이터를 바인딩
         // 정원의 이름을 텍스트 뷰에 설정

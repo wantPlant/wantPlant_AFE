@@ -47,6 +47,14 @@ class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var g
             mTodoClickListener.onOutlineWaterClick(todo[position].todoId, todo[position].isComplete)
         }
 
+        if (todo[position].isComplete) {
+            holder.binding.itemWaterWeekTodoWaterFillIv.visibility = View.VISIBLE
+            holder.binding.itemWaterWeekTodoWaterOutlineIv.visibility = View.INVISIBLE
+        } else {
+            holder.binding.itemWaterWeekTodoWaterFillIv.visibility = View.INVISIBLE
+            holder.binding.itemWaterWeekTodoWaterOutlineIv.visibility = View.VISIBLE
+        }
+
         // 찬 물방울 클릭 시
         holder.binding.itemWaterWeekTodoWaterFillIv.setOnClickListener {
             todo[position].isComplete = false

@@ -78,6 +78,8 @@ class LandingActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
+        handler = Handler(Looper.getMainLooper())
+        runnable = Runnable {}
         // 액티비티가 종료될 때 핸들러의 동작을 중지시킴
         handler.removeCallbacks(runnable)
     }

@@ -29,6 +29,7 @@ class GardenFragment : Fragment() {
     private lateinit var binding : FragmentGardenBinding
     private lateinit var gardenGardenRVAdapter: GardenGardenRVAdapter
     private var accessToken: String? = null
+    private var clickGardenId: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +57,13 @@ class GardenFragment : Fragment() {
             gardenGardenRVAdapter.currentGardenId = gardenId  // 아이템을 클릭할 때마다 currentGardenId를 업데이트
             initPotRecyclerView(gardenId)
         }
+
+        gardenGardenRVAdapter.setGardenTitleClick(object: GardenGardenRVAdapter.GardenClickListener{
+            override fun onGardenTitleClick(clickedGardenId: String) {
+                clickGardenId = clickedGardenId.toLong()
+            }
+
+        })
 
         binding.gardenGardenRv.apply {
             adapter = gardenGardenRVAdapter
@@ -160,6 +168,7 @@ class GardenFragment : Fragment() {
         // 화분 심기를 눌렀을 때
         binding.gardenAddPotLl.setOnClickListener {
             val intent = Intent(activity, PlantActivity::class.java)
+            intent.putExtra("gardenId", clickGardenId)
             startActivity(intent)
         }
 

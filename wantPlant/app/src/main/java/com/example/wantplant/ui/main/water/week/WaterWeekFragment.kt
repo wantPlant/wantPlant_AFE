@@ -2,10 +2,15 @@ package com.example.wantplant.ui.main.water.week
 
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.R
@@ -34,6 +39,7 @@ import retrofit2.Response
 class WaterWeekFragment : Fragment(), WaterWeekInterface {
     private lateinit var binding : FragmentWaterWeekBinding
     private lateinit var standardDate: LocalDate
+    private lateinit var changeCalendarModeTextView: TextView
 
     private var clickdate: String? = null
     private var clickPotId: Long = 0
@@ -67,6 +73,8 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
             waterWeekGoalDialog.show()
         }
 
+        setTextViewColor()
+
 //        initPotRecyclerView()
 
 //        initGardenRecyclerView()
@@ -81,6 +89,25 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
 
 
         return binding.root
+    }
+
+    private fun setTextViewColor() {
+
+        changeCalendarModeTextView = binding.waterWeekChangeCalendarTv
+
+        val textData: String = changeCalendarModeTextView.text.toString()
+        val builder = SpannableStringBuilder(textData)
+
+        val color1 = ResourcesCompat.getColor(resources, R.color.wp_changeCalendar2, null)
+        val setColor1 = ForegroundColorSpan(color1)
+        builder.setSpan(setColor1, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        val color2 = ResourcesCompat.getColor(resources, R.color.wp_changeCalendar1, null)
+        val setColor2 = ForegroundColorSpan(color2)
+        builder.setSpan(setColor2, 2, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        changeCalendarModeTextView.text = builder
+
     }
 
     private fun weekCalendar() {
@@ -100,6 +127,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         }
     }
 
+    // 주간 달력
     private fun weekCalendarList() {
         val dayList = dayInMonthArray()
         Log.d("dayList", dayList.toString())
@@ -113,6 +141,10 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         dayListAdapter.setWeekDayClick(object: WaterWeekDayRVAdapter.DayClickListener{
             override fun onWeekDayClick(formattedDate: String) {
                 clickdate = formattedDate
+                if (clickdate != "" && clickPotId != 0.toLong()) {
+                    // 날짜별 목표, 할 일 api 연동
+                    getGoalTodo()
+                }
             }
         })
     }
@@ -196,17 +228,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
 //        }
 //    }
 
-    override fun onCompleteClicked() {
-        weekCalendar()
-    }
 
-    override fun onPatchClicked() {
-        weekCalendar()
-    }
-
-    override fun onDeleteClicked() {
-        weekCalendar()
-    }
 
     // 정원 GET api 연동
     private fun getGarden() {
@@ -241,6 +263,12 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                                 // 정원 클릭 시
                                 override fun onGardenClick(potList: List<PotList>) {
 
+                                    if (potList.isNullOrEmpty()) {
+                                        binding.waterWeekNonPotTitleTv.visibility = View.VISIBLE
+                                    } else {
+                                        binding.waterWeekNonPotTitleTv.visibility = View.INVISIBLE
+                                    }
+
                                     // 화분 리사이클러뷰
                                     val weekPotManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                                     val weekPotAdapter = WaterWeekPotTitleRVAdapter(potList)
@@ -253,14 +281,20 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                                     weekPotAdapter.setPotClick(object: WaterWeekPotTitleRVAdapter.PotClickListener{
                                         override fun onPotClick(potId: Long) {
                                             clickPotId = potId
+                                            if (clickdate != "" && clickPotId != 0.toLong()) {
+                                                // 날짜별 목표, 할 일 api 연동
+                                                getGoalTodo()
+                                            }
                                         }
                                     })
                                 }
                             })
 
+                            // 정원이 비어있으면
                             if (response.body()?.result?.gardens?.isEmpty() == true) {
                                 binding.itemWaterWeekGardenTitleNonLl.visibility = View.VISIBLE
                             }
+                            // 정원이 비어있지 않으면
                             else {
                                 binding.itemWaterWeekGardenTitleNonLl.visibility = View.INVISIBLE
                             }
@@ -276,7 +310,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         })
     }
 
-    // 목표, 할일 api 연동
+    // 목표, 할일 GET api 연동
     private fun getGoalTodo() {
         val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
         val accessToken = sharedPref?.getString("accessToken", "")
@@ -355,6 +389,21 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
             }
 
         })
+    }
+
+    // 확인 클릭 시
+    override fun onCompleteClicked() {
+        weekCalendar()
+    }
+
+    // 수정 클릭 시
+    override fun onPatchClicked() {
+        weekCalendar()
+    }
+
+    // 삭제 클릭 시
+    override fun onDeleteClicked() {
+        weekCalendar()
     }
 
 }

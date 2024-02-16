@@ -1,9 +1,13 @@
 package com.example.wantplant.ui.main.water.month
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wantplant.R
 import com.example.wantplant.data.remote.tag.response.TagColor
 import com.example.wantplant.data.remote.tag.response.TagMonthGetResult
 import com.example.wantplant.databinding.ItemMonthDayTagBinding
@@ -51,9 +55,13 @@ class WaterMonthDayTagRVAdapter(private val tag: List<TagMonthGetResult>?): Recy
             else -> {setColor = "#7A6740"}
         }
 
-        holder.binding.itemDayTagTodoLayout.setBackgroundColor(setColor.toColorInt())
+        // 네모
+//        holder.binding.itemDayTagTodoLayout.setBackgroundColor(setColor.toColorInt())
 
-        holder.binding.itemMonthDayTagTodo.setOnClickListener {
+        // 둥근거
+        holder.binding.itemDayTagTodoLayout.backgroundTintList = ColorStateList.valueOf(Color.parseColor(setColor))
+
+        holder.binding.itemDayTagTodoLayout.setOnClickListener {
             mTagClickListener.onTagClick(tag?.get(position)!!)
         }
     }

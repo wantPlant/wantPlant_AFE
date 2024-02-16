@@ -19,7 +19,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_nav_bnv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:background="@color/wp_green1"
         app:itemRippleColor="@color/wp_transparent"
         app:itemActiveIndicatorStyle="@color/wp_transparent"

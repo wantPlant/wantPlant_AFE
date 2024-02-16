@@ -31,4 +31,6 @@
     <color name="wp_blue3">#63A0C7</color>
     <color name="wp_transparent">#00000000</color>
     <color name="wp_alpha50_green3">#804F6F53</color>
+    <color name="wp_changeCalendar1">#727272</color>
+    <color name="wp_changeCalendar2">#C4C4C4</color>
 </resources>
