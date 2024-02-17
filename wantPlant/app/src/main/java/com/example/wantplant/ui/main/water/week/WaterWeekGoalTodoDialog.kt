@@ -37,6 +37,7 @@ class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInt
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         binding.dialogWaterWeekGoalTv.text = goalName
+        binding.dialogWaterWeekDateTv.text = todoDate
 
         // 시간 설정
         binding.dialogWaterWeekTimeLl.setOnClickListener {
@@ -130,7 +131,7 @@ class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInt
         {
             override fun onResponse(call: Call<TodoPostResponse>, response: Response<TodoPostResponse>) {
                 Log.d("TodoPost/ServerSuccess", response.toString())
-                Log.d("TodAdd", response.body()?.result.toString())
+                Log.d("TodoAdd", response.body()?.result.toString())
                 when(response.body()?.code) {
                     "200" -> Log.d("TodoAdd/Success", "TodoAdd!!")
                 }

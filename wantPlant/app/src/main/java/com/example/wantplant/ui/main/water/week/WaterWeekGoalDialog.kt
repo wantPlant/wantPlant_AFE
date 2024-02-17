@@ -115,8 +115,6 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
             var todoName = binding.dialogWaterWeekTodoEt.text.toString()
             var todoTime = binding.dialogWaterWeekTimeTv.text.toString()
 
-            this.waterWeekInterface?.onCompleteClicked()
-
             postGoalAPI(GoalPostRequest(potId, goalName, TodoList(todoName, formattedDate, todoTime)))
 
             dismiss()
@@ -139,6 +137,9 @@ class WaterWeekGoalDialog(context: Context, waterWeekInterface: WaterWeekInterfa
                 Log.d("GoalPost/ServerSuccess", response.toString())
                 val resp: GoalPostResponse? = response.body()
                 Log.d("GoalAdd", response.body()?.result.toString())
+                if (resp != null) {
+                    waterWeekInterface?.onCompleteClicked()
+                }
                 when(resp?.code) {
                     "200" -> Log.d("GoalAdd/Success", "GoalAdd!!")
                 }

@@ -17,7 +17,7 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
             binding.itemGoalTitleTv.text = goals[position].goalTitle
 
             val todoManager = LinearLayoutManager(binding.itemGoalTodoRv.context, LinearLayoutManager.HORIZONTAL, false)
-            val todoAdapter = WaterWeekTodoRVAdapter(goals[position].todos, goals[position].goalTitle)
+            val todoAdapter = WaterWeekTodoRVAdapter(goals[position].todos, goals[position].goalTitle, goals[position].goalId)
             binding.itemGoalTodoRv.apply {
                 adapter = todoAdapter
                 layoutManager = todoManager
@@ -25,8 +25,8 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
 
             todoAdapter.setTodoClick(object: WaterWeekTodoRVAdapter.TodoClickListener{
 
-                override fun onTodoClick(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String) {
-                    mItemClickListener.onTodoClick2(clickTodoId, clickTodoTitle, clickTodoDate, clickTodoTime, clickTodoGoalTitle)
+                override fun onTodoClick(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long) {
+                    mItemClickListener.onTodoClick2(clickTodoId, clickTodoTitle, clickTodoDate, clickTodoTime, clickTodoGoalTitle, clickGoalId)
                 }
 
                 override fun onOutlineWaterClick(doneId: Long, doneBoolean: Boolean) {
@@ -44,7 +44,7 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
 
     interface ItemClickListener {
         fun onTodoAddClick(goalName: String, goalId: Long)
-        fun onTodoClick2(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String)
+        fun onTodoClick2(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long)
         fun onOutlineWaterClick2(doneId: Long, doneBoolean: Boolean)
         fun onFillWaterClick2(doneId: Long, doneBoolean: Boolean)
     }

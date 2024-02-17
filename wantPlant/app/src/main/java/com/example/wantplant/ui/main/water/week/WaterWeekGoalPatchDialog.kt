@@ -8,6 +8,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import com.example.wantplant.data.remote.goal.GoalRetrofitInterfaces
+import com.example.wantplant.data.remote.goal.request.GoalPatchRequest
+import com.example.wantplant.data.remote.goal.response.GoalPatchResponse
 import com.example.wantplant.data.remote.tag.response.TagPatchResponse
 import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
 import com.example.wantplant.data.remote.todo.request.TodoPatchRequest
@@ -20,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
 
-class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekInterface, val clickTodoId: Long, var clickTodoTitle: String, var clickTodoDate: String, var clickTodoTime: String, var clickTodoGoalTitle: String): Dialog(context) {
+class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekInterface, val clickTodoId: Long, var clickTodoTitle: String, var clickTodoDate: String, var clickTodoTime: String, var clickTodoGoalTitle: String, var clickGoalId: Long): Dialog(context) {
     private var mBinding : DialogWaterWeekPatchBinding? = null
     private val binding get() = mBinding!!
     private lateinit var todoTime: String
@@ -43,7 +46,7 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
         todoDate = clickTodoDate
 
         // 클릭한 할 일 정보 표시
-        binding.dialogWaterWeekGoalTv.text = clickTodoGoalTitle
+        binding.dialogWaterWeekGoalTv.setText(clickTodoGoalTitle)
         binding.dialogWaterWeekTodoEt.setText(clickTodoTitle)
         binding.dialogWaterWeekTimeTv.text = clickTodoTime
         binding.dialogWaterWeekDateTv.text = clickTodoDate
@@ -148,16 +151,18 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
         // 삭제 클릭 시
         binding.dialogWaterWeekDeleteTv.setOnClickListener {
             deleteTodoAPI(clickTodoId)
-            this.waterWeekInterface?.onDeleteClicked()
+
             dismiss()
         }
 
         // 완료 클릭 시
         binding.dialogWaterWeekCompleteTv.setOnClickListener {
             var todoName = binding.dialogWaterWeekTodoEt.text.toString()
+            var goalTitle = binding.dialogWaterWeekGoalTv.text.toString()
 
             patchTodoAPI(clickTodoId, TodoPatchRequest(todoName, todoDate, todoTime))
-            this.waterWeekInterface?.onPatchClicked()
+            patchGoalAPI(GoalPatchRequest(goalTitle))
+
 
             dismiss()
         }
@@ -176,6 +181,11 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
                 Log.d("TodoPatchRequest", todoPatchRequest.toString())
 
                 val resp: TodoPatchResponse? = response.body()
+
+                if (resp != null) {
+                    waterWeekInterface?.onPatchClicked()
+                }
+
                 when(resp?.code) {
                     "200" -> Log.d("TodoPatch/Success", "TodoPatch!!")
                 }
@@ -183,6 +193,34 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
 
             override fun onFailure(call: Call<TodoPatchResponse>, t: Throwable) {
                 Log.d("TodoPatch/Failure", t.message.toString())
+            }
+
+        })
+    }
+
+    // 목표 이름 수정 api 연동
+    private fun patchGoalAPI(goalPatchRequest: GoalPatchRequest) {
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
+        val goalService = getRetrofit().create(GoalRetrofitInterfaces::class.java)
+
+        goalService.patchGoalTitle("Bearer $accessToken", clickGoalId, goalPatchRequest).enqueue(object: Callback<GoalPatchResponse>{
+            override fun onResponse(call: Call<GoalPatchResponse>, response: Response<GoalPatchResponse>) {
+                Log.d("GoalPatch/ServerSuccess", response.toString())
+                Log.d("GoalPatchRequest", goalPatchRequest.toString())
+                val resp: GoalPatchResponse? = response.body()
+                if (resp != null) {
+                    waterWeekInterface?.onPatchClicked()
+                }
+
+                when(resp?.code) {
+                    "200" -> Log.d("GoalPatch/Success", "TodoPatch!!")
+                }
+            }
+
+            override fun onFailure(call: Call<GoalPatchResponse>, t: Throwable) {
+                Log.d("GoalPatch/Failure", t.message.toString())
             }
 
         })
@@ -199,6 +237,10 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
             override fun onResponse(call: Call<TodoDeleteResponse>, response: Response<TodoDeleteResponse>) {
                 Log.d("TodoDelete/ServerSuccess", response.toString())
                 Log.d("TodoDeleteRequest", todoId.toString())
+                val resp: TodoDeleteResponse? = response.body()
+                if (resp != null) {
+                    waterWeekInterface?.onDeleteClicked()
+                }
             }
 
             override fun onFailure(call: Call<TodoDeleteResponse>, t: Throwable) {

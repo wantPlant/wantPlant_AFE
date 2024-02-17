@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.data.remote.goal.response.GoalTodoList
 import com.example.wantplant.databinding.ItemWaterWeekTodoBinding
 
-class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var goalTitle: String) : RecyclerView.Adapter<WaterWeekTodoRVAdapter.ViewHolder>() {
+class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var goalTitle: String, private val goalId: Long) : RecyclerView.Adapter<WaterWeekTodoRVAdapter.ViewHolder>() {
 
     interface TodoClickListener {
-        fun onTodoClick(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String)
+        fun onTodoClick(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long)
         fun onOutlineWaterClick(doneId: Long, doneBoolean: Boolean)
         fun onFillWaterClick(doneId: Long, doneBoolean: Boolean)
     }
@@ -35,7 +35,7 @@ class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var g
 
         // 할 일 클릭 시
         holder.binding.itemWaterWeekTodoCl.setOnClickListener {
-            mTodoClickListener.onTodoClick(todo[position].todoId, todo[position].todoTitle, todo[position].date, todo[position].time, goalTitle)
+            mTodoClickListener.onTodoClick(todo[position].todoId, todo[position].todoTitle, todo[position].date, todo[position].time, goalTitle, goalId)
         }
 
         // 빈 물방울 클릭 시

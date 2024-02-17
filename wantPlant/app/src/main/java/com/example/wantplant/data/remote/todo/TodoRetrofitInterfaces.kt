@@ -26,5 +26,5 @@ interface TodoRetrofitInterfaces {
     fun patchTodo(@Header("Authorization") token: String?, @Path(value = "todoId") todoId: Long, @Body todoPatchRequest: TodoPatchRequest): Call<TodoPatchResponse>
 
     @PATCH("/api/todos/{todoId}/complete")
-    fun patchTodoComplete(@Header("Authorization") token: String?,@Path(value = "todoId") todoId: Long, @Body todoPatchCompleteRequest: TodoPatchCompleteRequest): Call<TodoPatchCompleteResponse>
+    fun patchTodoComplete(@Header("Authorization") token: String?, @Path(value = "todoId") todoId: Long, @Body todoPatchCompleteRequest: TodoPatchCompleteRequest): Call<TodoPatchCompleteResponse>
 }

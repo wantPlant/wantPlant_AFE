@@ -41,7 +41,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
     private lateinit var standardDate: LocalDate
     private lateinit var changeCalendarModeTextView: TextView
 
-    private var clickdate: String? = null
+    private var clickdate: String? = ""
     private var clickPotId: Long = 0
 
     override fun onCreateView(
@@ -85,6 +85,10 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         if (clickdate != null && clickPotId != 0.toLong()) {
             // 날짜별 목표, 할 일 api 연동
             getGoalTodo()
+        }
+
+        if (clickdate != "" && clickPotId != 0.toLong()) {
+            binding.waterWeekAddGoalLl.visibility = View.VISIBLE
         }
 
 
@@ -144,6 +148,9 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                 if (clickdate != "" && clickPotId != 0.toLong()) {
                     // 날짜별 목표, 할 일 api 연동
                     getGoalTodo()
+                }
+                if (clickdate != "" && clickPotId != 0.toLong()) {
+                    binding.waterWeekAddGoalLl.visibility = View.VISIBLE
                 }
             }
         })
@@ -263,6 +270,16 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                                 // 정원 클릭 시
                                 override fun onGardenClick(potList: List<PotList>) {
 
+                                    binding.waterWeekGoalRv.adapter = null
+//                                    clickdate = ""
+                                    clickPotId = 0
+
+                                    if (clickdate != "" && clickPotId != 0.toLong()) {
+                                        binding.waterWeekAddGoalLl.visibility = View.VISIBLE
+                                    } else {
+                                        binding.waterWeekAddGoalLl.visibility = View.INVISIBLE
+                                    }
+
                                     if (potList.isNullOrEmpty()) {
                                         binding.waterWeekNonPotTitleTv.visibility = View.VISIBLE
                                     } else {
@@ -284,6 +301,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                                             if (clickdate != "" && clickPotId != 0.toLong()) {
                                                 // 날짜별 목표, 할 일 api 연동
                                                 getGoalTodo()
+                                                binding.waterWeekAddGoalLl.visibility = View.VISIBLE
                                             }
                                         }
                                     })
@@ -325,37 +343,40 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                     Log.d("getGoalTodo/Request", clickPotId.toString())
                     Log.d("getGoalTodo", response.body()?.result.toString())
 
-                    // 목표 리사이클러뷰 연동
-                    val goalManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    val goalAdapter = response.body()?.result?.let { WaterWeekGoalRVAdapter(it.goals) }
-                    binding.waterWeekGoalRv.apply {
-                        adapter = goalAdapter
-                        layoutManager = goalManager
+                    if (clickdate != "" || clickPotId != 0.toLong()) {
+                        // 목표 리사이클러뷰 연동
+                        val goalManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        val goalAdapter = response.body()?.result?.let { WaterWeekGoalRVAdapter(it.goals) }
+                        binding.waterWeekGoalRv.apply {
+                            adapter = goalAdapter
+                            layoutManager = goalManager
+                        }
+
+                        goalAdapter?.setGoalAddClick(object: WaterWeekGoalRVAdapter.ItemClickListener{
+
+                            // 할 일 추가 클릭 시 dialog
+                            override fun onTodoAddClick(goalName: String, goalId: Long) {
+                                val waterWeekGoalTodoDialog = WaterWeekGoalTodoDialog(requireContext(), this@WaterWeekFragment, goalName, goalId, clickdate.toString())
+                                waterWeekGoalTodoDialog.show()
+                            }
+
+                            // 할 일 클릭 시 dialog
+                            override fun onTodoClick2(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long) {
+                                val waterWeekGoalPatchDialog = WaterWeekGoalPatchDialog(requireContext(), this@WaterWeekFragment, clickTodoId, clickTodoTitle, clickTodoDate, clickTodoTime, clickTodoGoalTitle, clickGoalId)
+                                waterWeekGoalPatchDialog.show()
+                            }
+
+                            override fun onOutlineWaterClick2(doneId: Long, doneBoolean: Boolean) {
+                                patchTodoComplete(doneId, TodoPatchCompleteRequest(doneBoolean))
+                            }
+
+                            override fun onFillWaterClick2(doneId: Long, doneBoolean: Boolean) {
+                                patchTodoComplete(doneId, TodoPatchCompleteRequest(doneBoolean))
+                            }
+
+                        })
                     }
 
-                    goalAdapter?.setGoalAddClick(object: WaterWeekGoalRVAdapter.ItemClickListener{
-
-                        // 할일 추가 클릭 시 dialog
-                        override fun onTodoAddClick(goalName: String, goalId: Long) {
-                            val waterWeekGoalTodoDialog = WaterWeekGoalTodoDialog(requireContext(), this@WaterWeekFragment, goalName, goalId, clickdate.toString())
-                            waterWeekGoalTodoDialog.show()
-                        }
-
-                        // 할 일 클릭 시 dialog
-                        override fun onTodoClick2(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String) {
-                            val waterWeekGoalPatchDialog = WaterWeekGoalPatchDialog(requireContext(), this@WaterWeekFragment, clickTodoId, clickTodoTitle, clickTodoDate, clickTodoTime, clickTodoGoalTitle)
-                            waterWeekGoalPatchDialog.show()
-                        }
-
-                        override fun onOutlineWaterClick2(doneId: Long, doneBoolean: Boolean) {
-                            patchTodoComplete(doneId, TodoPatchCompleteRequest(doneBoolean))
-                        }
-
-                        override fun onFillWaterClick2(doneId: Long, doneBoolean: Boolean) {
-                            patchTodoComplete(doneId, TodoPatchCompleteRequest(doneBoolean))
-                        }
-
-                    })
                 }
             }
 
@@ -393,17 +414,17 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
 
     // 확인 클릭 시
     override fun onCompleteClicked() {
-        weekCalendar()
+        getGoalTodo()
     }
 
     // 수정 클릭 시
     override fun onPatchClicked() {
-        weekCalendar()
+        getGoalTodo()
     }
 
     // 삭제 클릭 시
     override fun onDeleteClicked() {
-        weekCalendar()
+        getGoalTodo()
     }
 
 }
