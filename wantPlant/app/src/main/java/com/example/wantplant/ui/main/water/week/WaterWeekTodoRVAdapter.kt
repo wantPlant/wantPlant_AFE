@@ -24,7 +24,7 @@ class WaterWeekTodoRVAdapter(private val data: List<String>, private val parentP
 
     inner class ViewHolder(private val binding: ItemWaterWeekTodoBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.itemTodoTitleTv.text = data[position]
+            binding.itemWaterWeekTodoTitleTv.text = data[position]
         }
     }
 

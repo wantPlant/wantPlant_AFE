@@ -15,10 +15,11 @@ data class GardenResponse(
 )
 
 data class ResultData(
-    val gardenList: List<GardenData>,
+    val gardens: List<GardenData>,
     val listSize: Int,
     val totalPage: Int,
     val totalElements: Int,
     val isFirst: Boolean,
     val isLast: Boolean
 )
+

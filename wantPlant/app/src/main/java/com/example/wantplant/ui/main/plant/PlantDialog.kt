@@ -8,6 +8,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import com.example.wantplant.data.local.Goal
+import com.example.wantplant.data.local.TodoResult
+import com.example.wantplant.data.remote.pot.request.PotPostRequest
+import com.example.wantplant.data.remote.pot.request.Todo
 import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
 import com.example.wantplant.data.remote.todo.request.TodoPostRequest
 import com.example.wantplant.data.remote.todo.response.TodoPostResponse
@@ -58,22 +62,27 @@ class PlantDialog(context: Context, plantDialogInterface: PlantDialogInterface) 
         }
 
         binding.dialogPlantCompleteBtn.setOnClickListener{
+            var goalName = binding.dialogPlantGoalEt.text.toString()
             var todoName = binding.dialogPlantGoalEt.text.toString()
             var todoTime = binding.dialogPlantMonthTimeTv.text.toString()
             var todoDate = binding.dialogPlantMonthDateTv.text.toString()
 
             this.plantDialogInterface?.onCompleteClicked()
 
+            Log.d("goalName", goalName)
             Log.d("todoName", todoName)
             Log.d("todoTime", todoTime)
             Log.d("todoDate", todoDate)
+
+            // 여기서 목표를 생성하고 해당 목표에 투두를 추가함
+
 
             dismiss()
         }
     }
 
     private fun postTodoAPI(todoPostRequest: TodoPostRequest) {
-        val todoService = getRetrofit().create(TodoRetrofitInterfaces::class.java)
+        /*val todoService = getRetrofit().create(TodoRetrofitInterfaces::class.java)
         Log.d("TodoPostRequest", todoPostRequest.toString())
 
         todoService.postTodo(todoPostRequest).enqueue(object: Callback<TodoPostResponse> {
@@ -91,6 +100,6 @@ class PlantDialog(context: Context, plantDialogInterface: PlantDialogInterface) 
             override fun onFailure(call: Call<TodoPostResponse>, t: Throwable) {
                 Log.d("TodoAdd/Failure", t.message.toString())
             }
-        })
+        })*/
     }
 }

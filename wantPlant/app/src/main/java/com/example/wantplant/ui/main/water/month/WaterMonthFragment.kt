@@ -63,7 +63,6 @@ class WaterMonthFragment : Fragment(), WaterMonthInterface {
             binding.waterMonthYearTv.text = "${yearFromDate(standardDate)}년 ${monthFromDate(standardDate)}월"
             getMonthTagAPI(standardDate)
         }
-
     }
 
     // 월별 태그 api 연동

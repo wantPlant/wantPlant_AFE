@@ -15,5 +15,5 @@ data class Todo(
 
 data class Goal(
     var goalTitle: String,
-    var todoLIst: ArrayList<Todo>
+    var todoList: ArrayList<Todo>
 )

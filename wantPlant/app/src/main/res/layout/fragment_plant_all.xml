@@ -97,6 +97,7 @@
             android:progressDrawable="@drawable/rounded_progress_bar"/>
 
         <TextView
+            android:id="@+id/whole_plant_progress_chart_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -156,7 +157,7 @@
         android:inputType="text"
         android:letterSpacing="0.02"
         android:textColor="#757373"
-        android:id="@+id/whole_plant_creating_garden_et"
+        android:id="@+id/whole_plant_creating_garden_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"

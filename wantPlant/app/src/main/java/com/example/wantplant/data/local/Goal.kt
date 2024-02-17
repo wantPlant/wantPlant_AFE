@@ -1,8 +1,9 @@
 package com.example.wantplant.data.local
 
 data class Goal(
-    val goalTitle: String,
-    val todoList: List<TodoResult>
+    val goalId: Long,
+    var goalTitle: String,
+    var todoList: List<TodoResult>
 )
 
 /*data class Todo(

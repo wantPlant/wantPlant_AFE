@@ -21,7 +21,7 @@ import retrofit2.Response
 import java.util.Calendar
 
 class PlantPatchDialog(context: Context, private var todo: TodoResult, plantDialogInterface: PlantDialogInterface) : Dialog(context) {
-    private var mBinding : DialogPlantBinding? = null
+    /*private var mBinding : DialogPlantBinding? = null
     private val binding get() = mBinding!!
     private var plantDialogInterface : PlantDialogInterface? = null
 
@@ -114,5 +114,5 @@ class PlantPatchDialog(context: Context, private var todo: TodoResult, plantDial
                 Log.d("TodoPatch/Failure", t.message.toString())
             }
         })
-    }
+    }*/
 }

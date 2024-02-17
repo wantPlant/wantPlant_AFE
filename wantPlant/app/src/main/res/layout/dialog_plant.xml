@@ -24,13 +24,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
+    <EditText
         android:id="@+id/dialog_plant_goal_et"
         android:layout_width="138dp"
         android:layout_height="69dp"
         android:background="@drawable/rect_bluefill_nonstroke_15radius"
         android:gravity="center"
-        android:text="큰 목표"
+        android:hint="큰 목표"
         android:paddingTop="6dp"
         android:paddingLeft="10dp"
         android:paddingRight="6dp"

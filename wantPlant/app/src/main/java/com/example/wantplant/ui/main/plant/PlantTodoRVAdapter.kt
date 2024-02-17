@@ -30,7 +30,7 @@ class PlantTodoRVAdapter() : RecyclerView.Adapter<PlantTodoViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: PlantTodoViewHolder, position: Int) {
-        holder.bind(data[position], mTodoItemClickListener)
+        /*holder.bind(data[position], mTodoItemClickListener)*/
     }
 
     override fun getItemCount(): Int {
@@ -38,12 +38,12 @@ class PlantTodoRVAdapter() : RecyclerView.Adapter<PlantTodoViewHolder>() {
     }
 
 //    inner class ViewHolder(val binding: ItemWaterWeekTodoBinding) : RecyclerView.ViewHolder(binding.root) {
-///*        init {
+//        init {
 //            binding.itemTodoTitleTv.setOnClickListener {
 //                val plantDialog = PlantDialog(it.context as AppCompatActivity, it.context as PlantDialogInterface)
 //                plantDialog.show()
 //            }
-//        }*/
+//        }
 //    }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -54,7 +54,7 @@ class PlantTodoRVAdapter() : RecyclerView.Adapter<PlantTodoViewHolder>() {
 }
 
 class PlantTodoViewHolder(val binding: ItemWaterWeekTodoBinding) : RecyclerView.ViewHolder(binding.root){
-    fun bind(item: TodoResult, listener: TodoItemClickListener?){
+/*    fun bind(item: TodoResult, listener: TodoItemClickListener?){
         with(binding){
             itemTodoTimeTv.text = item.time
             itemTodoTitleTv.text = item.title
@@ -62,5 +62,5 @@ class PlantTodoViewHolder(val binding: ItemWaterWeekTodoBinding) : RecyclerView.
                 listener?.onTodoItemClick(item)
             }
         }
-    }
+    }*/
 }

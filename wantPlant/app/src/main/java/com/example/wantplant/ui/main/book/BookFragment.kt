@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.book
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,6 +44,15 @@ class BookFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bookGardenNameRVAdapter.setOnGardenClickListener { gardenId ->
+            // 클릭된 정원의 ID를 어댑터에 전달
+            bookGardenNameRVAdapter.setSelectedGardenId(gardenId)
+        }
+    }
+
     // 모든 정원 GET
     private fun initGardenNameRecyclerView() {
         val gardenNameManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -50,6 +60,7 @@ class BookFragment : Fragment() {
 
         // bookGardenNameRVAdapter 객체 생성 및 초기화
         bookGardenNameRVAdapter = BookGardenNameRVAdapter { gardenId ->
+            bookGardenNameRVAdapter.currentGardenId = gardenId  // 아이템을 클릭할 때마다 currentGardenId를 업데이트
             initFlowerpotRecyclerView(gardenId)
             // gardenId를 인자로 받아 initFlowerpotRecyclerView() 함수를 호출
         }
@@ -59,41 +70,56 @@ class BookFragment : Fragment() {
             layoutManager = gardenNameManager
         } // 정원 이름 리사이클러뷰에 어뎁터 및 레이아웃 메니저 적용
 
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val retrofit = getRetrofit() // Retrofit 객체를 얻음
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
         // GardenRetrofitInterfaces 인터페이스 생성 => API
-        val call = api.getGardens("Bearer $accessToken", page = 1, pageSize = 100) // [GET] 모든 정원 조회 API
+
+        val call = api.getGardens("Bearer $accessToken")
         call.enqueue(object : Callback<GardenResponse> { // Call 객체에 비동기적인 응답 처리 등록
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
-                if (response.isSuccessful) { // 서버 응답이 성공인 경우 (뭔가가 응답이 오긴 했지만 성공인지 실팬지 따로 체크해야 됨)
-                    // 서버에서 받아온 정원 리스트를 ID(gardenId) 순서대로 정렬
-                    val gardenList = response.body()?.result?.gardenList?.sortedBy { it.gardenId } ?: emptyList()
+                if (response.isSuccessful) { // 서버 응답이 성공인 경우
+                    val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
+                    // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
                     // body() - 서버로부터 받은 데이터를 얻음
                     // ?. - 앞의 표현식이 null이면 null을 반환, 그렇지 않으면 계속 진행
                     // result?.gardenList - 서버 응답의 데이터 중 result에 해당하는 부분에서 gardenList를 가져옴
                     // ?.sortedBy { it.gardenId } - gardenId를 기준으로 gardenList 정렬 (it - 각각의 Garden 객체)
                     // ?: emptyList() - 위의 표현식이 null이면 빈 리스트 반환, response.body()가 null인 경우를 대비하여 빈 리스트로 초기화
 
-                    // 정렬된 리스트에서 각 정원의 이름을 가져옴
-                    val gardenNames = gardenList.map { it.name } // map - 추출
-                    val gardenIds = gardenList.map { it.gardenId.toString() }
-
                     plantNotLayout = binding.bookPlantNotCl // 아직 다 키운 화분이 없어요 ㅠ_ㅠ
                     plantAllLayout = binding.bookPlantAllCl // 전체 도감
 
                     if (gardenList.isEmpty()) { // 정원 리스트가 비어있다면
-                        binding.bookCreateGardenAcb.visibility = View.VISIBLE // 정원을 만들어주세요 표시
-                        binding.bookGardenNameRv.visibility = View.INVISIBLE // 정원 리스트 숨김
-                    } else { // 정원이 하나라도 있다면
-                        binding.bookCreateGardenAcb.visibility = View.INVISIBLE // 정원을 만들어주세요 숨김
-                        binding.bookGardenNameRv.visibility = View.VISIBLE // 정원 리스트 표시
+                        bookGardenNameRVAdapter.setData(listOf("정원을 만들어주세요"), listOf("0"))
+                        Log.d("Retrofit 정원 이름 리스트 호출", "리스트 비었음: ${listOf("정원을 만들어주세요")}")
 
-                        bookGardenNameRVAdapter.gardenTitles = gardenNames // 정원 이름 설정
-                        bookGardenNameRVAdapter.notifyDataSetChanged()
+                        //binding.bookCreateGardenAcb.visibility = View.VISIBLE // 정원을 만들어주세요 표시
+                        //binding.bookGardenNameRv.visibility = View.INVISIBLE // 정원 리스트 숨김
+                    } else { // 정원이 하나라도 있다면
+                        //binding.bookCreateGardenAcb.visibility = View.INVISIBLE // 정원을 만들어주세요 숨김
+                        //binding.bookGardenNameRv.visibility = View.VISIBLE // 정원 리스트 표시
+
+                        // 정렬된 리스트에서 각 정원의 이름을 가져옴
+                        val gardenNames = gardenList.map { it.name } // map - 추출
+                        val gardenIds = gardenList.map { it.gardenId.toString() }
+
+                        //bookGardenNameRVAdapter.gardenTitles = gardenNames // 정원 이름 설정
+                        //bookGardenNameRVAdapter.notifyDataSetChanged()
                         // 어댑터가 현재 데이터셋에 대한 변경 사항을 감지하고 이를 RecyclerView에 적용하도록 시스템에 알림
 
+                        // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
+                        bookGardenNameRVAdapter.setData(gardenNames, gardenIds)
+
+                        // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
+                        bookGardenNameRVAdapter.currentGardenId = gardenIds[0]
+
+                        Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
+
                         // 정원의 id 저장
-                        bookGardenNameRVAdapter.gardenIds = gardenIds
+                        //bookGardenNameRVAdapter.gardenIds = gardenIds
                         bookGardenNameRVAdapter.setOnGardenClickListener { gardenId ->
                             val selectedGarden = gardenList.find { it.gardenId.toString() == gardenId }
                             // gardenList에서 현재 요소의 gardenId(선택된 정원의 id)가 gardenId와 일치하는 것을 찾아서 저장
@@ -109,10 +135,11 @@ class BookFragment : Fragment() {
                             selectedGardenDescription = selectedGarden?.description
                             binding.bookExplainGardenLabelTv.text = selectedGardenDescription
                             // 선택된 정원의 설명을 selectedGardenDescription에 저장 후 bookExplainGardenLabelTv에 표시
+
                         }
                     }
 
-                    Log.d("Retrofit 정원 이름 리스트 호출", "성공: ${gardenNames}, ${gardenIds}")
+                    // Log.d("Retrofit 정원 이름 리스트 호출", "성공: ${gardenNames}, ${gardenIds}")
                 } else { // 서버 응답이 실패인 경우
                     Log.d("Retrofit 정원 이름 리스트 호출", "실패: ${response.errorBody()}")
                 }
@@ -126,11 +153,13 @@ class BookFragment : Fragment() {
 
     // 특정 정원 당 모든 화분(이름, 이미지, 기간) GET
     private fun initFlowerpotRecyclerView(gardenId: String) {
-        val retrofit = getRetrofit() // 브라우저 창 열기
-        val api = retrofit.create(PotRetrofitInterfaces::class.java) // 어떤 주소로 들어감 (요청 X)
-        val call = api.getCompletedPots(gardenId) // 정원 당 화분 리스트 조회
 
-        // 입력한 주소 중 하나로 연결 시도
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+        val retrofit = getRetrofit()
+        val api = retrofit.create(PotRetrofitInterfaces::class.java)
+
+        val call = api.getCompletedPots("Bearer $accessToken", gardenId) // 정원 당 화분 리스트 조회
         call.enqueue(object : Callback<CompletedPotResult> {
             override fun onResponse(call: Call<CompletedPotResult>, response: Response<CompletedPotResult>) {
                 if (response.isSuccessful) {
@@ -164,8 +193,7 @@ class BookFragment : Fragment() {
                             layoutManager = potManager
                         } // 화분 리사이클러뷰에 어뎁터 및 레이아웃 메니저 적용
                     }
-
-                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots(gardenId)}")
+                    Log.d("Retrofit 화분", "성공 ${api.getCompletedPots("Bearer $accessToken", gardenId)}")
                 } else {
                     Log.d("Retrofit 화분", "실패 ${response.errorBody()}") // 응답 실패 시의 처리
                 }

@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.databinding.FragmentPlantAllBinding
-import com.example.wantplant.ui.main.book.PlantFlowerpotNameRVAdapter
 import com.example.wantplant.ui.main.water.week.WaterWeekPotTitleRVAdapter
 
 class PlantFlowerpotNameFragment : Fragment() {
-    private lateinit var binding: FragmentPlantAllBinding
+/*    private lateinit var binding: FragmentPlantAllBinding
     private var plantFlowerpotNameDatas = ArrayList<PlantFlowerpotName>()
 
     override fun onCreateView(
@@ -45,5 +44,5 @@ class PlantFlowerpotNameFragment : Fragment() {
         })
 
         return binding.root
-    }
+    }*/
 }

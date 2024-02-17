@@ -3,6 +3,7 @@ package com.example.wantplant.data.local
 data class Pot(
     val potId: Int,
     val potName: String,
+    val potTagColor: String,
     val proceed: Int,
     val potImageUrl: String,
     val startAt: String

@@ -18,16 +18,14 @@ interface GardenRetrofitInterfaces {
         @Body gardenData: GardenData
     ): Call<GardenResponse>
 
-    @GET("/api/gardens/{page}/{pageSize}")
+    @GET("/api/gardens")
     fun getGardens(
-        @Header("Authorization") authorization: String,
-        @Path("page") page: Int,
-        @Path("pageSize") pageSize: Int
+        @Header("Authorization") authorization: String
     ): Call<GardenResponse>
 
     @DELETE("/api/gardens/{gardenId}")
     fun deleteGarden(@Header("Authorization") authorization: String, @Path("gardenId") gardenId: Int): Call<Void>
 
     @GET("/api/gardens/{gardenId}")
-    fun getGarden(@Path("gardenId") gardenId: Int) : Call<GardenResponse>
+    fun getGarden(@Header("Authorization") authorization: String, @Path("gardenId") gardenId: Int) : Call<GardenResponse>
 }
