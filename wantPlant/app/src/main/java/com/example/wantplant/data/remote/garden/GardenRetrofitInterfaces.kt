@@ -2,6 +2,7 @@ package com.example.wantplant.data.remote.garden
 
 import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
+import com.example.wantplant.data.remote.garden.response.GardenGetResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -22,6 +23,11 @@ interface GardenRetrofitInterfaces {
     fun getGardens(
         @Header("Authorization") authorization: String
     ): Call<GardenResponse>
+
+    @GET("/api/gardens")
+    fun getGarden(
+        @Header("Authorization") authorization: String
+    ): Call<GardenGetResponse>
 
     @DELETE("/api/gardens/{gardenId}")
     fun deleteGarden(@Header("Authorization") authorization: String, @Path("gardenId") gardenId: Int): Call<Void>

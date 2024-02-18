@@ -34,7 +34,7 @@
         tools:listitem="@layout/item_book_garden_name" />
 
     <LinearLayout
-        android:id="@+id/book_create_garden_acb"
+        android:id="@+id/book_create_garden_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -63,7 +63,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/book_create_garden_acb"
+        app:layout_constraintTop_toBottomOf="@+id/book_create_garden_ll"
         android:layout_marginTop="89dp"
         android:id="@+id/book_plant_not_cl"
         android:visibility="invisible"

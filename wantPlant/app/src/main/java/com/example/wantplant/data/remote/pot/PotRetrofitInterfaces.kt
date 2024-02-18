@@ -19,7 +19,7 @@ interface PotRetrofitInterfaces {
     @GET("/api/pots")
     fun getPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: Int, @Query("page") page: Int): Call<PotsResult>
 
-    @GET("/api/pots/completed/app")
+    @GET("/api/completed-pots/app")
     fun getCompletedPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: String): Call<CompletedPotResult>
 
     @GET("/api/pots/names")

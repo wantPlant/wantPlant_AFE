@@ -12,8 +12,9 @@ data class CompletedPotResult(
     val code: String,
     val message: String,
     val result: CompletedResult
-) {
-    data class CompletedResult(
-        val pots: List<CompletedPot>
-    )
-}
+)
+
+data class CompletedResult(
+    val pots: List<CompletedPot>
+)
+
