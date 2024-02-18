@@ -17,7 +17,7 @@
         android:lineSpacingExtra="5sp"
         android:letterSpacing="0.02"
         android:textStyle="bold"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:paddingLeft="13dp"
         android:paddingRight="13dp"
         android:paddingTop="8dp"
