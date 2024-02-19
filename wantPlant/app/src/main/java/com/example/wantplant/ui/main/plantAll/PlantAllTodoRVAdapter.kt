@@ -1,14 +1,15 @@
-package com.example.wantplant.ui.main.water.week
+package com.example.wantplant.ui.main.plantAll
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wantplant.data.remote.goal.response.GoalTodoList
+import com.example.wantplant.data.remote.goal.response.TodoGetList
 import com.example.wantplant.databinding.ItemWaterWeekTodoBinding
+import com.example.wantplant.ui.main.water.week.WaterWeekTodoRVAdapter
 
-class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var goalTitle: String, private val goalId: Long) : RecyclerView.Adapter<WaterWeekTodoRVAdapter.ViewHolder>() {
+class PlantAllTodoRVAdapter(private var todo: List<TodoGetList>, private var goalTitle: String, private val goalId: Long): RecyclerView.Adapter<PlantAllTodoRVAdapter.ViewHolder>() {
 
     interface TodoClickListener {
         fun onTodoClick(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long)
@@ -22,15 +23,17 @@ class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var g
         mTodoClickListener = todoClickListener
     }
 
+    inner class ViewHolder(val binding: ItemWaterWeekTodoBinding) : RecyclerView.ViewHolder(binding.root)
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): WaterWeekTodoRVAdapter.ViewHolder {
+    ): PlantAllTodoRVAdapter.ViewHolder {
         val binding = ItemWaterWeekTodoBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: WaterWeekTodoRVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PlantAllTodoRVAdapter.ViewHolder, position: Int) {
         holder.binding.itemWaterWeekTodoTitleTv.text = todo[position].todoTitle
         holder.binding.itemWaterWeekTodoTimeTv.text = todo[position].time
 
@@ -69,7 +72,4 @@ class WaterWeekTodoRVAdapter(private var todo: List<GoalTodoList>, private var g
     override fun getItemCount(): Int {
         return todo.size
     }
-
-    inner class ViewHolder(val binding: ItemWaterWeekTodoBinding) : RecyclerView.ViewHolder(binding.root)
-
 }

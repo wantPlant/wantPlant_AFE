@@ -26,6 +26,7 @@ import com.example.wantplant.data.remote.todo.response.TodoPatchCompleteResponse
 import com.example.wantplant.data.remote.todo.response.TodoPatchResponse
 import com.example.wantplant.databinding.FragmentWaterWeekBinding
 import com.example.wantplant.ui.main.MainActivity
+import com.example.wantplant.ui.main.plantAll.PlantAllGoalDeleteDialog
 import com.example.wantplant.ui.main.water.month.WaterMonthDayRVAdapter
 import com.example.wantplant.ui.main.water.month.WaterMonthFragment
 import com.example.wantplant.utils.getRetrofit
@@ -55,18 +56,7 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
 
         weekCalendar()
 
-//        val dayList = dayInMonthArray()
-//        Log.d("dayList", dayList.toString())
-//        val dayListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//        val dayListAdapter = WaterWeekDayRVAdapter(dayList)
-//        binding.waterWeekDayListRv.apply {
-//            layoutManager = dayListManager
-//            adapter = dayListAdapter
-//        }
-
         onClickListener()
-
-//        initGoalRecyclerView()
 
         binding.waterWeekAddGoalLl.setOnClickListener {
             val waterWeekGoalDialog = WaterWeekGoalDialog(requireContext(), this@WaterWeekFragment, clickdate.toString(), clickPotId)
@@ -74,10 +64,6 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         }
 
         setTextViewColor()
-
-//        initPotRecyclerView()
-
-//        initGardenRecyclerView()
 
         // 정원 리사이클러뷰 api 연동
         getGarden()
@@ -90,7 +76,6 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
         if (clickdate != "" && clickPotId != 0.toLong()) {
             binding.waterWeekAddGoalLl.visibility = View.VISIBLE
         }
-
 
         return binding.root
     }
@@ -198,44 +183,6 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                 .commitAllowingStateLoss()
         }
     }
-
-    // 목표 리사이클러뷰 연동
-//    private fun initGoalRecyclerView() {
-//        binding.waterWeekGoalRv.apply {
-//            adapter = WaterWeekGoalRVAdapter()
-//            layoutManager = LinearLayoutManager(context)
-//        }
-//    }
-
-    // 화분 리사이클러뷰 연동
-//    private fun initPotRecyclerView() {
-//        val weekPotManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.waterWeekPotTitleRv.apply {
-//            adapter = WaterWeekPotTitleRVAdapter()
-//            layoutManager = weekPotManager
-//        }
-//    }
-
-
-//    private fun initGardenRecyclerView() {
-//
-//        getGarden()
-//
-//        val weekGardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.waterWeekGardenTitleRv.apply {
-//            adapter = WaterWeekGardenTitleRVAdapter()
-//            layoutManager = weekGardenManager
-//        }
-//    }
-
-//    private fun showDialog(formattedDate: String) {
-//        binding.waterWeekAddGoalLl.setOnClickListener {
-//            val waterWeekGoalDialog = WaterWeekGoalDialog(binding.root.context, this, formattedDate)
-//            waterWeekGoalDialog.show()
-//        }
-//    }
-
-
 
     // 정원 GET api 연동
     private fun getGarden() {
@@ -372,6 +319,12 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
 
                             override fun onFillWaterClick2(doneId: Long, doneBoolean: Boolean) {
                                 patchTodoComplete(doneId, TodoPatchCompleteRequest(doneBoolean))
+                            }
+
+                            // 목표 클릭 시 dialog
+                            override fun onGoalDeleteClick(goalName: String, goalId: Long) {
+                                val waterWeekGoalDeleteDialog = WaterWeekGoalDeleteDialog(requireContext(), this@WaterWeekFragment, goalName, goalId)
+                                waterWeekGoalDeleteDialog.show()
                             }
 
                         })

@@ -29,8 +29,11 @@ class PlantActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val gardenId = intent.getLongExtra("gardenId", 0)
+        val gardenTitle = intent.getStringExtra("gardenTitle")
 
         binding = ActivityPlantBinding.inflate(layoutInflater)
+
+        binding.plantCreatingGardenEt.text = gardenTitle
 
         val calendar = Calendar.getInstance()
 

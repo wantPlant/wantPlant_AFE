@@ -17,7 +17,8 @@
     <string name="logo_small">이제는 하고 싶을 때,</string>
     <string name="logo_big">하고,심다</string>
     <string name="garden_delete">정원 삭제</string>
-    <string name="garden_delete_explain">정원을 삭제하시겠습니까? </string>
+    <string name="garden_delete_explain">을(를) 삭제하시겠습니까? </string>
+    <string name="goal_delete">목표 삭제</string>
     <string name="garden_my">나의 정원</string>
     <string name="garden_pot">화분 심기</string>
     <string name="garden_add">정원 만들기</string>

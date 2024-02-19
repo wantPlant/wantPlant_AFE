@@ -1,7 +1,7 @@
 package com.example.wantplant.data.local
 
 data class GardenData(
-    val gardenId: Int? = null,
+    val gardenId: Long,
     val name: String,
     val description: String,
     val category: String

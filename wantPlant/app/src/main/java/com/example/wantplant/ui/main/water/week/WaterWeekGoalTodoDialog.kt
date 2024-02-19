@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import com.example.wantplant.data.remote.goal.response.GoalPostResponse
 import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
 import com.example.wantplant.data.remote.todo.request.TodoPostRequest
 import com.example.wantplant.data.remote.todo.response.TodoPostResponse
@@ -114,8 +115,6 @@ class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInt
 
             postTodoAPI(TodoPostRequest(goalId, todoTitle, todoDate, todoTime))
 
-            this.waterWeekInterface?.onCompleteClicked()
-
             dismiss()
         }
     }
@@ -132,6 +131,11 @@ class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInt
             override fun onResponse(call: Call<TodoPostResponse>, response: Response<TodoPostResponse>) {
                 Log.d("TodoPost/ServerSuccess", response.toString())
                 Log.d("TodoAdd", response.body()?.result.toString())
+                val resp: TodoPostResponse? = response.body()
+
+                if (resp != null) {
+                    waterWeekInterface?.onCompleteClicked()
+                }
                 when(response.body()?.code) {
                     "200" -> Log.d("TodoAdd/Success", "TodoAdd!!")
                 }

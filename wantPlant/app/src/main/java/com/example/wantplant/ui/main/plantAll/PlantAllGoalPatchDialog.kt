@@ -1,4 +1,4 @@
-package com.example.wantplant.ui.main.water.week
+package com.example.wantplant.ui.main.plantAll
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -11,28 +11,28 @@ import android.util.Log
 import com.example.wantplant.data.remote.goal.GoalRetrofitInterfaces
 import com.example.wantplant.data.remote.goal.request.GoalPatchRequest
 import com.example.wantplant.data.remote.goal.response.GoalPatchResponse
-import com.example.wantplant.data.remote.tag.response.TagPatchResponse
 import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
 import com.example.wantplant.data.remote.todo.request.TodoPatchRequest
 import com.example.wantplant.data.remote.todo.response.TodoDeleteResponse
 import com.example.wantplant.data.remote.todo.response.TodoPatchResponse
 import com.example.wantplant.databinding.DialogWaterWeekPatchBinding
+import com.example.wantplant.ui.main.water.week.WaterWeekInterface
 import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
 
-class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekInterface, val clickTodoId: Long, var clickTodoTitle: String, var clickTodoDate: String, var clickTodoTime: String, var clickTodoGoalTitle: String, var clickGoalId: Long): Dialog(context) {
+class PlantAllGoalPatchDialog(context: Context, plantAllInterface: PlantAllInterface, val clickTodoId: Long, var clickTodoTitle: String, var clickTodoDate: String, var clickTodoTime: String, var clickTodoGoalTitle: String, var clickGoalId: Long): Dialog(context) {
     private var mBinding : DialogWaterWeekPatchBinding? = null
     private val binding get() = mBinding!!
     private lateinit var todoTime: String
     private lateinit var todoDate: String
 
-    private var waterWeekInterface: WaterWeekInterface? = null
+    private var plantAllInterface: PlantAllInterface? = null
 
     init {
-        this.waterWeekInterface = waterWeekInterface
+        this.plantAllInterface = plantAllInterface
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,7 +140,8 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
                     }
                 }
             }
-            DatePickerDialog(context, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(context, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(
+                Calendar.DAY_OF_MONTH)).show()
         }
 
         // 완료 클릭 시
@@ -175,7 +176,8 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
 
         val todoService = getRetrofit().create(TodoRetrofitInterfaces::class.java)
 
-        todoService.patchTodo("Bearer $accessToken", todoId, todoPatchRequest).enqueue(object: Callback<TodoPatchResponse> {
+        todoService.patchTodo("Bearer $accessToken", todoId, todoPatchRequest).enqueue(object:
+            Callback<TodoPatchResponse> {
             override fun onResponse(call: Call<TodoPatchResponse>, response: Response<TodoPatchResponse>) {
                 Log.d("TodoPatch/ServerSuccess", response.toString())
                 Log.d("TodoPatchRequest", todoPatchRequest.toString())
@@ -183,7 +185,7 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
                 val resp: TodoPatchResponse? = response.body()
 
                 if (resp != null) {
-                    waterWeekInterface?.onPatchClicked()
+                    plantAllInterface?.onPatchClicked()
                 }
 
                 when(resp?.code) {
@@ -205,13 +207,14 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
 
         val goalService = getRetrofit().create(GoalRetrofitInterfaces::class.java)
 
-        goalService.patchGoalTitle("Bearer $accessToken", clickGoalId, goalPatchRequest).enqueue(object: Callback<GoalPatchResponse>{
+        goalService.patchGoalTitle("Bearer $accessToken", clickGoalId, goalPatchRequest).enqueue(object:
+            Callback<GoalPatchResponse> {
             override fun onResponse(call: Call<GoalPatchResponse>, response: Response<GoalPatchResponse>) {
                 Log.d("GoalPatch/ServerSuccess", response.toString())
                 Log.d("GoalPatchRequest", goalPatchRequest.toString())
                 val resp: GoalPatchResponse? = response.body()
                 if (resp != null) {
-                    waterWeekInterface?.onPatchClicked()
+                    plantAllInterface?.onPatchClicked()
                 }
 
                 when(resp?.code) {
@@ -233,18 +236,19 @@ class WaterWeekGoalPatchDialog(context: Context, waterWeekInterface: WaterWeekIn
 
         val todoService = getRetrofit().create(TodoRetrofitInterfaces::class.java)
 
-        todoService.deleteTodo("Bearer $accessToken", todoId = todoId).enqueue(object: Callback<TodoDeleteResponse>{
+        todoService.deleteTodo("Bearer $accessToken", todoId = todoId).enqueue(object:
+            Callback<TodoDeleteResponse> {
             override fun onResponse(call: Call<TodoDeleteResponse>, response: Response<TodoDeleteResponse>) {
                 Log.d("TodoDelete/ServerSuccess", response.toString())
                 Log.d("TodoDeleteRequest", todoId.toString())
                 val resp: TodoDeleteResponse? = response.body()
                 if (resp != null) {
-                    waterWeekInterface?.onDeleteClicked()
+                    plantAllInterface?.onDeleteClicked()
                 }
             }
 
             override fun onFailure(call: Call<TodoDeleteResponse>, t: Throwable) {
-                Log.d("TodoDelete/Failure", t.message.toString())
+                Log.d("TodoPatch/Failure", t.message.toString())
             }
 
         })

@@ -1,5 +1,6 @@
 package com.example.wantplant.ui.main.water.week
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,7 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
         fun bind(position: Int) {
             binding.itemGoalTitleTv.text = goals[position].goalTitle
 
-            val todoManager = LinearLayoutManager(binding.itemGoalTodoRv.context, LinearLayoutManager.HORIZONTAL, false)
+            val todoManager = LinearLayoutManager(binding.itemGoalTodoRv.context, LinearLayoutManager.VERTICAL, false)
             val todoAdapter = WaterWeekTodoRVAdapter(goals[position].todos, goals[position].goalTitle, goals[position].goalId)
             binding.itemGoalTodoRv.apply {
                 adapter = todoAdapter
@@ -47,6 +48,7 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
         fun onTodoClick2(clickTodoId: Long, clickTodoTitle: String, clickTodoDate: String, clickTodoTime: String, clickTodoGoalTitle: String, clickGoalId: Long)
         fun onOutlineWaterClick2(doneId: Long, doneBoolean: Boolean)
         fun onFillWaterClick2(doneId: Long, doneBoolean: Boolean)
+        fun onGoalDeleteClick(goalName: String, goalId: Long)
     }
 
     private lateinit var mItemClickListener: ItemClickListener
@@ -68,6 +70,10 @@ class WaterWeekGoalRVAdapter(private var goals: List<GoalList>) : RecyclerView.A
         holder.bind(position)
         holder.binding.itemGoalPlusBtnIv.setOnClickListener {
             mItemClickListener.onTodoAddClick(goals[position].goalTitle, goals[position].goalId)
+        }
+
+        holder.binding.itemGoalTitleTv.setOnClickListener {
+            mItemClickListener.onGoalDeleteClick(goals[position].goalTitle, goals[position].goalId)
         }
     }
 
