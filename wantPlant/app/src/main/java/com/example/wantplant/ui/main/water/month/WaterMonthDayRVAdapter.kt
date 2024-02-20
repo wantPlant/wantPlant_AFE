@@ -41,7 +41,7 @@ class WaterMonthDayRVAdapter(private val dayList: MutableList<MonthDate>): Recyc
         val context = holder.binding.root.context
 
         // 해당 날을 클릭 했을 때
-        holder.binding.waterMonthDayCl.setOnClickListener {
+        holder.binding.itemDayLayout.setOnClickListener {
 
             if (dayList[position].tag?.size ?:0 > 3) {
                 val waterMonthWarningDialog = WaterMonthWarningDialog(context)

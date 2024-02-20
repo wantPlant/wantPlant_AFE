@@ -14,21 +14,27 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.R
 import com.example.wantplant.data.local.GardenResponse
+import com.example.wantplant.data.local.Pot
 import com.example.wantplant.data.local.PotsResult
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
 import com.example.wantplant.data.remote.pot.PotRetrofitInterfaces
 import com.example.wantplant.databinding.FragmentGardenBinding
+import com.example.wantplant.ui.main.MainActivity
 import com.example.wantplant.ui.main.plant.PlantActivity
+import com.example.wantplant.ui.main.plantAll.PlantAllFragment
 import com.example.wantplant.ui.main.selectgarden.SelectGardenActivity
 import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GardenFragment : Fragment() {
+class GardenFragment : Fragment(), GardenInterface {
     private lateinit var binding : FragmentGardenBinding
-    private lateinit var gardenGardenRVAdapter: GardenGardenRVAdapter
+
     private var accessToken: String? = null
+    private var clickGardenId: Long = 0
+    private var clickGardenTitle: String = ""
+    private var clickGardenDes: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,31 +46,51 @@ class GardenFragment : Fragment() {
         val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
         accessToken = sharedPref?.getString("accessToken", "")
 
+        Log.d("토큰", accessToken.toString())
+
         initGardenRecyclerView()
 
-        initPotRecyclerView(String())
+        initPotRecyclerView(clickGardenId)
 
         onClickListener()
+
+        if (clickGardenId == 0.toLong()) {
+            binding.gardenAddPotLl.visibility = View.INVISIBLE
+            binding.gardenDeleteTv.visibility = View.INVISIBLE
+        } else {
+            binding.gardenAddPotLl.visibility = View.VISIBLE
+            binding.gardenDeleteTv.visibility = View.VISIBLE
+        }
 
         return binding.root
     }
 
     private fun initGardenRecyclerView() {
-        val gardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        gardenGardenRVAdapter = GardenGardenRVAdapter { gardenId ->
-            gardenGardenRVAdapter.currentGardenId = gardenId  // 아이템을 클릭할 때마다 currentGardenId를 업데이트
-            initPotRecyclerView(gardenId)
-        }
-
-        binding.gardenGardenRv.apply {
-            adapter = gardenGardenRVAdapter
-            layoutManager = gardenManager
-        }
+//        val gardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        val gardenAdapter = GardenGardenRVAdapter()
+//
+////        gardenGardenRVAdapter = GardenGardenRVAdapter { gardenId ->
+////            gardenGardenRVAdapter.currentGardenId = gardenId  // 아이템을 클릭할 때마다 currentGardenId를 업데이트
+////            initPotRecyclerView(gardenId)
+////        }
+//
+//        gardenAdapter.setGardenTitleClick(object: GardenGardenRVAdapter.GardenClickListener{
+//            override fun onGardenTitleClick(clickedGardenId: String, clickedGardenTitle: String) {
+//                clickGardenId = clickedGardenId.toLong()
+//                clickGardenTitle = clickedGardenTitle
+//                initPotRecyclerView(clickGardenId)
+//            }
+//
+//        })
+//
+//        binding.gardenGardenRv.apply {
+//            adapter = gardenAdapter
+//            layoutManager = gardenManager
+//        }
 
         val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
         val accessToken = sharedPref?.getString("accessToken", "")
-        Log.d("Retrofit 정원이름리스트호출", "사용된 액세스 토큰: Bearer $accessToken")
+//        Log.d("Retrofit 정원이름리스트호출", "사용된 액세스 토큰: Bearer $accessToken")
 
         val retrofit = getRetrofit()
         val api = retrofit.create(GardenRetrofitInterfaces::class.java)
@@ -73,36 +99,98 @@ class GardenFragment : Fragment() {
 
         call.enqueue(object : Callback<GardenResponse> {
             override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
-                Log.d("Retrofit 정원이름리스트호출", "응답 코드: ${response.code()}, 응답 메시지: ${response.message()}, 응답 본문: ${response.body()}")
+                Log.e("GardenGet/ServerSuccess", response.message())
+                Log.d("getGarden", response.body()?.result.toString())
 
-                if (response.isSuccessful) {
-                    // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
-                    val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
-
-                    if (gardenList.isEmpty()) {
-                        // 정원 리스트가 비어있을 경우
-                        gardenGardenRVAdapter.setData(listOf("정원만들기"), listOf("0"))
-                        Log.d("Retrofit 정원이름리스트호출", "리스트 비었음: ${listOf("정원만들기")}")
-                    } else {
-                        // 정원 리스트가 비어있지 않을 경우
-                        // 정렬된 리스트에서 각 정원의 이름을 가져옴
-                        val gardenNames = gardenList.map { it.name }
-                        val gardenIds = gardenList.map { it.gardenId.toString() }
-
-                        // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
-                        gardenGardenRVAdapter.setData(gardenNames, gardenIds)
-
-                        // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
-                        gardenGardenRVAdapter.currentGardenId = gardenIds[0]
-
-                        Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
+                if (response.code() == 200 && response.isSuccessful) {
+                    val gardenManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                    val gardenAdapter = response.body()?.result?.gardens?.let {
+                        GardenGardenRVAdapter(
+                            it
+                        )
                     }
 
-                    Log.d("Retrofit 정원이름리스트호출", "받아온 정원 리스트: $gardenList")
+                    if (response.body()?.result?.gardens?.isNotEmpty() == true) {
+                        clickGardenId = response.body()?.result?.gardens!![0].gardenId
+                        clickGardenTitle = response.body()!!.result.gardens[0].name
 
-                } else {
-                    Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()?.string()}")
+                        binding.gardenNonGardenTitleTv.visibility = View.INVISIBLE
+
+                        if (clickGardenId == 0.toLong()) {
+                            binding.gardenAddPotLl.visibility = View.INVISIBLE
+                            binding.gardenDeleteTv.visibility = View.INVISIBLE
+                        } else {
+                            binding.gardenAddPotLl.visibility = View.VISIBLE
+                            binding.gardenDeleteTv.visibility = View.VISIBLE
+                        }
+                    } else {
+                        binding.gardenNonGardenTitleTv.visibility = View.VISIBLE
+                        binding.gardenAddPotLl.visibility = View.INVISIBLE
+                        binding.gardenDeleteTv.visibility = View.INVISIBLE
+                    }
+
+                    initPotRecyclerView(clickGardenId)
+
+                    binding.gardenGardenRv.apply {
+                        adapter = gardenAdapter
+                        layoutManager = gardenManager
+                    }
+
+//        gardenGardenRVAdapter = GardenGardenRVAdapter { gardenId ->
+//            gardenGardenRVAdapter.currentGardenId = gardenId  // 아이템을 클릭할 때마다 currentGardenId를 업데이트
+//            initPotRecyclerView(gardenId)
+//        }
+
+                    gardenAdapter?.setGardenTitleClick(object: GardenGardenRVAdapter.GardenClickListener{
+                        override fun onGardenTitleClick(clickedGardenId: Long, clickedGardenTitle: String, clickedGardenDes: String) {
+                            clickGardenId = clickedGardenId
+                            clickGardenTitle = clickedGardenTitle
+                            clickGardenDes = clickedGardenDes
+                            initPotRecyclerView(clickGardenId)
+
+                            if (clickGardenId == 0.toLong()) {
+                                binding.gardenAddPotLl.visibility = View.INVISIBLE
+                                binding.gardenDeleteTv.visibility = View.INVISIBLE
+                            } else {
+                                binding.gardenAddPotLl.visibility = View.VISIBLE
+                                binding.gardenDeleteTv.visibility = View.VISIBLE
+                            }
+                        }
+                    })
+
+
                 }
+//                Log.d("Retrofit 정원이름리스트호출", "응답 코드: ${response.code()}, 응답 메시지: ${response.message()}, 응답 본문: ${response.body()}")
+
+//                if (response.isSuccessful) {
+//                    // 서버에서 받아온 정원 리스트를 ID 순서대로 정렬
+//                    val gardenList = response.body()?.result?.gardens?.sortedBy { it.gardenId } ?: emptyList()
+//
+//                    if (gardenList.isEmpty()) {
+//                        // 정원 리스트가 비어있을 경우
+//                        gardenGardenRVAdapter.setData(listOf("정원만들기"), listOf("0"))
+//                        Log.d("Retrofit 정원이름리스트호출", "리스트 비었음: ${listOf("정원만들기")}")
+//                    } else {
+//                        // 정원 리스트가 비어있지 않을 경우
+//                        // 정렬된 리스트에서 각 정원의 이름을 가져옴
+//                        val gardenNames = gardenList.map { it.name }
+//                        val gardenIds = gardenList.map { it.gardenId.toString() }
+//
+//                        // gardenNames와 gardenIds를 GardenGardenRVAdapter에 설정
+//                        gardenGardenRVAdapter.setData(gardenNames, gardenIds)
+//
+//                        // 첫 번째 정원의 ID로 currentGardenId를 초기화합니다.
+//                        gardenGardenRVAdapter.currentGardenId = gardenIds[0]
+//
+//                        Log.d("Retrofit 정원이름리스트호출", "성공: ${gardenNames}, ${gardenIds}")
+//                    }
+//
+//                    Log.d("Retrofit 정원이름리스트호출", "받아온 정원 리스트: $gardenList")
+//
+//                } else {
+//                    Log.d("Retrofit 정원이름리스트호출", "실패: ${response.errorBody()?.string()}")
+//                }
+
             }
 
             override fun onFailure(call: Call<GardenResponse>, t: Throwable) {
@@ -111,18 +199,18 @@ class GardenFragment : Fragment() {
         })
     }
 
-    private fun initPotRecyclerView(gardenId: String) {
+    private fun initPotRecyclerView(gardenId: Long) {
         val retrofit = getRetrofit()
         val api = retrofit.create(PotRetrofitInterfaces::class.java)
 
-        val num = gardenId.toIntOrNull()
+//        val num = gardenId.toIntOrNull()
+//
+//        if (num == null) {
+//            Log.e("GardenFragment", "gardenId가 정수로 변환할 수 없습니다: $gardenId")
+//            return
+//        }
 
-        if (num == null) {
-            Log.e("GardenFragment", "gardenId가 정수로 변환할 수 없습니다: $gardenId")
-            return
-        }
-
-        val call = api.getPots("Bearer $accessToken", num, 1)
+        val call = api.getPots("Bearer $accessToken", gardenId, 1)
         call.enqueue(object : Callback<PotsResult> {
             override fun onResponse(call: Call<PotsResult>, response: Response<PotsResult>) {
                 if (response.isSuccessful) {
@@ -134,7 +222,7 @@ class GardenFragment : Fragment() {
                         this.adapter = adapter
                         layoutManager = potManager
                     }
-                    Log.d("Retrofit 화분", "성공 ${api.getPots("Bearer $accessToken", num, 1)}")
+//                    Log.d("Retrofit 화분", "성공 ${api.getPots("Bearer $accessToken", num, 1)}")
                 } else {
                     // 응답 실패 시의 처리를 작성합니다.
                     Log.d("Retrofit 화분", "실패 ${response.code()}")
@@ -160,69 +248,90 @@ class GardenFragment : Fragment() {
         // 화분 심기를 눌렀을 때
         binding.gardenAddPotLl.setOnClickListener {
             val intent = Intent(activity, PlantActivity::class.java)
+            intent.putExtra("gardenId", clickGardenId)
+            intent.putExtra("gardenTitle", clickGardenTitle)
             startActivity(intent)
+        }
+
+        // 배경을 눌렀을 때
+        binding.gardenBgIv.setOnClickListener {
+            if (clickGardenId != 0.toLong()) {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, PlantAllFragment().apply {
+                        arguments = Bundle().apply {
+                            putLong("gardenId", clickGardenId)
+                            putString("gardenTitle", clickGardenTitle)
+                            putString("gardenDes", clickGardenDes)
+                        }
+                    })
+                    .commitAllowingStateLoss()
+            }
         }
 
 
         // 정원 삭제를 눌럿을 때
         binding.gardenDeleteTv.setOnClickListener {
-            val gardenId = gardenGardenRVAdapter.currentGardenId
-            val gardenName = gardenGardenRVAdapter.getCurrentGardenName() // 정원의 이름을 가져옵니다.
-            Log.d("정원 삭제 이름", gardenName)
+//            val gardenId = gardenGardenRVAdapter.currentGardenId
+//            val gardenName = gardenGardenRVAdapter.getCurrentGardenName() // 정원의 이름을 가져옵니다.
+//            Log.d("정원 삭제 이름", gardenName)
 
-            // AlertDialog 생성
-            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_garden, null)
-            val builder = AlertDialog.Builder(context).setView(dialogView)
-            val alertDialog = builder.show()
+            val gardenDeleteDialog = GardenDeleteDialog(requireContext(), this@GardenFragment, clickGardenId, clickGardenTitle)
+            gardenDeleteDialog.show()
 
-            val titleTextView = dialogView.findViewById<TextView>(R.id.dialog_delete_garden_title_tv)
-            titleTextView.text = "$gardenName ${titleTextView.text}"
-
-            val messageTextView = dialogView.findViewById<TextView>(R.id.dialog_delete_garden_explain_tv)
-            messageTextView.text = "$gardenName 을(를) 정말로 삭제하시겠습니까?"
-
-            dialogView.findViewById<Button>(R.id.dialog_delete_garden_complete_btn).setOnClickListener {
-                // "예" 버튼을 눌렀을 때의 동작
-                gardenId?.let {
-                    deleteGarden(it)
-                } ?: run {
-                    Log.e("GardenFragment", "No garden selected.")
-                }
-                alertDialog.dismiss()
-            }
-
-            dialogView.findViewById<Button>(R.id.dialog_delete_garden_cancel_btn).setOnClickListener {
-                // "아니오" 버튼을 눌렀을 때의 동작
-                alertDialog.dismiss()
-            }
+//            // AlertDialog 생성
+//            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_garden, null)
+//            val builder = AlertDialog.Builder(context).setView(dialogView)
+//            val alertDialog = builder.show()
+//
+//            val titleTextView = dialogView.findViewById<TextView>(R.id.dialog_delete_garden_title_tv)
+//            titleTextView.text = "$gardenName ${titleTextView.text}"
+//
+//            val messageTextView = dialogView.findViewById<TextView>(R.id.dialog_delete_garden_explain_tv)
+//            messageTextView.text = "$gardenName 을(를) 정말로 삭제하시겠습니까?"
+//
+//            dialogView.findViewById<Button>(R.id.dialog_delete_garden_complete_btn).setOnClickListener {
+//                // "예" 버튼을 눌렀을 때의 동작
+//                gardenId?.let {
+//                    deleteGarden(it)
+//                } ?: run {
+//                    Log.e("GardenFragment", "No garden selected.")
+//                }
+//                alertDialog.dismiss()
+//            }
+//
+//            dialogView.findViewById<Button>(R.id.dialog_delete_garden_cancel_btn).setOnClickListener {
+//                // "아니오" 버튼을 눌렀을 때의 동작
+//                alertDialog.dismiss()
+//            }
         }
-
-
-
     }
 
 
 
-    private fun deleteGarden(gardenId: String) {
-        val retrofit = getRetrofit()
-        val api = retrofit.create(GardenRetrofitInterfaces::class.java)
+//    private fun deleteGarden(gardenId: String) {
+//        val retrofit = getRetrofit()
+//        val api = retrofit.create(GardenRetrofitInterfaces::class.java)
+//
+//        val gardenIdInt = gardenId.toInt()
+//        val call = api.deleteGarden("Bearer $accessToken", gardenIdInt) // 토큰을 헤더에 추가
+//        call.enqueue(object : Callback<Void> {
+//            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+//                if (response.isSuccessful) {
+//                    Log.d("Retrofit 정원삭제", "성공")
+//                    // 정원 삭제 후, 화면을 갱신하거나 다른 처리를 여기에 작성합니다.
+//                } else {
+//                    Log.d("Retrofit 정원삭제", "실패: ${response.errorBody()?.string()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Void>, t: Throwable) {
+//                Log.d("Retrofit 정원삭제", "실패: $t")
+//            }
+//        })
+//    }
 
-        val gardenIdInt = gardenId.toInt()
-        val call = api.deleteGarden("Bearer $accessToken", gardenIdInt) // 토큰을 헤더에 추가
-        call.enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    Log.d("Retrofit 정원삭제", "성공")
-                    // 정원 삭제 후, 화면을 갱신하거나 다른 처리를 여기에 작성합니다.
-                } else {
-                    Log.d("Retrofit 정원삭제", "실패: ${response.errorBody()?.string()}")
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.d("Retrofit 정원삭제", "실패: $t")
-            }
-        })
+    override fun clickDialogDelete() {
+        initGardenRecyclerView()
     }
 
 }

@@ -13,10 +13,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.example.wantplant.R
-import com.example.wantplant.data.local.GardenData
 import com.example.wantplant.data.local.GardenResponse
 import com.example.wantplant.data.remote.garden.GardenRetrofitInterfaces
-import com.example.wantplant.data.remote.garden.LoginRetrofitInterfaces
+import com.example.wantplant.data.remote.garden.request.GardenPostRequest
 import com.example.wantplant.databinding.ActivitySelectGardenBinding
 import com.example.wantplant.ui.main.MainActivity
 import com.example.wantplant.utils.getRetrofit
@@ -121,7 +120,7 @@ class SelectGardenActivity : AppCompatActivity() {
             // 한글 카테고리 이름을 영문으로 변환합니다.
             val selectedCategoryName = categoryMap[selectedCategoryNameInKorean]
 
-            val gardenData = GardenData(
+            val gardenData = GardenPostRequest(
                 name = editTextTitle.text.toString(),
                 description = editTextExplain.text.toString(),
                 category = selectedCategoryName.toString()
@@ -131,6 +130,8 @@ class SelectGardenActivity : AppCompatActivity() {
             val accessToken = sharedPref.getString("accessToken", "")
 
             val call = api.postData("Bearer $accessToken", gardenData)
+
+            Log.d("정원 만들기", gardenData.toString())
 
             call.enqueue(object : Callback<GardenResponse> {
                 override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {

@@ -9,21 +9,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="@id/water_month_calendar_ll">
         <TextView
+            android:id="@+id/water_month_change_calendar_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:text="@string/water_change_calendar" />
+            android:textSize="12sp"
+            android:text="@string/water_change_calendar"
+            android:fontFamily="@font/seoulhangang_ceb"/>
 
         <ImageView
             android:id="@+id/water_month_change_calendar_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_marginStart="3dp"
             android:src="@drawable/ic_water_solar_refresh_linear"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_water_month_garden_title_non_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingRight="18dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rect_whitefill_mainstroke_15radius2"
+        android:backgroundTint="@color/wp_main_btn"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/water_month_change_calendar_ll"
+        app:layout_constraintStart_toStartOf="@id/water_month_calendar_ll"
+        app:layout_constraintEnd_toEndOf="@id/water_month_calendar_ll">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_flower_outline"
+            app:tint="@color/wp_brown1"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -33,7 +63,7 @@
         android:orientation="vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/water_month_change_calendar_ll"
+        app:layout_constraintTop_toBottomOf="@id/item_water_month_garden_title_non_ll"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/rect_nonfill_mainstroke_15radius">
 
@@ -46,12 +76,12 @@
                 android:id="@+id/water_month_back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_water_back"
                 android:layout_marginStart="20dp"
                 android:padding="5dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_water_back"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/water_month_year_tv"
@@ -61,7 +91,7 @@
                 android:fontFamily="@font/seoulhangang_ceb"
                 android:text="2022년 6월"
                 android:textColor="@color/wp_green3"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,12 +110,10 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="3dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +176,7 @@
             android:id="@+id/water_month_day_list_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:overScrollMode="never"/>
 
     </LinearLayout>

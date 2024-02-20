@@ -14,6 +14,6 @@ class LandingVPAdapter(fragment: LandingActivity) : FragmentStateAdapter(fragmen
 
     fun addFragment(fragment: Fragment){
         fragmentList.add(fragment) // fragmentList의 동작값으로 받은 fragment를 추가하는 작업
-        notifyItemInserted(fragmentList.size-1) // 새로운 값이 리스트에 추가되는 것 (인덱스는 0부터!)
+        notifyDataSetChanged() // 데이터셋이 변경되었음을 알림
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_water_week_garden_title_ll"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/wp_brown1"
         android:text="정원 이름"
-        android:textSize="10dp"
+        android:textSize="12dp"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/seoulhangang_ceb"/>
 

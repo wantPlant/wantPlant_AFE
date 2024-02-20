@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import com.example.wantplant.R
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.example.wantplant.data.remote.tag.TagRetrofitInterfaces
 import com.example.wantplant.data.remote.tag.request.TagPostRequest
 import com.example.wantplant.data.remote.tag.response.TagColor
@@ -17,15 +19,13 @@ import com.example.wantplant.utils.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class WaterMonthDialog(context: Context, private var formattedDate: String, waterMonthInterface: WaterMonthInterface) : Dialog(context) {
     private var mBinding : DialogWaterMonthBinding? = null
     private val binding get() = mBinding!!
     private var color : TagColor = TagColor.COLOR_1
-    private lateinit var tagTime: String
+    private var tagTime: String = ""
 
     private var waterMonthInterface : WaterMonthInterface? = null
 
@@ -42,38 +42,105 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
 
         binding.dialogWaterMonthDateTv.text = formattedDate
 
+        binding.dialogWaterMonthColor1Select.visibility = View.VISIBLE
+
         binding.dialogWaterMonthColor1.setOnClickListener {
             color = TagColor.COLOR_1
+            binding.dialogWaterMonthColor1Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor2.setOnClickListener {
             color = TagColor.COLOR_2
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor3.setOnClickListener {
             color = TagColor.COLOR_3
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor4.setOnClickListener {
             color = TagColor.COLOR_4
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor5.setOnClickListener {
             color = TagColor.COLOR_5
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor6.setOnClickListener {
             color = TagColor.COLOR_6
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor7.setOnClickListener {
             color = TagColor.COLOR_7
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.VISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.INVISIBLE
         }
 
         binding.dialogWaterMonthColor8.setOnClickListener {
             color = TagColor.COLOR_8
+            binding.dialogWaterMonthColor1Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor2Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor3Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor4Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor5Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor6Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor7Select.visibility = View.INVISIBLE
+            binding.dialogWaterMonthColor8Select.visibility = View.VISIBLE
         }
 
+        // 시간 설정
         binding.dialogWaterMonthTimeLl.setOnClickListener {
             val cal = Calendar.getInstance()
             val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
@@ -134,14 +201,15 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, TimePickerDialog.THEME_HOLO_LIGHT, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
+        // 취소 클릭 시
         binding.dialogWaterMonthCancelTv.setOnClickListener {
-
             dismiss()
         }
 
+        // 완료 클릭 시
         binding.dialogWaterMonthCompleteTv.setOnClickListener {
             var tagName = binding.dialogWaterMonthTodoEt.text.toString()
 
@@ -150,25 +218,35 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
             Log.d("tagTime", tagTime)
             Log.d("date", formattedDate)
 
-            postTagAPI(TagPostRequest(color, tagName, tagTime, formattedDate))
+            if (tagName != "" && tagTime != "" && formattedDate != "") {
+                postTagAPI(TagPostRequest(color, tagName, tagTime, formattedDate))
 
-            this.waterMonthInterface?.clickDialogComplete()
-
-            dismiss()
+                dismiss()
+            }
+            else {
+                Toast.makeText(context, "모두 입력해주세요!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     // 태그 추가 api 연동
     private fun postTagAPI(tagPostRequest: TagPostRequest) {
+
+        val sharedPref = context?.getSharedPreferences("TOKEN", Context.MODE_PRIVATE)
+        val accessToken = sharedPref?.getString("accessToken", "")
+
         val tagService = getRetrofit().create(TagRetrofitInterfaces::class.java)
         Log.d("TagPostRequest", tagPostRequest.toString())
 
-        tagService.postTag(tagPostRequest).enqueue(object: Callback<TagPostResponse>
+        tagService.postTag("Bearer $accessToken", tagPostRequest).enqueue(object: Callback<TagPostResponse>
         {
             override fun onResponse(call: Call<TagPostResponse>, response: Response<TagPostResponse>) {
                 Log.d("TagPost/ServerSuccess", response.toString())
                 val resp: TagPostResponse? = response.body()
-                Log.d("TagAdd", "code: ${resp?.message}")
+                Log.d("TagAdd", response.body()?.result.toString())
+                if (resp != null) {
+                    waterMonthInterface?.clickDialogComplete()
+                }
                 when(resp?.code) {
                     "200" -> Log.d("TagAdd/Success", "TagAdd!!")
                 }

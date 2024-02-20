@@ -4,7 +4,7 @@ data class CompletedPot(
     val potName: String,
     val potImageUrl: String,
     val startAt: String,
-    val completedAt: String
+    val completeAt: String
 )
 
 data class CompletedPotsResult(
