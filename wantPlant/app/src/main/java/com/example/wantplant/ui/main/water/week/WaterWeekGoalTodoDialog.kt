@@ -101,7 +101,7 @@ class WaterWeekGoalTodoDialog(context: Context, waterWeekInterface: WaterWeekInt
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, TimePickerDialog.THEME_HOLO_LIGHT, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
         // 취소 클릭 시

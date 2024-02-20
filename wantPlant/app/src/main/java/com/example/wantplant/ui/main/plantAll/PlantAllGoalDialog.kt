@@ -99,7 +99,7 @@ class PlantAllGoalDialog(context: Context, plantAllInterface: PlantAllInterface,
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, TimePickerDialog.THEME_HOLO_LIGHT, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
         binding.dialogWaterWeekDateLl.setOnClickListener {

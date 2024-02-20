@@ -57,7 +57,7 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginTop="83dp"
-        android:src="@drawable/img_profile_image"
+        android:src="@drawable/ic_non_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

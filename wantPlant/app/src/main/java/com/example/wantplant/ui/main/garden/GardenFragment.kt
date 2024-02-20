@@ -110,7 +110,7 @@ class GardenFragment : Fragment(), GardenInterface {
                         )
                     }
 
-                    if (response.body()?.result?.gardens!!.isNotEmpty()) {
+                    if (response.body()?.result?.gardens?.isNotEmpty() == true) {
                         clickGardenId = response.body()?.result?.gardens!![0].gardenId
                         clickGardenTitle = response.body()!!.result.gardens[0].name
 

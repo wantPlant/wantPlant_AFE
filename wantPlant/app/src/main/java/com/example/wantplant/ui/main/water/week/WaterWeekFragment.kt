@@ -212,14 +212,68 @@ class WaterWeekFragment : Fragment(), WaterWeekInterface {
                                 layoutManager = weekGardenManager
                             }
 
+                            // 정원이 비어있으면
+                            if (response.body()?.result?.gardens?.isEmpty() == true) {
+                                binding.itemWaterWeekGardenTitleNonLl.visibility = View.VISIBLE
+                            }
+                            // 정원이 비어있지 않으면
+                            else {
+                                binding.itemWaterWeekGardenTitleNonLl.visibility = View.INVISIBLE
+                            }
+
+                            val gardenPotList = response.body()?.result?.gardens?.getOrNull(0)?.potList
+
+                            if (gardenPotList?.isNotEmpty() == true) {
+                                clickPotId = gardenPotList[0].potId
+                                clickdate = standardDate.toString()
+
+                                val weekPotManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                                val weekPotAdapter = WaterWeekPotTitleRVAdapter(gardenPotList)
+                                binding.waterWeekPotTitleRv.apply {
+                                    adapter = weekPotAdapter
+                                    layoutManager = weekPotManager
+                                }
+
+                                // 화분 클릭 시 화분 id 저장
+                                weekPotAdapter.setPotClick(object: WaterWeekPotTitleRVAdapter.PotClickListener{
+                                    override fun onPotClick(potId: Long) {
+                                        clickPotId = potId
+                                        if (clickdate != "" && clickPotId != 0.toLong()) {
+                                            // 날짜별 목표, 할 일 api 연동
+                                            getGoalTodo()
+                                            binding.waterWeekAddGoalLl.visibility = View.VISIBLE
+                                        }
+                                    }
+                                })
+
+                                if (clickdate != "" && clickPotId != 0.toLong()) {
+                                    binding.waterWeekAddGoalLl.visibility = View.VISIBLE
+                                } else {
+                                    binding.waterWeekAddGoalLl.visibility = View.INVISIBLE
+                                }
+
+                                binding.waterWeekNonPotTitleTv.visibility = View.INVISIBLE
+
+                                getGoalTodo()
+                            } else {
+                                binding.waterWeekNonPotTitleTv.visibility = View.VISIBLE
+                            }
+
                             weekGardenAdapter?.setGardenClick(object: WaterWeekGardenTitleRVAdapter.GardenClickListener{
 
                                 // 정원 클릭 시
                                 override fun onGardenClick(potList: List<PotList>) {
 
+                                    weekCalendarList()
+
                                     binding.waterWeekGoalRv.adapter = null
-//                                    clickdate = ""
-                                    clickPotId = 0
+
+                                    if (potList.isNotEmpty()) {
+                                        clickPotId = potList[0].potId
+                                        clickdate = standardDate.toString()
+
+                                        getGoalTodo()
+                                    }
 
                                     if (clickdate != "" && clickPotId != 0.toLong()) {
                                         binding.waterWeekAddGoalLl.visibility = View.VISIBLE

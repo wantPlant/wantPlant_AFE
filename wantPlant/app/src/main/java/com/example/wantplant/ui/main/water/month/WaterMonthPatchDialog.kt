@@ -236,7 +236,7 @@ class WaterMonthPatchDialog(context: Context, private var tag: TagMonthGetResult
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, TimePickerDialog.THEME_HOLO_LIGHT, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
         binding.dialogWaterMonthDateLl.setOnClickListener {

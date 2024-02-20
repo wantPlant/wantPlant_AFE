@@ -31,8 +31,7 @@ data class PotList(
     var proceed: Int,
     var potTagColor: PotTagColor,
     var potImageUrl: String,
-    var startAt: String,
-    val garden: List<GardenList>
+    var startAt: String
 )
 
 data class GardenList(

@@ -201,7 +201,7 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
                     }
                 }
             }
-            TimePickerDialog(context, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(context, TimePickerDialog.THEME_HOLO_LIGHT, timePickerListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         }
 
         // 취소 클릭 시
@@ -224,7 +224,7 @@ class WaterMonthDialog(context: Context, private var formattedDate: String, wate
                 dismiss()
             }
             else {
-                Toast.makeText(context, "에러요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "모두 입력해주세요!", Toast.LENGTH_SHORT).show()
             }
         }
     }

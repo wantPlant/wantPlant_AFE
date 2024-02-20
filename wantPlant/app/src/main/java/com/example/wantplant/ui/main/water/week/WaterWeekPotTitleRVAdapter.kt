@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,19 +14,19 @@ import com.example.wantplant.databinding.ItemWaterWeekPotTitleBinding
 
 class WaterWeekPotTitleRVAdapter(private var potList: List<PotList>): RecyclerView.Adapter<WaterWeekPotTitleRVAdapter.ViewHolder>() {
 
-    private var selectedPosition: Int = RecyclerView.NO_POSITION
-
-    inner class ViewHolder(val binding: ItemWaterWeekPotTitleBinding): RecyclerView.ViewHolder(binding.root)
+    private var selectedPosition: Int = 0
 
     interface PotClickListener {
         fun onPotClick(potId: Long)
     }
 
-    private lateinit var mPotClickListener: PotClickListener
+    private var mPotClickListener: PotClickListener? = null
 
     fun setPotClick(potClickListener: PotClickListener) {
         mPotClickListener = potClickListener
     }
+
+    inner class ViewHolder(val binding: ItemWaterWeekPotTitleBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -52,11 +53,12 @@ class WaterWeekPotTitleRVAdapter(private var potList: List<PotList>): RecyclerVi
         holder.binding.itemWaterWeekPotTitleTv.setOnClickListener {
             notifyItemChanged(selectedPosition)
 
-            mPotClickListener.onPotClick(potList[position].potId)
-
             holder.binding.itemWaterWeekPotTitleTv.setBackgroundResource(R.drawable.border_nonfill_greenstroke_15radius)
             holder.binding.itemWaterWeekPotTitleTv.setTypeface(null, Typeface.BOLD)
             holder.binding.itemWaterWeekPotTitleTv.setTextColor(Color.BLACK)
+
+            mPotClickListener?.onPotClick(potList[position].potId)
+            Log.d("화분아이디", potList[position].potId.toString())
 
             selectedPosition = position
         }

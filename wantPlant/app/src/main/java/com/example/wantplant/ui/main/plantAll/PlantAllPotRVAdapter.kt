@@ -13,7 +13,7 @@ import com.example.wantplant.ui.main.water.week.WaterWeekPotTitleRVAdapter
 
 class PlantAllPotRVAdapter(private var potList: List<Pot>) : RecyclerView.Adapter<PlantAllPotRVAdapter.ViewHolder>() {
 
-    private var selectedPosition: Int = 0
+    private var selectedPosition: Int = RecyclerView.NO_POSITION
 
     inner class ViewHolder(val binding: ItemWaterWeekPotTitleBinding): RecyclerView.ViewHolder(binding.root)
 

@@ -4,7 +4,7 @@ data class GardenData(
     val gardenId: Long,
     val name: String,
     val description: String,
-    val category: String
+    val gardenCategory: String
 )
 
 data class GardenResponse(

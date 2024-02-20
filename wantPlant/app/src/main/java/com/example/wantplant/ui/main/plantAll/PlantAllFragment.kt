@@ -24,6 +24,8 @@ import com.example.wantplant.data.remote.todo.TodoRetrofitInterfaces
 import com.example.wantplant.data.remote.todo.request.TodoPatchCompleteRequest
 import com.example.wantplant.data.remote.todo.response.TodoPatchCompleteResponse
 import com.example.wantplant.databinding.FragmentPlantAllBinding
+import com.example.wantplant.ui.main.MainActivity
+import com.example.wantplant.ui.main.garden.GardenFragment
 import com.example.wantplant.ui.main.water.week.WaterWeekGoalDialog
 import com.example.wantplant.ui.main.water.week.WaterWeekGoalPatchDialog
 import com.example.wantplant.ui.main.water.week.WaterWeekGoalTodoDialog
@@ -53,6 +55,12 @@ class PlantAllFragment : Fragment(), PlantAllInterface {
 
         // 정원 이름 설정
         binding.wholePlantCreatingGardenEt.setText(gardenTitle)
+
+        binding.wholePlantBackIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, GardenFragment())
+                .commitAllowingStateLoss()
+        }
 
         binding.wholePlantAddGoalLl.setOnClickListener {
             val plantAllGoalDialog = PlantAllGoalDialog(requireContext(), this@PlantAllFragment, clickPotId)
@@ -94,9 +102,6 @@ class PlantAllFragment : Fragment(), PlantAllInterface {
                                 .load(potList[0].potImageUrl)  // potImageUrl은 이미지의 URL이어야 합니다.
                                 .into(binding.wholePlantPotIv)
                         }
-
-                        getGoalTodo(clickPotId)
-
                     }
 
                     val potsManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -207,6 +212,10 @@ class PlantAllFragment : Fragment(), PlantAllInterface {
                 Log.d("TodoCompletePatchRequest", todoPatchCompleteRequest.toString())
 
                 val resp: TodoPatchCompleteResponse? = response.body()
+
+                if (resp != null) {
+                    getPots()
+                }
 
                 when(resp?.code) {
                     "200" -> Log.d("TodoCompletePatch/Success", "TodoCompletePatch!!")

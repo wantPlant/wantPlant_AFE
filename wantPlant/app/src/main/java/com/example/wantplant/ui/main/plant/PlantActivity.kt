@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wantplant.data.local.PotTagColor
@@ -41,10 +42,14 @@ class PlantActivity : AppCompatActivity() {
         Log.d("currentDate", currentDate)
 
         binding.plantCreateFlowerpotAcb.setOnClickListener{
-            var potTitle = binding.plantFlowerpotNameEt.text.toString()
-            postPotsAPI(PotsPostRequest(gardenId, potTitle, potTageColor = PotTagColor.PURPLE, currentDate))
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            if (binding.plantFlowerpotNameEt.text.toString() != "") {
+                var potTitle = binding.plantFlowerpotNameEt.text.toString()
+                postPotsAPI(PotsPostRequest(gardenId, potTitle, potTageColor = PotTagColor.PURPLE, currentDate))
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "화분 이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         onClickListener()

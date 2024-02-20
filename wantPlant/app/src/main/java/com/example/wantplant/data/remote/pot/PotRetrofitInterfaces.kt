@@ -22,8 +22,8 @@ interface PotRetrofitInterfaces {
     @POST("/api/pots")
     fun postPots(@Header("Authorization") authorization: String, @Body potsPostRequest: PotsPostRequest): Call<PotsPostResponse>
 
-    @GET("/api/pots/completed/app")
-    fun getCompletedPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: String): Call<CompletedPotsResult>
+    @GET("/api/completed-pots/app")
+    fun getCompletedPots(@Header("Authorization") authorization: String, @Query("gardenId") gardenId: Long): Call<CompletedPotsResult>
 
     @PATCH("/api/pots/{potId}")
     fun patchPots(@Header("Authorization") authorization: String, @Path(value = "potId") potId: Long, @Body potsPatchRequest: PotsPatchRequest): Call<PotsPatchResponse>

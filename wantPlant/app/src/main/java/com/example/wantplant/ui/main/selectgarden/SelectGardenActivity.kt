@@ -131,6 +131,8 @@ class SelectGardenActivity : AppCompatActivity() {
 
             val call = api.postData("Bearer $accessToken", gardenData)
 
+            Log.d("정원 만들기", gardenData.toString())
+
             call.enqueue(object : Callback<GardenResponse> {
                 override fun onResponse(call: Call<GardenResponse>, response: Response<GardenResponse>) {
                     if (response.isSuccessful) {

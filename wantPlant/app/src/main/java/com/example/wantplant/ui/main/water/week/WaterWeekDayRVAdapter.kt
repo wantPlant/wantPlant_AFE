@@ -30,6 +30,7 @@ class WaterWeekDayRVAdapter(private val dayList: MutableList<WeekDate>): Recycle
 
     inner class ViewHolder(val binding: ItemWaterWeekDayBinding): RecyclerView.ViewHolder(binding.root)
 
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
